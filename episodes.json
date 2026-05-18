@@ -8,6 +8,986 @@
       "logo": "Gumball.png",
       "episodes": [
         {
+          "season": 1,
+          "episode": 1,
+          "title": "Il DVD"
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "Tutta colpa... sua!"
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Il terzo amico del cuore"
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Il debito"
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "La fine del mondo"
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Il vestito"
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "La bambola di Anais"
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "Su le mani"
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Gli amici prima delle ragazze"
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Il disegno"
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Il più pigro"
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Il fantasma"
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "Il mistero"
+        },
+        {
+          "season": 1,
+          "episode": 14,
+          "title": "Lo scherzo"
+        },
+        {
+          "season": 1,
+          "episode": 15,
+          "title": "I torsoli del karate"
+        },
+        {
+          "season": 1,
+          "episode": 16,
+          "title": "Un posto felice"
+        },
+        {
+          "season": 1,
+          "episode": 17,
+          "title": "La festa"
+        },
+        {
+          "season": 1,
+          "episode": 18,
+          "title": "Il rimborso"
+        },
+        {
+          "season": 1,
+          "episode": 19,
+          "title": "Il robot"
+        },
+        {
+          "season": 1,
+          "episode": 20,
+          "title": "Il picnic"
+        },
+        {
+          "season": 1,
+          "episode": 21,
+          "title": "Scemo per un giorno"
+        },
+        {
+          "season": 1,
+          "episode": 22,
+          "title": "Giù per il tubo"
+        },
+        {
+          "season": 1,
+          "episode": 23,
+          "title": "Il calzino"
+        },
+        {
+          "season": 1,
+          "episode": 24,
+          "title": "Il genio"
+        },
+        {
+          "season": 1,
+          "episode": 25,
+          "title": "Il fantasma"
+        },
+        {
+          "season": 1,
+          "episode": 26,
+          "title": "Da grandi"
+        },
+        {
+          "season": 1,
+          "episode": 27,
+          "title": "Il primo appuntamento"
+        },
+        {
+          "season": 1,
+          "episode": 28,
+          "title": "Il club"
+        },
+        {
+          "season": 1,
+          "episode": 29,
+          "title": "La bacchetta magica"
+        },
+        {
+          "season": 1,
+          "episode": 30,
+          "title": "Miss simpatia"
+        },
+        {
+          "season": 1,
+          "episode": 31,
+          "title": "La macchina nuova"
+        },
+        {
+          "season": 1,
+          "episode": 32,
+          "title": "Che sfortuna!"
+        },
+        {
+          "season": 1,
+          "episode": 33,
+          "title": "Il mostro mangia-tutto"
+        },
+        {
+          "season": 1,
+          "episode": 34,
+          "title": "Una mamma ficcanaso"
+        },
+        {
+          "season": 1,
+          "episode": 35,
+          "title": "L'elmetto"
+        },
+        {
+          "season": 1,
+          "episode": 36,
+          "title": "Il duello"
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "title": "Il telecomando"
+        },
+        {
+          "season": 2,
+          "episode": 2,
+          "title": "Il gigante"
+        },
+        {
+          "season": 2,
+          "episode": 3,
+          "title": "I cavalieri"
+        },
+        {
+          "season": 2,
+          "episode": 4,
+          "title": "La tabella"
+        },
+        {
+          "season": 2,
+          "episode": 5,
+          "title": "Il fiore"
+        },
+        {
+          "season": 2,
+          "episode": 6,
+          "title": "La penna"
+        },
+        {
+          "season": 2,
+          "episode": 7,
+          "title": "Il telefono"
+        },
+        {
+          "season": 2,
+          "episode": 8,
+          "title": "Speedy pizza"
+        },
+        {
+          "season": 2,
+          "episode": 9,
+          "title": "La festa di Halloween"
+        },
+        {
+          "season": 2,
+          "episode": 10,
+          "title": "Il tesoro nascosto"
+        },
+        {
+          "season": 2,
+          "episode": 11,
+          "title": "Le scuse"
+        },
+        {
+          "season": 2,
+          "episode": 12,
+          "title": "Le parole fanno male"
+        },
+        {
+          "season": 2,
+          "episode": 13,
+          "title": "Il teschio e le bugie"
+        },
+        {
+          "season": 2,
+          "episode": 14,
+          "title": "Il robot-schiavo"
+        },
+        {
+          "season": 2,
+          "episode": 15,
+          "title": "Salviamo il Natale"
+        },
+        {
+          "season": 2,
+          "episode": 16,
+          "title": "Sfida all'ultimo... orologio"
+        },
+        {
+          "season": 2,
+          "episode": 17,
+          "title": "Spirito di patata"
+        },
+        {
+          "season": 2,
+          "episode": 18,
+          "title": "Scherzi dell'anestesia"
+        },
+        {
+          "season": 2,
+          "episode": 19,
+          "title": "Una buona madre"
+        },
+        {
+          "season": 2,
+          "episode": 20,
+          "title": "Il virus"
+        },
+        {
+          "season": 2,
+          "episode": 21,
+          "title": "Il pony"
+        },
+        {
+          "season": 2,
+          "episode": 22,
+          "title": "L'eroe"
+        },
+        {
+          "season": 2,
+          "episode": 23,
+          "title": "Il sogno"
+        },
+        {
+          "season": 2,
+          "episode": 24,
+          "title": "La spalla"
+        },
+        {
+          "season": 2,
+          "episode": 25,
+          "title": "La foto"
+        },
+        {
+          "season": 2,
+          "episode": 26,
+          "title": "Il cassonetto"
+        },
+        {
+          "season": 2,
+          "episode": 27,
+          "title": "La tempesta"
+        },
+        {
+          "season": 2,
+          "episode": 28,
+          "title": "Prigionieri a scuola"
+        },
+        {
+          "season": 2,
+          "episode": 29,
+          "title": "Il gioco"
+        },
+        {
+          "season": 2,
+          "episode": 30,
+          "title": "Mamma belva"
+        },
+        {
+          "season": 2,
+          "episode": 31,
+          "title": "Un'amicizia bloccata"
+        },
+        {
+          "season": 2,
+          "episode": 32,
+          "title": "Una vera amicizia"
+        },
+        {
+          "season": 2,
+          "episode": 33,
+          "title": "Casa dolce casa"
+        },
+        {
+          "season": 2,
+          "episode": 34,
+          "title": "Lo stereo"
+        },
+        {
+          "season": 2,
+          "episode": 35,
+          "title": "Ciak, si gira!"
+        },
+        {
+          "season": 2,
+          "episode": 36,
+          "title": "I maglioni"
+        },
+        {
+          "season": 2,
+          "episode": 37,
+          "title": "Internet"
+        },
+        {
+          "season": 2,
+          "episode": 38,
+          "title": "Il piano"
+        },
+        {
+          "season": 2,
+          "episode": 39,
+          "title": "Cose a caso"
+        },
+        {
+          "season": 2,
+          "episode": 40,
+          "title": "Il finale"
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "title": "Cambio di voce"
+        },
+        {
+          "season": 3,
+          "episode": 2,
+          "title": "Rivali in amore"
+        },
+        {
+          "season": 3,
+          "episode": 3,
+          "title": "L'allenatore"
+        },
+        {
+          "season": 3,
+          "episode": 4,
+          "title": "L'epidemia"
+        },
+        {
+          "season": 3,
+          "episode": 5,
+          "title": "La tartaruga"
+        },
+        {
+          "season": 3,
+          "episode": 6,
+          "title": "La clonazione"
+        },
+        {
+          "season": 3,
+          "episode": 7,
+          "title": "Zac"
+        },
+        {
+          "season": 3,
+          "episode": 8,
+          "title": "Le comparse"
+        },
+        {
+          "season": 3,
+          "episode": 9,
+          "title": "Veramente falso"
+        },
+        {
+          "season": 3,
+          "episode": 10,
+          "title": "La vacanza"
+        },
+        {
+          "season": 3,
+          "episode": 11,
+          "title": "110 e frode"
+        },
+        {
+          "season": 3,
+          "episode": 12,
+          "title": "Il vuoto"
+        },
+        {
+          "season": 3,
+          "episode": 13,
+          "title": "Il capo"
+        },
+        {
+          "season": 3,
+          "episode": 14,
+          "title": "Niente bugie"
+        },
+        {
+          "season": 3,
+          "episode": 15,
+          "title": "La legge"
+        },
+        {
+          "season": 3,
+          "episode": 16,
+          "title": "L'allergia"
+        },
+        {
+          "season": 3,
+          "episode": 17,
+          "title": "Supermamma"
+        },
+        {
+          "season": 3,
+          "episode": 18,
+          "title": "La password"
+        },
+        {
+          "season": 3,
+          "episode": 19,
+          "title": "La spazzatura"
+        },
+        {
+          "season": 3,
+          "episode": 20,
+          "title": "Il guscio"
+        },
+        {
+          "season": 3,
+          "episode": 21,
+          "title": "La saggezza del criceto"
+        },
+        {
+          "season": 3,
+          "episode": 22,
+          "title": "Fratelli"
+        },
+        {
+          "season": 3,
+          "episode": 23,
+          "title": "L'uomo nero"
+        },
+        {
+          "season": 3,
+          "episode": 24,
+          "title": "Il fidanzato della nonna"
+        },
+        {
+          "season": 3,
+          "episode": 25,
+          "title": "L'apocalisse"
+        },
+        {
+          "season": 3,
+          "episode": 26,
+          "title": "Rockoween"
+        },
+        {
+          "season": 3,
+          "episode": 27,
+          "title": "Effetto domino"
+        },
+        {
+          "season": 3,
+          "episode": 28,
+          "title": "Il senso della vita"
+        },
+        {
+          "season": 3,
+          "episode": 29,
+          "title": "Il santo"
+        },
+        {
+          "season": 3,
+          "episode": 30,
+          "title": "L'amico immaginario"
+        },
+        {
+          "season": 3,
+          "episode": 31,
+          "title": "L'oracolo"
+        },
+        {
+          "season": 3,
+          "episode": 32,
+          "title": "La sicurezza"
+        },
+        {
+          "season": 3,
+          "episode": 33,
+          "title": "Segreti a scuola"
+        },
+        {
+          "season": 3,
+          "episode": 34,
+          "title": "Il film dell'orrore"
+        },
+        {
+          "season": 3,
+          "episode": 35,
+          "title": "Viaggi nel tempo"
+        },
+        {
+          "season": 3,
+          "episode": 36,
+          "title": "L'intruso"
+        },
+        {
+          "season": 3,
+          "episode": 37,
+          "title": "Solo al mondo"
+        },
+        {
+          "season": 3,
+          "episode": 38,
+          "title": "Il compagno di giochi"
+        },
+        {
+          "season": 3,
+          "episode": 39,
+          "title": "L'assolo"
+        },
+        {
+          "season": 3,
+          "episode": 40,
+          "title": "Famiglie al verde"
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "title": "Si ritorna a scuola"
+        },
+        {
+          "season": 4,
+          "episode": 2,
+          "title": "Dr. Demolitore"
+        },
+        {
+          "season": 4,
+          "episode": 3,
+          "title": "La gang"
+        },
+        {
+          "season": 4,
+          "episode": 4,
+          "title": "Gli altri"
+        },
+        {
+          "season": 4,
+          "episode": 5,
+          "title": "Il papà di papà"
+        },
+        {
+          "season": 4,
+          "episode": 6,
+          "title": "L'assegno"
+        },
+        {
+          "season": 4,
+          "episode": 7,
+          "title": "La peste"
+        },
+        {
+          "season": 4,
+          "episode": 8,
+          "title": "In vendita"
+        },
+        {
+          "season": 4,
+          "episode": 9,
+          "title": "Il dono perfetto"
+        },
+        {
+          "season": 4,
+          "episode": 10,
+          "title": "Il parcheggio"
+        },
+        {
+          "season": 4,
+          "episode": 11,
+          "title": "La missione"
+        },
+        {
+          "season": 4,
+          "episode": 12,
+          "title": "Robot 2.0"
+        },
+        {
+          "season": 4,
+          "episode": 13,
+          "title": "Il fumetto"
+        },
+        {
+          "season": 4,
+          "episode": 14,
+          "title": "Il romantico"
+        },
+        {
+          "season": 4,
+          "episode": 15,
+          "title": "I caricamenti"
+        },
+        {
+          "season": 4,
+          "episode": 16,
+          "title": "Il contratto"
+        },
+        {
+          "season": 4,
+          "episode": 17,
+          "title": "L'abbraccio"
+        },
+        {
+          "season": 4,
+          "episode": 18,
+          "title": "La cattiva"
+        },
+        {
+          "season": 4,
+          "episode": 19,
+          "title": "Il traditore"
+        },
+        {
+          "season": 4,
+          "episode": 20,
+          "title": "Le origini parte 1"
+        },
+        {
+          "season": 4,
+          "episode": 21,
+          "title": "Le origini parte 2"
+        },
+        {
+          "season": 4,
+          "episode": 22,
+          "title": "La fidanzata"
+        },
+        {
+          "season": 4,
+          "episode": 23,
+          "title": "Il consiglio"
+        },
+        {
+          "season": 4,
+          "episode": 24,
+          "title": "Il segnale"
+        },
+        {
+          "season": 4,
+          "episode": 25,
+          "title": "Il parassita"
+        },
+        {
+          "season": 4,
+          "episode": 26,
+          "title": "Cos'è l'amore?"
+        },
+        {
+          "season": 4,
+          "episode": 27,
+          "title": "Sincronismo perfetto"
+        },
+        {
+          "season": 4,
+          "episode": 28,
+          "title": "Il nido"
+        },
+        {
+          "season": 4,
+          "episode": 29,
+          "title": "Soldi invisibili"
+        },
+        {
+          "season": 4,
+          "episode": 30,
+          "title": "L'autobus"
+        },
+        {
+          "season": 4,
+          "episode": 31,
+          "title": "La notte"
+        },
+        {
+          "season": 4,
+          "episode": 32,
+          "title": "Le incomprensioni"
+        },
+        {
+          "season": 4,
+          "episode": 33,
+          "title": "Il pesce fuor d'acqua"
+        },
+        {
+          "season": 4,
+          "episode": 34,
+          "title": "Genitori contro figli"
+        },
+        {
+          "season": 4,
+          "episode": 35,
+          "title": "La pacca sul sedere"
+        },
+        {
+          "season": 4,
+          "episode": 36,
+          "title": "Il detective"
+        },
+        {
+          "season": 4,
+          "episode": 37,
+          "title": "La sfida"
+        },
+        {
+          "season": 4,
+          "episode": 38,
+          "title": "Elmore stream 2.0"
+        },
+        {
+          "season": 4,
+          "episode": 39,
+          "title": "Il divoratore"
+        },
+        {
+          "season": 4,
+          "episode": 40,
+          "title": "Il disastro"
+        },
+        {
+          "season": 5,
+          "episode": 1,
+          "title": "I racconti di Molly"
+        },
+        {
+          "season": 5,
+          "episode": 2,
+          "title": "Indietro nel tempo"
+        },
+        {
+          "season": 5,
+          "episode": 3,
+          "title": "Ma chi è Josh?"
+        },
+        {
+          "season": 5,
+          "episode": 4,
+          "title": "La noia"
+        },
+        {
+          "season": 5,
+          "episode": 5,
+          "title": "Alan il malvagio"
+        },
+        {
+          "season": 5,
+          "episode": 6,
+          "title": "Le scelte"
+        },
+        {
+          "season": 5,
+          "episode": 7,
+          "title": "Senza internet"
+        },
+        {
+          "season": 5,
+          "episode": 8,
+          "title": "Il test"
+        },
+        {
+          "season": 5,
+          "episode": 9,
+          "title": "La nuova app"
+        },
+        {
+          "season": 5,
+          "episode": 10,
+          "title": "Il protocollo"
+        },
+        {
+          "season": 5,
+          "episode": 11,
+          "title": "La patata"
+        },
+        {
+          "season": 5,
+          "episode": 12,
+          "title": "Un giorno da ricordare"
+        },
+        {
+          "season": 5,
+          "episode": 13,
+          "title": "I sosia"
+        },
+        {
+          "season": 5,
+          "episode": 14,
+          "title": "Nonno Frankie"
+        },
+        {
+          "season": 5,
+          "episode": 15,
+          "title": "Il vaso"
+        },
+        {
+          "season": 5,
+          "episode": 16,
+          "title": "I due cupido"
+        },
+        {
+          "season": 5,
+          "episode": 17,
+          "title": "Pacco a sorpresa"
+        },
+        {
+          "season": 5,
+          "episode": 18,
+          "title": "Il videogioco"
+        },
+        {
+          "season": 5,
+          "episode": 19,
+          "title": "Lo skate"
+        },
+        {
+          "season": 5,
+          "episode": 20,
+          "title": "False identità"
+        },
+        {
+          "season": 5,
+          "episode": 21,
+          "title": "Il riscatto dei papà"
+        },
+        {
+          "season": 5,
+          "episode": 22,
+          "title": "Cattive recensioni"
+        },
+        {
+          "season": 5,
+          "episode": 23,
+          "title": "I voti"
+        },
+        {
+          "season": 5,
+          "episode": 24,
+          "title": "La dieta"
+        },
+        {
+          "season": 5,
+          "episode": 25,
+          "title": "La mia nemesi"
+        },
+        {
+          "season": 5,
+          "episode": 26,
+          "title": "Lo stregone"
+        },
+        {
+          "season": 5,
+          "episode": 27,
+          "title": "Il menù segreto"
+        },
+        {
+          "season": 5,
+          "episode": 28,
+          "title": "Lo zio famoso"
+        },
+        {
+          "season": 5,
+          "episode": 29,
+          "title": "La stramba"
+        },
+        {
+          "season": 5,
+          "episode": 30,
+          "title": "La rapina"
+        },
+        {
+          "season": 5,
+          "episode": 31,
+          "title": "Cantando"
+        },
+        {
+          "season": 5,
+          "episode": 32,
+          "title": "Il migliore"
+        },
+        {
+          "season": 5,
+          "episode": 33,
+          "title": "Il peggiore"
+        },
+        {
+          "season": 5,
+          "episode": 34,
+          "title": "Lo sciopero del papà"
+        },
+        {
+          "season": 5,
+          "episode": 35,
+          "title": "I petali"
+        },
+        {
+          "season": 5,
+          "episode": 36,
+          "title": "I pupazzi"
+        },
+        {
+          "season": 5,
+          "episode": 37,
+          "title": "Via i Watterson da Elmore"
+        },
+        {
+          "season": 5,
+          "episode": 38,
+          "title": "La fila"
+        },
+        {
+          "season": 5,
+          "episode": 39,
+          "title": "La lista sbagliata"
+        },
+        {
+          "season": 5,
+          "episode": 40,
+          "title": "Sguiscia la notizia"
+        },
+        {
           "season": 6,
           "episode": 1,
           "title": "Nuovi arrivi"
@@ -40,7 +1020,7 @@
         {
           "season": 6,
           "episode": 7,
-          "title": "L&#39;imbarazzo"
+          "title": "L'imbarazzo"
         },
         {
           "season": 6,
@@ -120,7 +1100,7 @@
         {
           "season": 6,
           "episode": 23,
-          "title": "L&#39;inserimento"
+          "title": "L'inserimento"
         },
         {
           "season": 6,
@@ -190,7 +1170,7 @@
         {
           "season": 6,
           "episode": 37,
-          "title": "L&#39;Agente segreto"
+          "title": "L'Agente segreto"
         },
         {
           "season": 6,
@@ -235,6 +1215,106 @@
       "logo": "Gumball2.png",
       "episodes": [
         {
+          "season": 1,
+          "episode": 1,
+          "title": "L'hamburger"
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "L'assistente"
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "La lontananza"
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "La cosa"
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "La poesia"
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Il traffico"
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Le previsioni cosmiche"
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "Il cheerleader"
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Il tempo"
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "L'insegnante"
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "L'app"
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Il profumo"
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "La lettera"
+        },
+        {
+          "season": 1,
+          "episode": 14,
+          "title": "La pancia"
+        },
+        {
+          "season": 1,
+          "episode": 15,
+          "title": "La ruga"
+        },
+        {
+          "season": 1,
+          "episode": 16,
+          "title": "I maccheroni"
+        },
+        {
+          "season": 1,
+          "episode": 17,
+          "title": "La piscina"
+        },
+        {
+          "season": 1,
+          "episode": 18,
+          "title": "La foto di famiglia"
+        },
+        {
+          "season": 1,
+          "episode": 19,
+          "title": "La scalata"
+        },
+        {
+          "season": 1,
+          "episode": 20,
+          "title": "Il clan Fitzgerald"
+        },
+        {
           "season": 2,
           "episode": 1,
           "title": "La convocazione"
@@ -247,7 +1327,7 @@
         {
           "season": 2,
           "episode": 3,
-          "title": "L&#39;invito"
+          "title": "L'invito"
         },
         {
           "season": 2,
