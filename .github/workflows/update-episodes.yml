@@ -4,7 +4,7 @@ on:
   schedule:
     # Ogni 3 giorni alle 04:00 UTC
     - cron: '0 4 */3 * *'
-  workflow_dispatch: # Permette di lanciarla manualmente dal pulsante su GitHub
+  workflow_dispatch: # Lancio manuale dal tab Actions
 
 jobs:
   update:
@@ -16,12 +16,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
       - name: Aggiorna episodes.json
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: node scripts/update-episodes.js
 
       - name: Commit se ci sono cambiamenti
