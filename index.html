@@ -51,6 +51,36 @@
         .player-wrapper { position: relative; width: 100%; height: 100vh; background: #000; }
         .player-wrapper iframe { width: 100%; height: 100%; border: none; }
 
+        /* ===== TRIGGER ZONES — intercettano il mouse sopra l'iframe ===== */
+        .trigger-zone {
+            position: fixed;
+            z-index: 85;
+            pointer-events: auto;
+            background: transparent;
+        }
+        .trigger-top {
+            top: 0; left: 0; right: 0;
+            height: 100px;
+        }
+        .trigger-bottom {
+            bottom: 0; left: 35%; right: 30%;
+            height: 50px;
+        }
+
+        /* ===== FULLSCREEN OVERLAY BUTTON — SEMPRE visibile ===== */
+        .fs-overlay-btn {
+            position: fixed;
+            bottom: 12px; right: 12px;
+            width: 48px; height: 48px;
+            z-index: 95;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .fs-overlay-btn svg { width: 0; height: 0; fill: transparent; pointer-events: none; }
+
         /* ===== TOP BAR ===== */
         .top-bar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -122,6 +152,7 @@
             .btn { padding: 8px 14px; font-size: 13px; }
             .btn .btn-text { display: none; }
             .bottom-info { bottom: 14px; font-size: 14px; }
+            .fs-overlay-btn { bottom: 8px; right: 8px; width: 42px; height: 42px; }
         }
     </style>
 </head>
@@ -135,6 +166,15 @@
 
     <div class="player-wrapper">
         <iframe id="player" allowfullscreen allow="autoplay; encrypted-media" src="about:blank"></iframe>
+    </div>
+
+    <!-- Zone trigger: intercettano il mouse SOPRA l'iframe -->
+    <div class="trigger-zone trigger-top" id="triggerTop"></div>
+    <div class="trigger-zone trigger-bottom" id="triggerBottom"></div>
+
+    <!-- Fullscreen button: SEMPRE visibile, blocca il native di vixsrc -->
+    <div class="fs-overlay-btn" id="fsOverlayBtn">
+        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
     </div>
 
     <div class="top-bar hidden" id="topBar">
@@ -184,10 +224,9 @@
         const CREDITS_SKIP_SECONDS = 33;
         const DB_REFRESH_DAYS = 3;
 
-        // Fonti per episodes.json (in ordine di priorità)
         const DB_URLS = [
-            'episodes.json',  // Relativo — funziona su GitHub Pages
-            'https://raw.githubusercontent.com/riukii/gumball-ita/refs/heads/main/episodes.json' // Fallback GitHub raw
+            'episodes.json',
+            'https://raw.githubusercontent.com/riukii/gumball-ita/refs/heads/main/episodes.json'
         ];
 
         // ============================================
@@ -195,7 +234,7 @@
         // ============================================
         let allEpisodes = [];
         let currentEpisode = null;
-        let isFirstEpisode = true; // true fino al primo play riuscito
+        let isFirstEpisode = true;
         let lastEpisodeIndices = [];
         const AVOID_REPEAT_COUNT = 5;
         let hideTimer = null;
@@ -206,8 +245,9 @@
         let loadCheckTimer = null;
         let consecutiveFailures = 0;
         const MAX_FAILS = 8;
-        const LOAD_TIMEOUT = 5000;       // 5s normale
-        const FIRST_LOAD_TIMEOUT = 10000; // 10s primo episodio
+        const LOAD_TIMEOUT = 5000;
+        const FIRST_LOAD_TIMEOUT = 10000;
+        let wasFullscreen = false;
 
         // ============================================
         // DOM
@@ -228,10 +268,104 @@
         const loadingText = $('loadingText');
         const btnRandom = $('btnRandom');
         const btnHistory = $('btnHistory');
+        const fsOverlayBtn = $('fsOverlayBtn');
         const showLogoEl = $('showLogo');
+        const triggerTop = $('triggerTop');
+        const triggerBottom = $('triggerBottom');
 
         // ============================================
-        // RANDOMIZATION (crypto, no bias, evita ripetizioni)
+        // FULLSCREEN — il nostro bottone è SEMPRE visibile
+        // ============================================
+        const fsSvgEnter = '<svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>';
+        const fsSvgExit = '<svg viewBox="0 0 24 24"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>';
+
+        function toggleFullscreen() {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                document.documentElement.requestFullscreen().catch(() => {});
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            const isFs = !!document.fullscreenElement;
+            wasFullscreen = isFs;
+            fsOverlayBtn.innerHTML = isFs ? fsSvgExit : fsSvgEnter;
+        });
+
+        function restoreFullscreen() {
+            if (wasFullscreen && !document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            }
+        }
+
+        fsOverlayBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFullscreen();
+        });
+
+        // ============================================
+        // OVERLAY + TRIGGER ZONES
+        // ============================================
+        // L'iframe cross-origin cattura tutti gli eventi mouse.
+        // Soluzione: div trasparenti (trigger zone) sopra l'iframe
+        // che intercettano mouseenter per mostrare l'overlay.
+        // Quando l'overlay è visibile, disabilitiamo le trigger zone
+        // (pointer-events: none) così il player è di nuovo utilizzabile.
+        // Quando l'overlay si nasconde, riabilitiamo le trigger zone.
+
+        function enableTriggers() {
+            triggerTop.style.pointerEvents = 'auto';
+            triggerBottom.style.pointerEvents = 'auto';
+        }
+
+        function disableTriggers() {
+            triggerTop.style.pointerEvents = 'none';
+            triggerBottom.style.pointerEvents = 'none';
+        }
+
+        function showOverlay() {
+            topBar.classList.remove('hidden');
+            bottomInfo.classList.remove('hidden');
+            // Il fs-overlay-btn è SEMPRE visibile, non lo nascondiamo mai
+            disableTriggers(); // Lascia passare i click al player
+            startHideTimer();
+        }
+
+        function hideOverlay() {
+            if (isPaused) return;
+            topBar.classList.add('hidden');
+            bottomInfo.classList.add('hidden');
+            // Il fs-overlay-btn resta SEMPRE visibile
+            enableTriggers(); // Riattiva le zone per il prossimo hover
+        }
+
+        function startHideTimer() {
+            clearTimeout(hideTimer);
+            if (!isPaused) hideTimer = setTimeout(hideOverlay, 3500);
+        }
+
+        // Trigger zone: mouseenter → mostra overlay
+        triggerTop.addEventListener('mouseenter', showOverlay);
+        triggerBottom.addEventListener('mouseenter', showOverlay);
+
+        // Se il mouse è sopra i nostri elementi overlay, mantienili visibili
+        topBar.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
+        bottomInfo.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
+
+        // Mouse che esce dai nostri elementi → riavvia il timer
+        topBar.addEventListener('mouseleave', startHideTimer);
+        bottomInfo.addEventListener('mouseleave', startHideTimer);
+
+        // Touch: ovunque sullo schermo → mostra overlay (mobile)
+        document.addEventListener('touchstart', showOverlay, { passive: true });
+
+        // Focus/blur finestra
+        window.addEventListener('focus', showOverlay);
+
+        // ============================================
+        // RANDOMIZATION
         // ============================================
         function secureRandomInt(max) {
             if (max <= 0) return 0;
@@ -300,7 +434,6 @@
             return eps;
         }
 
-        // Prova tutte le fonti in ordine finché una funziona
         async function fetchJson() {
             for (const url of DB_URLS) {
                 try {
@@ -323,7 +456,6 @@
         async function initializeApp() {
             loadingScreen.classList.remove('hidden');
 
-            // 1. Cache locale → istantaneo
             const cached = loadCache();
             if (cached) {
                 allEpisodes = cached.episodes;
@@ -334,7 +466,6 @@
                 return;
             }
 
-            // 2. episodes.json (prova tutte le fonti)
             loadingSubtitle.textContent = 'Caricamento database...';
             const jsonEps = await fetchJson();
             if (jsonEps && jsonEps.length > 0) {
@@ -346,7 +477,6 @@
                 return;
             }
 
-            // 3. Errore
             showError('Impossibile caricare gli episodi. Controlla la connessione.');
         }
 
@@ -403,7 +533,6 @@
             console.log(`[Gumball] S${ep.season}E${ep.episode} - "${ep.title}"`);
             setTimeout(() => { player.src = buildUrl(ep); }, 300);
 
-            // Timeout: 10s per il primo episodio, 5s per i successivi
             const timeout = isFirstEpisode ? FIRST_LOAD_TIMEOUT : LOAD_TIMEOUT;
             loadCheckTimer = setTimeout(() => {
                 console.warn(`[Gumball] S${ep.season}E${ep.episode} non disponibile`);
@@ -415,6 +544,9 @@
 
             saveToHistory(ep);
             showOverlay();
+
+            // Ripristina fullscreen se era attivo
+            setTimeout(restoreFullscreen, 500);
         }
 
         function playRandomEpisode() { const ep = getRandomEpisode(); if (ep) playEpisode(ep, false); }
@@ -440,22 +572,6 @@
         }
 
         // ============================================
-        // OVERLAY
-        // ============================================
-        function showOverlay() { topBar.classList.remove('hidden'); bottomInfo.classList.remove('hidden'); startHideTimer(); }
-        function hideOverlay() { if (isPaused) return; topBar.classList.add('hidden'); bottomInfo.classList.add('hidden'); }
-        function startHideTimer() { clearTimeout(hideTimer); if (!isPaused) hideTimer = setTimeout(hideOverlay, 3000); }
-
-        // ============================================
-        // EVENTI MOUSE / TOUCH / FOCUS
-        // ============================================
-        document.addEventListener('mousemove', showOverlay);
-        player.addEventListener('mouseenter', showOverlay);
-        window.addEventListener('blur', showOverlay);
-        window.addEventListener('focus', showOverlay);
-        document.addEventListener('touchstart', showOverlay, { passive: true });
-
-        // ============================================
         // PLAYER EVENTS (postMessage da vixsrc.to)
         // ============================================
         function extractEvent(d) {
@@ -476,7 +592,7 @@
             switch (pe.event) {
                 case 'play':
                     isPaused = false;
-                    isFirstEpisode = false; // Il primo episodio è partito, da ora 5s di timeout
+                    isFirstEpisode = false;
                     clearTimeout(loadCheckTimer);
                     consecutiveFailures = 0;
                     transitionOverlay.classList.remove('active');
