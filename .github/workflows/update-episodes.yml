@@ -1,0 +1,32 @@
+name: Aggiorna episodes.json
+
+on:
+  schedule:
+    # Ogni 3 giorni alle 04:00 UTC
+    - cron: '0 4 */3 * *'
+  workflow_dispatch: # Permette di lanciarla manualmente dal pulsante su GitHub
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Aggiorna episodes.json
+        run: node scripts/update-episodes.js
+
+      - name: Commit se ci sono cambiamenti
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet episodes.json || git commit -am "auto: aggiornato episodes.json"
+          git push
