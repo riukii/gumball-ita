@@ -1,1 +1,340 @@
-
+{
+  "version": 1,
+  "updated": "2026-05-18",
+  "shows": [
+    {
+      "tmdbId": 37606,
+      "showName": "Lo straordinario mondo di Gumball",
+      "logo": "Gumball.png",
+      "episodes": [
+        {
+          "season": 6,
+          "episode": 1,
+          "title": "Nuovi arrivi"
+        },
+        {
+          "season": 6,
+          "episode": 2,
+          "title": "Il travestimento"
+        },
+        {
+          "season": 6,
+          "episode": 3,
+          "title": "Il bullo sconfitto"
+        },
+        {
+          "season": 6,
+          "episode": 4,
+          "title": "Il giorno della pigrizia"
+        },
+        {
+          "season": 6,
+          "episode": 5,
+          "title": "Il numero uno"
+        },
+        {
+          "season": 6,
+          "episode": 6,
+          "title": "Un nonno complicato"
+        },
+        {
+          "season": 6,
+          "episode": 7,
+          "title": "L&#39;imbarazzo"
+        },
+        {
+          "season": 6,
+          "episode": 8,
+          "title": "La gabbia"
+        },
+        {
+          "season": 6,
+          "episode": 9,
+          "title": "Musica e colori"
+        },
+        {
+          "season": 6,
+          "episode": 10,
+          "title": "Il candidato"
+        },
+        {
+          "season": 6,
+          "episode": 11,
+          "title": "Lo scambio"
+        },
+        {
+          "season": 6,
+          "episode": 12,
+          "title": "La confessione"
+        },
+        {
+          "season": 6,
+          "episode": 13,
+          "title": "Il vicino misterioso"
+        },
+        {
+          "season": 6,
+          "episode": 14,
+          "title": "Love Story"
+        },
+        {
+          "season": 6,
+          "episode": 15,
+          "title": "Anais si è fatta male"
+        },
+        {
+          "season": 6,
+          "episode": 16,
+          "title": "I genitori"
+        },
+        {
+          "season": 6,
+          "episode": 17,
+          "title": "Il capo"
+        },
+        {
+          "season": 6,
+          "episode": 18,
+          "title": "La lezione"
+        },
+        {
+          "season": 6,
+          "episode": 19,
+          "title": "Ritorno al passato"
+        },
+        {
+          "season": 6,
+          "episode": 20,
+          "title": "La pozione"
+        },
+        {
+          "season": 6,
+          "episode": 21,
+          "title": "Assalto ai programmi"
+        },
+        {
+          "season": 6,
+          "episode": 22,
+          "title": "Fuori dal guscio"
+        },
+        {
+          "season": 6,
+          "episode": 23,
+          "title": "L&#39;inserimento"
+        },
+        {
+          "season": 6,
+          "episode": 24,
+          "title": "Gli ospiti"
+        },
+        {
+          "season": 6,
+          "episode": 25,
+          "title": "Halloween"
+        },
+        {
+          "season": 6,
+          "episode": 26,
+          "title": "Il cattivo odore"
+        },
+        {
+          "season": 6,
+          "episode": 27,
+          "title": "Il tema della settimana"
+        },
+        {
+          "season": 6,
+          "episode": 28,
+          "title": "Il fattorino"
+        },
+        {
+          "season": 6,
+          "episode": 29,
+          "title": "Il gossip"
+        },
+        {
+          "season": 6,
+          "episode": 30,
+          "title": "I computer infettati"
+        },
+        {
+          "season": 6,
+          "episode": 31,
+          "title": "Il frigo dei ricordi"
+        },
+        {
+          "season": 6,
+          "episode": 32,
+          "title": "Serata di famiglia"
+        },
+        {
+          "season": 6,
+          "episode": 33,
+          "title": "Senza parole"
+        },
+        {
+          "season": 6,
+          "episode": 34,
+          "title": "Il futuro"
+        },
+        {
+          "season": 6,
+          "episode": 35,
+          "title": "Un cuscino speciale"
+        },
+        {
+          "season": 6,
+          "episode": 36,
+          "title": "La fabbrica"
+        },
+        {
+          "season": 6,
+          "episode": 37,
+          "title": "L&#39;Agente segreto"
+        },
+        {
+          "season": 6,
+          "episode": 38,
+          "title": "Problemi col computer"
+        },
+        {
+          "season": 6,
+          "episode": 39,
+          "title": "Il Disastro"
+        },
+        {
+          "season": 6,
+          "episode": 40,
+          "title": "Il cuore"
+        },
+        {
+          "season": 6,
+          "episode": 41,
+          "title": "La rivolta"
+        },
+        {
+          "season": 6,
+          "episode": 42,
+          "title": "Imparare a scegliere"
+        },
+        {
+          "season": 6,
+          "episode": 43,
+          "title": "Amici del cuore"
+        },
+        {
+          "season": 6,
+          "episode": 44,
+          "title": "La scuola trasformata"
+        }
+      ]
+    },
+    {
+      "tmdbId": 291904,
+      "showName": "Lo strano e meraviglioso mondo di Gumball",
+      "logo": "Gumball2.png",
+      "episodes": [
+        {
+          "season": 2,
+          "episode": 1,
+          "title": "La convocazione"
+        },
+        {
+          "season": 2,
+          "episode": 2,
+          "title": "La fan"
+        },
+        {
+          "season": 2,
+          "episode": 3,
+          "title": "L&#39;invito"
+        },
+        {
+          "season": 2,
+          "episode": 4,
+          "title": "La tromba"
+        },
+        {
+          "season": 2,
+          "episode": 5,
+          "title": "La sintesi"
+        },
+        {
+          "season": 2,
+          "episode": 6,
+          "title": "Il cheapmas"
+        },
+        {
+          "season": 2,
+          "episode": 7,
+          "title": "Il punteggio"
+        },
+        {
+          "season": 2,
+          "episode": 8,
+          "title": "Il diario"
+        },
+        {
+          "season": 2,
+          "episode": 9,
+          "title": "La punizione"
+        },
+        {
+          "season": 2,
+          "episode": 10,
+          "title": "Le battute"
+        },
+        {
+          "season": 2,
+          "episode": 11,
+          "title": "I sopravvissuti"
+        },
+        {
+          "season": 2,
+          "episode": 12,
+          "title": "Le etichette"
+        },
+        {
+          "season": 2,
+          "episode": 13,
+          "title": "Gli sciocchi"
+        },
+        {
+          "season": 2,
+          "episode": 14,
+          "title": "I compiti"
+        },
+        {
+          "season": 2,
+          "episode": 15,
+          "title": "La sonda"
+        },
+        {
+          "season": 2,
+          "episode": 16,
+          "title": "Il signore"
+        },
+        {
+          "season": 2,
+          "episode": 17,
+          "title": "Il tracciamento"
+        },
+        {
+          "season": 2,
+          "episode": 18,
+          "title": "I pantaloni"
+        },
+        {
+          "season": 2,
+          "episode": 19,
+          "title": "Il Necropancer"
+        },
+        {
+          "season": 2,
+          "episode": 20,
+          "title": "Il copione"
+        }
+      ]
+    }
+  ]
+}
