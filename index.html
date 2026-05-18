@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="Gumball.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="Gumball.png">
     <title>Gumball</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -162,6 +167,13 @@
 
     <script>
         // ============================================
+        // PWA SERVICE WORKER
+        // ============================================
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(() => {});
+        }
+
+        // ============================================
         // CONFIGURAZIONE
         // ============================================
         const SHOWS_CONFIG = [
@@ -171,13 +183,19 @@
 
         const CREDITS_SKIP_SECONDS = 33;
         const DB_REFRESH_DAYS = 3;
-        const EPISODES_JSON_URL = 'episodes.json';
+
+        // Fonti per episodes.json (in ordine di priorità)
+        const DB_URLS = [
+            'episodes.json',  // Relativo — funziona su GitHub Pages
+            'https://raw.githubusercontent.com/riukii/gumball-ita/refs/heads/main/episodes.json' // Fallback GitHub raw
+        ];
 
         // ============================================
         // STATO
         // ============================================
         let allEpisodes = [];
         let currentEpisode = null;
+        let isFirstEpisode = true; // true fino al primo play riuscito
         let lastEpisodeIndices = [];
         const AVOID_REPEAT_COUNT = 5;
         let hideTimer = null;
@@ -188,7 +206,8 @@
         let loadCheckTimer = null;
         let consecutiveFailures = 0;
         const MAX_FAILS = 8;
-        const LOAD_TIMEOUT = 4000; // 4s
+        const LOAD_TIMEOUT = 5000;       // 5s normale
+        const FIRST_LOAD_TIMEOUT = 10000; // 10s primo episodio
 
         // ============================================
         // DOM
@@ -239,7 +258,7 @@
         // CACHE (localStorage)
         // ============================================
         const CACHE_KEY = 'gumball_db';
-        const CACHE_VER = 8;
+        const CACHE_VER = 9;
 
         function loadCache() {
             try {
@@ -264,7 +283,6 @@
         // ============================================
         // DATABASE LOADER
         // ============================================
-        // episodes.json → array piatto di episodi
         function flattenDb(db) {
             const eps = [];
             if (!db || !db.shows) return eps;
@@ -282,12 +300,21 @@
             return eps;
         }
 
+        // Prova tutte le fonti in ordine finché una funziona
         async function fetchJson() {
-            try {
-                const res = await fetch(EPISODES_JSON_URL, { cache: 'no-store' });
-                if (!res.ok) return null;
-                return flattenDb(await res.json());
-            } catch { return null; }
+            for (const url of DB_URLS) {
+                try {
+                    const res = await fetch(url, { cache: 'no-store' });
+                    if (!res.ok) continue;
+                    const data = await res.json();
+                    const eps = flattenDb(data);
+                    if (eps.length > 0) {
+                        console.log(`[Gumball] Caricato da: ${url}`);
+                        return eps;
+                    }
+                } catch { continue; }
+            }
+            return null;
         }
 
         // ============================================
@@ -307,7 +334,7 @@
                 return;
             }
 
-            // 2. episodes.json
+            // 2. episodes.json (prova tutte le fonti)
             loadingSubtitle.textContent = 'Caricamento database...';
             const jsonEps = await fetchJson();
             if (jsonEps && jsonEps.length > 0) {
@@ -320,7 +347,7 @@
             }
 
             // 3. Errore
-            showError('Impossibile caricare gli episodi. Apri il sito da GitHub Pages o aggiorna episodes.json.');
+            showError('Impossibile caricare gli episodi. Controlla la connessione.');
         }
 
         async function backgroundRefresh() {
@@ -376,14 +403,15 @@
             console.log(`[Gumball] S${ep.season}E${ep.episode} - "${ep.title}"`);
             setTimeout(() => { player.src = buildUrl(ep); }, 300);
 
-            // 4s senza play → skip
+            // Timeout: 10s per il primo episodio, 5s per i successivi
+            const timeout = isFirstEpisode ? FIRST_LOAD_TIMEOUT : LOAD_TIMEOUT;
             loadCheckTimer = setTimeout(() => {
                 console.warn(`[Gumball] S${ep.season}E${ep.episode} non disponibile`);
                 if (++consecutiveFailures >= MAX_FAILS) { showError('Troppi episodi non disponibili.'); return; }
                 loadingText.textContent = 'Episodio non disponibile, prossimo...';
                 transitionOverlay.classList.add('active');
                 setTimeout(() => playNextRandomEpisode(), 800);
-            }, LOAD_TIMEOUT);
+            }, timeout);
 
             saveToHistory(ep);
             showOverlay();
@@ -448,6 +476,7 @@
             switch (pe.event) {
                 case 'play':
                     isPaused = false;
+                    isFirstEpisode = false; // Il primo episodio è partito, da ora 5s di timeout
                     clearTimeout(loadCheckTimer);
                     consecutiveFailures = 0;
                     transitionOverlay.classList.remove('active');
