@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Gumball.png">
+    <title>Gumball</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0f;
+            color: #fff;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 400;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .loading-screen.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 56px;
+            height: 56px;
+            border: 3px solid rgba(79, 195, 247, 0.2);
+            border-top-color: #4fc3f7;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .loading-subtitle {
+            font-size: 14px;
+            color: #78909c;
+            text-align: center;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+
+        .loading-retry-btn {
+            margin-top: 8px;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #4fc3f7, #7c4dff);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .loading-retry-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== PLAYER ===== */
+        .player-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+        }
+
+        .player-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.6) 55%, transparent 100%);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .top-bar.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        .show-info {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .show-logo {
+            height: 56px;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+            border-radius: 14px;
+            flex-shrink: 0;
+        }
+
+        .show-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .show-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .episode-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #b0bec5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4fc3f7, #7c4dff);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(79, 195, 247, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.12);
+            color: #e0e0e0;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* ===== TOP CENTER: Episode Counter ===== */
+        .episode-counter {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 101;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(14px);
+            padding: 7px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #b0bec5;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .episode-counter.hidden {
+            opacity: 0;
+        }
+
+        .episode-counter .count-num {
+            color: #4fc3f7;
+            font-weight: 600;
+        }
+
+        /* ===== BOTTOM CENTER: Season / Episode ===== */
+        .bottom-info {
+            position: fixed;
+            bottom: 17px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 101;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(14px);
+            padding: 5px 14px;
+            border-radius: 16px;
+            font-size: 15px;
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .bottom-info.hidden {
+            opacity: 0;
+        }
+
+        .bottom-info .highlight {
+            color: #4fc3f7;
+            font-weight: 600;
+        }
+
+        /* ===== TRANSITION OVERLAY ===== */
+        .transition-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: #0a0a0f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .transition-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .transition-overlay .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(79, 195, 247, 0.2);
+            border-top-color: #4fc3f7;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-text {
+            font-size: 16px;
+            color: #9e9e9e;
+            font-weight: 500;
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 768px) {
+            .show-name {
+                font-size: 17px;
+            }
+
+            .episode-title {
+                font-size: 13px;
+            }
+
+            .show-logo {
+                height: 44px;
+                border-radius: 12px;
+            }
+
+            .top-bar {
+                padding: 14px 16px;
+            }
+
+            .show-info {
+                gap: 12px;
+            }
+
+            .btn {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+
+            .btn .btn-text {
+                display: none;
+            }
+
+            .bottom-info {
+                bottom: 14px;
+                font-size: 13px;
+            }
+
+            .episode-counter {
+                top: 14px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner" id="loadingSpinner"></div>
+        <div class="loading-title" id="loadingTitle">Caricamento dati...</div>
+        <div class="loading-subtitle" id="loadingSubtitle">Recupero stagioni ed episodi da TMDB</div>
+    </div>
+
+    <!-- Video Player -->
+    <div class="player-wrapper">
+        <iframe id="player" allowfullscreen allow="autoplay; encrypted-media" src="about:blank"></iframe>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar hidden" id="topBar">
+        <div class="show-info">
+            <img id="showLogo" src="Gumball.png" alt="Gumball" class="show-logo" onerror="this.style.display='none'">
+            <div class="show-details">
+                <div class="show-name" id="showName">-</div>
+                <div class="episode-title" id="episodeTitle">-</div>
+            </div>
+        </div>
+        <div class="controls">
+            <button class="btn btn-secondary" id="btnHistory" title="Episodio precedente">
+                <svg viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+            </button>
+            <button class="btn btn-primary" id="btnRandom" title="Episodio random">
+                <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+                <span class="btn-text">Random</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Center: Episode Counter -->
+    <div class="episode-counter hidden" id="episodeCounter">
+        Episodi visti: <span class="count-num" id="watchedCount">0</span>
+    </div>
+
+    <!-- Bottom Center: Season / Episode (sopra la progress bar del player) -->
+    <div class="bottom-info hidden" id="bottomInfo">
+        Stagione <span class="highlight" id="seasonNum">-</span> &middot; Episodio <span class="highlight" id="episodeNum">-</span>
+    </div>
+
+    <!-- Transition Overlay -->
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Caricamento episodio...</div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURAZIONE
+        // ============================================
+        const SHOWS_CONFIG = [
+            {
+                tmdbId: 37606,
+                searchQuery: 'The Amazing World of Gumball',
+                showName: 'Lo straordinario mondo di Gumball',
+                logo: 'Gumball.png'
+            },
+            {
+                tmdbId: 291904,
+                searchQuery: 'The Wonderfully Weird World of Gumball',
+                showName: 'Lo strano e meraviglioso mondo di Gumball',
+                logo: 'Gumball2.png'
+            }
+        ];
+
+        const CREDITS_SKIP_SECONDS = 33;
+        const CORS_PROXIES = [
+            url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+            url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
+        ];
+
+        // ============================================
+        // STATO
+        // ============================================
+        let allEpisodes = [];
+        let currentEpisode = null;
+        let watchedCount = 0;
+        let lastEpisodeIndex = -1;
+        let hideTimer = null;
+        let isPaused = false;
+        let hasTriggeredNext = false;
+        let playerDuration = 0;
+        let playerCurrentTime = 0;
+        let loadCheckTimer = null;
+        let consecutiveFailures = 0;
+        const MAX_CONSECUTIVE_FAILURES = 8;
+        const LOAD_CHECK_TIMEOUT = 7000; // 7s senza evento play → episodio non disponibile
+
+        // ============================================
+        // DOM
+        // ============================================
+        const loadingScreen = document.getElementById('loadingScreen');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const loadingTitle = document.getElementById('loadingTitle');
+        const loadingSubtitle = document.getElementById('loadingSubtitle');
+        const player = document.getElementById('player');
+        const topBar = document.getElementById('topBar');
+        const showNameEl = document.getElementById('showName');
+        const episodeTitleEl = document.getElementById('episodeTitle');
+        const episodeCounter = document.getElementById('episodeCounter');
+        const watchedCountEl = document.getElementById('watchedCount');
+        const bottomInfo = document.getElementById('bottomInfo');
+        const seasonNumEl = document.getElementById('seasonNum');
+        const episodeNumEl = document.getElementById('episodeNum');
+        const transitionOverlay = document.getElementById('transitionOverlay');
+        const loadingText = document.getElementById('loadingText');
+        const btnRandom = document.getElementById('btnRandom');
+        const btnHistory = document.getElementById('btnHistory');
+        const showLogoEl = document.querySelector('.show-logo');
+
+        // ============================================
+        // CORS PROXY FETCH
+        // ============================================
+
+        async function fetchWithProxy(url) {
+            for (const proxyFn of CORS_PROXIES) {
+                try {
+                    const proxyUrl = proxyFn(url);
+                    const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(15000) });
+                    if (!res.ok) continue;
+                    return await res.text();
+                } catch (e) {
+                    continue;
+                }
+            }
+            throw new Error('Tutti i proxy sono falliti');
+        }
+
+        // ============================================
+        // TMDB SCRAPING (primario - stesso ordinamento di vixsrc.to)
+        // ============================================
+        // TMDB non usa più __NEXT_DATA__. Le pagine stagione contengono:
+        //   <span class="episode_number">1</span>
+        //   <a data-episode-number="1" data-season-number="3">Cambio di voce</a>
+
+        function extractTmdbSeasonsFromHtml(html) {
+            const seasons = new Map();
+
+            // Metodo 1: link alle stagioni con data-season-number
+            const seasonLinkRegex = /href="[^"]*\/tv\/\d+[^\"]*\/season\/(\d+)[^"]*"[^>]*>.*?(\d+)\s*episod/gis;
+            const linkMatches = [...html.matchAll(seasonLinkRegex)];
+            for (const m of linkMatches) {
+                const sn = parseInt(m[1]);
+                const ec = parseInt(m[2]);
+                if (sn > 0 && ec > 0) seasons.set(sn, ec);
+            }
+
+            // Metodo 2: h2/h3 con "Stagione N" + conteggio
+            if (seasons.size === 0) {
+                const headerRegex = /Stagione\s+(\d+)[\s\S]*?(\d+)\s*episod/gi;
+                const headerMatches = [...html.matchAll(headerRegex)];
+                for (const m of headerMatches) {
+                    const sn = parseInt(m[1]);
+                    const ec = parseInt(m[2]);
+                    if (sn > 0 && ec > 0) seasons.set(sn, ec);
+                }
+            }
+
+            return seasons;
+        }
+
+        function extractTmdbEpisodesFromHtml(html) {
+            const episodes = [];
+
+            // Decodifica entità HTML (&#39; → ', &amp; → &, ecc.)
+            function decodeHtmlEntities(str) {
+                const txt = document.createElement('textarea');
+                txt.innerHTML = str;
+                return txt.value;
+            }
+
+            // Metodo principale: <a data-episode-number="N" data-season-number="S">Titolo</a>
+            const epLinkRegex = /data-episode-number="(\d+)"[^>]*data-season-number="(\d+)"[^>]*>([^<]+)<\/a>/g;
+            let match;
+            while ((match = epLinkRegex.exec(html)) !== null) {
+                const epNum = parseInt(match[1]);
+                const title = decodeHtmlEntities(match[3].trim());
+                // Ignora link generici come "Leggi di più" o titoli vuoti
+                if (epNum > 0 && title && title !== 'Leggi di più' && title.length > 1) {
+                    episodes.push({ number: epNum, title: title });
+                }
+            }
+
+            // Fallback: <span class="episode_number">N</span> seguito da h3 con titolo
+            if (episodes.length === 0) {
+                const spanRegex = /<span\s+class="episode_number">(\d+)<\/span>[\s\S]*?<h3[^>]*>([^<]+)<\/h3>/g;
+                while ((match = spanRegex.exec(html)) !== null) {
+                    const epNum = parseInt(match[1]);
+                    const title = decodeHtmlEntities(match[2].trim());
+                    if (epNum > 0) {
+                        episodes.push({ number: epNum, title: title || `Episodio ${epNum}` });
+                    }
+                }
+            }
+
+            // Rimuovi duplicati (stesso numero episodio)
+            const seen = new Set();
+            return episodes.filter(ep => {
+                if (seen.has(ep.number)) return false;
+                seen.add(ep.number);
+                return true;
+            });
+        }
+
+        async function fetchShowFromTmdb(config) {
+            const episodes = [];
+
+            // 1. Fetch la pagina delle stagioni (in italiano)
+            loadingSubtitle.textContent = `${config.showName} - Recupero stagioni...`;
+            const seasonsUrl = `https://www.themoviedb.org/tv/${config.tmdbId}?language=it-IT`;
+            let seasonsHtml;
+            try {
+                seasonsHtml = await fetchWithProxy(seasonsUrl);
+            } catch (e) {
+                // Se la pagina show fallisce, prova direttamente le stagioni
+                console.warn(`[Gumball] Pagina show fallita per ${config.showName}, provo stagioni dirette`);
+            }
+
+            let seasonsMap = new Map();
+            if (seasonsHtml) {
+                seasonsMap = extractTmdbSeasonsFromHtml(seasonsHtml);
+            }
+
+            // Se non abbiamo trovato stagioni, prova la pagina /seasons
+            if (seasonsMap.size === 0) {
+                try {
+                    const altUrl = `https://www.themoviedb.org/tv/${config.tmdbId}/seasons?language=it-IT`;
+                    const altHtml = await fetchWithProxy(altUrl);
+                    seasonsMap = extractTmdbSeasonsFromHtml(altHtml);
+                } catch (e) {}
+            }
+
+            console.log(`[Gumball] TMDB: ${config.showName} - trovate ${seasonsMap.size} stagioni`);
+
+            // Se ancora niente stagioni, prova 1-10 sequenzialmente
+            if (seasonsMap.size === 0) {
+                for (let s = 1; s <= 10; s++) {
+                    seasonsMap.set(s, 0); // 0 = conta sconosciuta
+                }
+            }
+
+            // 2. Fetch ogni stagione IN PARALLELO
+            const seasonEntries = [...seasonsMap.entries()].filter(([sn]) => sn > 0);
+            const seasonPromises = seasonEntries.map(async ([seasonNum, epCount]) => {
+                try {
+                    const seasonUrl = `https://www.themoviedb.org/tv/${config.tmdbId}/season/${seasonNum}?language=it-IT`;
+                    const seasonHtml = await fetchWithProxy(seasonUrl);
+                    const seasonEps = extractTmdbEpisodesFromHtml(seasonHtml);
+
+                    if (seasonEps.length > 0) {
+                        return seasonEps.map(ep => ({
+                            showId: config.tmdbId,
+                            showName: config.showName,
+                            logo: config.logo,
+                            season: seasonNum,
+                            episode: ep.number,
+                            title: ep.title
+                        }));
+                    } else if (epCount > 0) {
+                        // Fallback: usa conteggio dalla pagina stagioni
+                        return Array.from({ length: epCount }, (_, i) => ({
+                            showId: config.tmdbId,
+                            showName: config.showName,
+                            logo: config.logo,
+                            season: seasonNum,
+                            episode: i + 1,
+                            title: `Episodio ${i + 1}`
+                        }));
+                    }
+                    return [];
+                } catch (e) {
+                    console.warn(`[Gumball] Errore stagione ${seasonNum}:`, e);
+                    return [];
+                }
+            });
+
+            const results = await Promise.all(seasonPromises);
+            for (const eps of results) {
+                episodes.push(...eps);
+            }
+
+            if (episodes.length > 0) {
+                loadingSubtitle.textContent = `${config.showName} - ${episodes.length} episodi trovati`;
+            }
+
+            return episodes;
+        }
+
+        // ============================================
+        // TVMAZE API (fallback)
+        // ============================================
+
+        async function tvmazeSearch(query) {
+            const res = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`);
+            if (!res.ok) throw new Error(`TVMaze search error: ${res.status}`);
+            return res.json();
+        }
+
+        async function tvmazeEpisodes(showId) {
+            const res = await fetch(`https://api.tvmaze.com/shows/${showId}/episodes`);
+            if (!res.ok) throw new Error(`TVMaze episodes error: ${res.status}`);
+            return res.json();
+        }
+
+        async function fetchShowFromTvmaze(config) {
+            const episodes = [];
+            try {
+                const searchResults = await tvmazeSearch(config.searchQuery);
+                if (!searchResults || searchResults.length === 0) return episodes;
+
+                const show = searchResults[0].show;
+                const showName = show.name || config.showName;
+
+                loadingSubtitle.textContent = `${config.showName} - Scarico episodi...`;
+
+                const eps = await tvmazeEpisodes(show.id);
+                eps
+                    .filter(ep => ep.season > 0 && ep.number > 0)
+                    .forEach(ep => {
+                        episodes.push({
+                            showId: config.tmdbId,
+                            showName: config.showName,
+                            logo: config.logo,
+                            season: ep.season,
+                            episode: ep.number,
+                            title: ep.name || `Episodio ${ep.number}`
+                        });
+                    });
+
+                console.log(`[Gumball] TVMaze fallback: ${showName} - ${episodes.length} episodi`);
+            } catch (e) {
+                console.warn(`[Gumball] TVMaze fallito per "${config.searchQuery}":`, e.message);
+            }
+            return episodes;
+        }
+
+        // ============================================
+        // CACHE
+        // ============================================
+
+        const CACHE_VERSION = 5; // Incrementa quando cambia la struttura dati
+        function getCachedEpisodes() {
+            try {
+                const cached = localStorage.getItem('gumball_episodes_cache');
+                if (!cached) return null;
+                const parsed = JSON.parse(cached);
+                if (parsed.version !== CACHE_VERSION) return null; // Cache obsoleta
+                if (parsed.timestamp && Date.now() - parsed.timestamp < 7 * 24 * 60 * 60 * 1000) {
+                    return parsed.episodes;
+                }
+                return null;
+            } catch {
+                return null;
+            }
+        }
+
+        function setCachedEpisodes(episodes) {
+            try {
+                localStorage.setItem('gumball_episodes_cache', JSON.stringify({
+                    version: CACHE_VERSION,
+                    timestamp: Date.now(),
+                    episodes: episodes
+                }));
+            } catch (e) {}
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+
+        async function initializeApp() {
+            loadingScreen.classList.remove('hidden');
+            loadingTitle.textContent = 'Caricamento dati...';
+            loadingSubtitle.textContent = 'Recupero stagioni ed episodi da TMDB';
+
+            try {
+                // Controlla cache
+                const cached = getCachedEpisodes();
+                if (cached && cached.length > 0) {
+                    allEpisodes = cached;
+                    console.log(`[Gumball] Cache: ${allEpisodes.length} episodi`);
+                    loadingScreen.classList.add('hidden');
+                    playRandomEpisode();
+                    return;
+                }
+
+                // Primario: TMDB scraping (stesso DB di vixsrc.to → ordinamento corretto)
+                try {
+                    await loadFromTmdb();
+                } catch (e) {
+                    console.warn('[Gumball] TMDB scraping fallito:', e.message);
+                }
+
+                if (allEpisodes.length === 0) {
+                    // Fallback: TVMaze
+                    loadingTitle.textContent = 'Tentativo con TVMaze...';
+                    await loadFromTvmaze();
+                }
+
+                if (allEpisodes.length === 0) {
+                    throw new Error('Nessun episodio trovato');
+                }
+
+                setCachedEpisodes(allEpisodes);
+                loadingScreen.classList.add('hidden');
+                playRandomEpisode();
+
+            } catch (err) {
+                showError(`Impossibile caricare i dati: ${err.message}`);
+            }
+        }
+
+        async function loadFromTmdb() {
+            // Fetch entrambe le serie IN PARALLELO
+            const results = await Promise.all(
+                SHOWS_CONFIG.map(config =>
+                    fetchShowFromTmdb(config).catch(e => {
+                        console.warn(`[Gumball] TMDB fallito per ${config.showName}:`, e.message);
+                        return [];
+                    })
+                )
+            );
+            for (const eps of results) {
+                allEpisodes.push(...eps);
+            }
+        }
+
+        async function loadFromTvmaze() {
+            const results = await Promise.all(
+                SHOWS_CONFIG.map(config =>
+                    fetchShowFromTvmaze(config).catch(() => [])
+                )
+            );
+            for (const eps of results) {
+                allEpisodes.push(...eps);
+            }
+        }
+
+        function showError(message) {
+            loadingTitle.textContent = 'Errore';
+            loadingSubtitle.textContent = message;
+            loadingSpinner.style.display = 'none';
+
+            const existingBtn = loadingScreen.querySelector('.loading-retry-btn');
+            if (existingBtn) existingBtn.remove();
+
+            const retryBtn = document.createElement('button');
+            retryBtn.className = 'loading-retry-btn';
+            retryBtn.textContent = 'Riprova';
+            retryBtn.onclick = () => {
+                allEpisodes = [];
+                loadingSpinner.style.display = '';
+                retryBtn.remove();
+                initializeApp();
+            };
+            loadingScreen.appendChild(retryBtn);
+        }
+
+        // ============================================
+        // EPISODI
+        // ============================================
+
+        function getRandomEpisode() {
+            if (allEpisodes.length === 0) return null;
+            let idx;
+            do {
+                idx = Math.floor(Math.random() * allEpisodes.length);
+            } while (idx === lastEpisodeIndex && allEpisodes.length > 1);
+            lastEpisodeIndex = idx;
+            return allEpisodes[idx];
+        }
+
+        function buildUrl(ep) {
+            return `https://vixsrc.to/tv/${ep.showId}/${ep.season}/${ep.episode}?lang=it&startAt=22&primaryColor=46B4C9&secondaryColor=001117`;
+        }
+
+        function playEpisode(ep, isAutoNext = false) {
+            // Cancella eventuale timer di controllo precedente
+            clearTimeout(loadCheckTimer);
+
+            currentEpisode = ep;
+            hasTriggeredNext = false;
+            playerDuration = 0;
+            playerCurrentTime = 0;
+            isPaused = false;
+
+            loadingText.textContent = isAutoNext ? 'Prossimo episodio...' : 'Caricamento episodio...';
+            transitionOverlay.classList.add('active');
+
+            showNameEl.textContent = ep.showName;
+            episodeTitleEl.textContent = ep.title;
+            seasonNumEl.textContent = ep.season;
+            episodeNumEl.textContent = ep.episode;
+
+            // Cambia logo in base alla serie
+            showLogoEl.src = ep.logo;
+
+            const url = buildUrl(ep);
+            console.log(`[Gumball] Riproduzione: S${ep.season}E${ep.episode} - "${ep.title}"`);
+
+            setTimeout(() => {
+                player.src = url;
+            }, 300);
+
+            // Timer di controllo: se dopo 15s non riceviamo un evento "play",
+            // l'episodio probabilmente non esiste su vixsrc (errore 404)
+            loadCheckTimer = setTimeout(() => {
+                console.warn(`[Gumball] S${ep.season}E${ep.episode} - "${ep.title}" non disponibile su vixsrc (nessun evento play)`);
+                consecutiveFailures++;
+
+                if (consecutiveFailures >= MAX_CONSECUTIVE_FAILURES) {
+                    showError('Troppi episodi non disponibili. Riprova più tardi.');
+                    return;
+                }
+
+                // Mostra messaggio e passa al prossimo
+                loadingText.textContent = 'Episodio non disponibile, prossimo...';
+                transitionOverlay.classList.add('active');
+
+                setTimeout(() => {
+                    playNextRandomEpisode();
+                }, 1500);
+            }, LOAD_CHECK_TIMEOUT);
+
+            watchedCount++;
+            watchedCountEl.textContent = watchedCount;
+
+            saveToHistory(ep);
+            showOverlay();
+        }
+
+        function playRandomEpisode() {
+            const ep = getRandomEpisode();
+            if (ep) playEpisode(ep, false);
+        }
+
+        function playNextRandomEpisode() {
+            const ep = getRandomEpisode();
+            if (ep) playEpisode(ep, true);
+        }
+
+        // ============================================
+        // STORICO
+        // ============================================
+
+        function saveToHistory(ep) {
+            try {
+                const history = JSON.parse(localStorage.getItem('gumball_history') || '[]');
+                history.unshift({
+                    showId: ep.showId,
+                    showName: ep.showName,
+                    season: ep.season,
+                    episode: ep.episode,
+                    title: ep.title,
+                    timestamp: Date.now()
+                });
+                if (history.length > 50) history.pop();
+                localStorage.setItem('gumball_history', JSON.stringify(history));
+            } catch (e) {}
+        }
+
+        function goBackToPrevious() {
+            try {
+                const history = JSON.parse(localStorage.getItem('gumball_history') || '[]');
+                if (history.length >= 2) {
+                    playEpisode(history[1], false);
+                }
+            } catch (e) {}
+        }
+
+        // ============================================
+        // OVERLAY VISIBILITÀ
+        // ============================================
+        // L'iframe cross-origin blocca tutti gli eventi mouse al parent.
+        // Strategia:
+        //   1. Player events (pause → mostra, play → nascondi dopo 3s)
+        //   2. focus/blur sulla finestra (quando l'utente clicca nell'iframe)
+        //   3. mousemove/mouseenter sul documento/iframe (solo quando il mouse
+        //      è fuori dall'iframe o entra nell'area iframe)
+        //   4. Se in pausa → overlay SEMPRE visibile
+
+        function showOverlay() {
+            topBar.classList.remove('hidden');
+            episodeCounter.classList.remove('hidden');
+            bottomInfo.classList.remove('hidden');
+            startHideTimer();
+        }
+
+        function hideOverlay() {
+            if (isPaused) return;
+            topBar.classList.add('hidden');
+            episodeCounter.classList.add('hidden');
+            bottomInfo.classList.add('hidden');
+        }
+
+        function startHideTimer() {
+            clearTimeout(hideTimer);
+            if (!isPaused) {
+                hideTimer = setTimeout(hideOverlay, 3000);
+            }
+        }
+
+        // ============================================
+        // MOUSE / TOUCH / FOCUS
+        // ============================================
+
+        // Mouse move sul documento (fuori dall'iframe)
+        document.addEventListener('mousemove', () => {
+            showOverlay();
+        });
+
+        // Mouse entra nell'area iframe
+        player.addEventListener('mouseenter', () => {
+            showOverlay();
+        });
+
+        // Finestra perde focus → l'utente ha cliccato nell'iframe
+        // Mostra overlay brevemente (poi si nasconde se in play)
+        window.addEventListener('blur', () => {
+            showOverlay();
+        });
+
+        // Finestra riottiene focus → mostra overlay
+        window.addEventListener('focus', () => {
+            showOverlay();
+        });
+
+        // Touch
+        document.addEventListener('touchstart', () => {
+            showOverlay();
+        }, { passive: true });
+
+        // ============================================
+        // PLAYER EVENTS (postMessage da vixsrc.to)
+        // ============================================
+        // Due formati:
+        //   Diretto:  { type: "PLAYER_EVENT", data: { event: "play", currentTime, duration } }
+        //   Inoltrato: { type: "PLAYER_EVENT", event: { event: "play", currentTime, duration } }
+
+        function extractPlayerEvent(eventData) {
+            if (!eventData || eventData.type !== 'PLAYER_EVENT') return null;
+
+            if (eventData.data && eventData.data.event) {
+                return eventData.data;
+            }
+
+            if (eventData.event && eventData.event.event) {
+                return eventData.event;
+            }
+
+            return null;
+        }
+
+        window.addEventListener('message', (event) => {
+            const playerEvent = extractPlayerEvent(event.data);
+            if (!playerEvent) return;
+
+            const eventName = playerEvent.event;
+            const ct = parseFloat(playerEvent.currentTime) || 0;
+            const dur = parseFloat(playerEvent.duration) || 0;
+
+            if (ct > 0) playerCurrentTime = ct;
+            if (dur > 0) playerDuration = dur;
+
+            switch (eventName) {
+                case 'play':
+                    isPaused = false;
+                    // Episodio caricato correttamente → cancella timer e resetta contatore
+                    clearTimeout(loadCheckTimer);
+                    consecutiveFailures = 0;
+                    transitionOverlay.classList.remove('active');
+                    startHideTimer();
+                    break;
+
+                case 'pause':
+                    isPaused = true;
+                    clearTimeout(hideTimer);
+                    showOverlay();
+                    break;
+
+                case 'timeupdate':
+                    transitionOverlay.classList.remove('active');
+
+                    if (playerDuration > 0 && playerCurrentTime > 0 && !hasTriggeredNext) {
+                        const remaining = playerDuration - playerCurrentTime;
+                        if (remaining <= CREDITS_SKIP_SECONDS) {
+                            hasTriggeredNext = true;
+                            console.log(`[Gumball] Mancano ${remaining.toFixed(1)}s - skip al prossimo!`);
+                            playNextRandomEpisode();
+                        }
+                    }
+                    break;
+            }
+        });
+
+        // Fallback loading
+        player.addEventListener('load', () => {
+            setTimeout(() => {
+                transitionOverlay.classList.remove('active');
+            }, 2500);
+        });
+
+        // ============================================
+        // BUTTONS
+        // ============================================
+
+        btnRandom.addEventListener('click', () => {
+            playRandomEpisode();
+        });
+
+        btnHistory.addEventListener('click', () => {
+            goBackToPrevious();
+        });
+
+        // ============================================
+        // AVVIO
+        // ============================================
+        initializeApp();
+    </script>
+</body>
+</html>
