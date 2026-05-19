@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link rel="icon" type="image/png" href="Gumball.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0a0a0f">
@@ -12,6 +12,15 @@
     <title>Gumball</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --fs-width: 60px;           /* fullscreen button width (also 1× unit) */
+            --bottom-offset: 12px;      /* distance from bottom for bottom controls */
+            --right-offset: 12px;       /* distance from right for fullscreen btn */
+            --next-right: 180px;        /* next button right = 3× fs-width */
+            --bottom-info-bottom: 17px;
+            --safe-bottom: 0px;         /* will be overridden by JS for mobile browsers */
+        }
 
         body {
             background: #0a0a0f;
@@ -36,29 +45,40 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .loading-title { font-size: 20px; font-weight: 600; color: #e0e0e0; }
-        .loading-subtitle { font-size: 14px; color: #78909c; text-align: center; max-width: 320px; line-height: 1.6; }
+        .loading-title { font-size: clamp(16px, 2.5vw, 20px); font-weight: 600; color: #e0e0e0; }
+        .loading-subtitle { font-size: clamp(12px, 2vw, 14px); color: #78909c; text-align: center; max-width: 320px; line-height: 1.6; }
 
         .loading-retry-btn {
-            margin-top: 8px; padding: 10px 24px; border: none; border-radius: 10px;
+            margin-top: 8px; padding: clamp(8px, 1.5vw, 10px) clamp(16px, 3vw, 24px); border: none; border-radius: 10px;
             background: linear-gradient(135deg, #4fc3f7, #7c4dff);
-            color: #fff; font-size: 14px; font-weight: 600; cursor: pointer;
+            color: #fff; font-size: clamp(12px, 1.8vw, 14px); font-weight: 600; cursor: pointer;
             transition: transform 0.2s;
         }
         .loading-retry-btn:hover { transform: scale(1.05); }
 
         /* ===== PLAYER ===== */
-        .player-wrapper { position: relative; width: 100%; height: 100vh; background: #000; }
+        .player-wrapper {
+            position: relative; width: 100%;
+            height: 100vh; height: 100dvh;
+            background: #000;
+        }
         .player-wrapper iframe { width: 100%; height: 100%; border: none; }
+
+        /* ===== MOBILE BOTTOM SPACER (only for touch devices) ===== */
+        .mobile-bottom-spacer { display: none; height: 0; width: 100%; }
 
         /* ===== TRIGGER ZONES ===== */
         .trigger-zone { position: fixed; z-index: 85; pointer-events: auto; background: transparent; }
         .trigger-top { top: 0; left: 0; right: 0; height: 100px; }
-        .trigger-bottom { bottom: 0; left: 35%; right: 180px; height: 50px; }
+        .trigger-bottom { bottom: 0; left: 35%; right: var(--next-right); height: 50px; }
 
         /* ===== FULLSCREEN OVERLAY BUTTON ===== */
         .fs-overlay-btn {
-            position: fixed; bottom: 12px; right: 12px; width: 60px; height: 48px;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: calc(var(--fs-width) + var(--right-offset));
+            height: var(--fs-width);
             z-index: 95; cursor: pointer; background: transparent; border: none;
             border-radius: 6px; display: flex; align-items: center; justify-content: center;
         }
@@ -66,40 +86,44 @@
 
         /* ===== NEXT OVERLAY BUTTON ===== */
         .next-overlay-btn {
-            position: fixed; bottom: 12px; right: 180px;
+            position: fixed;
+            bottom: var(--bottom-offset);
+            right: var(--next-right);
             z-index: 95; cursor: pointer;
-            display: flex; align-items: center; gap: 8px;
-            padding: 10px 20px; border: none; border-radius: 10px;
+            display: flex; align-items: center; gap: clamp(4px, 1vw, 8px);
+            padding: clamp(7px, 1.2vw, 10px) clamp(10px, 2vw, 20px);
+            border: none; border-radius: clamp(6px, 1.2vw, 10px);
             background: linear-gradient(135deg, #4fc3f7, #7c4dff); color: #fff;
-            font-size: 14px; font-weight: 600;
+            font-size: clamp(12px, 1.8vw, 14px); font-weight: 600;
             transition: all 0.2s ease, opacity 0.4s ease; white-space: nowrap;
         }
         .next-overlay-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(79,195,247,0.3); }
         .next-overlay-btn:active { transform: scale(0.98); }
-        .next-overlay-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .next-overlay-btn svg { width: clamp(14px, 2vw, 18px); height: clamp(14px, 2vw, 18px); fill: currentColor; }
         .next-overlay-btn.hidden { opacity: 0; pointer-events: none; }
 
         /* ===== TOP BAR ===== */
         .top-bar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 18px 28px;
+            padding: clamp(10px, 2.5vw, 18px) clamp(12px, 3vw, 28px);
             background: linear-gradient(to bottom, rgba(0,0,0,0.92), rgba(0,0,0,0.6) 55%, transparent);
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
         .top-bar.hidden { opacity: 0; transform: translateY(-20px); pointer-events: none; }
 
-        .show-info { display: flex; align-items: center; gap: 18px; min-width: 0; flex: 1; }
-        .show-logo { height: 56px; width: auto; max-width: 120px; object-fit: contain; border-radius: 14px; flex-shrink: 0; }
-        .show-details { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-        .show-name { font-size: 22px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .episode-title { font-size: 16px; font-weight: 500; color: #b0bec5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .show-info { display: flex; align-items: center; gap: clamp(8px, 2vw, 18px); min-width: 0; flex: 1; }
+        .show-logo { height: clamp(32px, 7vw, 56px); width: auto; max-width: 120px; object-fit: contain; border-radius: clamp(8px, 1.5vw, 14px); flex-shrink: 0; }
+        .show-details { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .show-name { font-size: clamp(14px, 2.8vw, 22px); font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .episode-title { font-size: clamp(11px, 2vw, 16px); font-weight: 500; color: #b0bec5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: 16px; }
+        .controls { display: flex; align-items: center; gap: clamp(6px, 1vw, 10px); flex-shrink: 0; margin-left: clamp(8px, 2vw, 16px); }
         .btn {
-            display: flex; align-items: center; gap: 8px;
-            padding: 10px 20px; border: none; border-radius: 10px;
-            font-size: 14px; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; gap: clamp(4px, 1vw, 8px);
+            padding: clamp(6px, 1.2vw, 10px) clamp(8px, 2vw, 20px);
+            border: none; border-radius: clamp(6px, 1.2vw, 10px);
+            font-size: clamp(12px, 1.8vw, 14px); font-weight: 600; cursor: pointer;
             transition: all 0.2s ease; white-space: nowrap;
         }
         .btn-primary { background: linear-gradient(135deg, #4fc3f7, #7c4dff); color: #fff; }
@@ -107,14 +131,17 @@
         .btn-primary:active { transform: scale(0.98); }
         .btn-secondary { background: rgba(255,255,255,0.12); color: #e0e0e0; backdrop-filter: blur(10px); }
         .btn-secondary:hover { background: rgba(255,255,255,0.22); }
-        .btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .btn svg { width: clamp(14px, 2vw, 18px); height: clamp(14px, 2vw, 18px); fill: currentColor; }
 
         /* ===== BOTTOM CENTER ===== */
         .bottom-info {
-            position: fixed; bottom: 17px; left: 50%; transform: translateX(-50%); z-index: 101;
+            position: fixed;
+            bottom: var(--bottom-info-bottom);
+            left: 50%; transform: translateX(-50%); z-index: 101;
             background: rgba(0,0,0,0.6); backdrop-filter: blur(14px);
-            padding: 5px 14px; border-radius: 16px;
-            font-size: 17px; color: #e0e0e0;
+            padding: clamp(3px, 0.8vw, 5px) clamp(8px, 2vw, 14px);
+            border-radius: clamp(10px, 2vw, 16px);
+            font-size: clamp(12px, 2vw, 17px); color: #e0e0e0;
             border: 1px solid rgba(255,255,255,0.07);
             transition: opacity 0.4s ease; pointer-events: none; white-space: nowrap;
         }
@@ -254,21 +281,37 @@
         .ep-item.now-playing .ep-title-text { color: #4fc3f7; }
         .ep-info .ep-meta { font-size: 11px; color: #546e7a; }
 
-        /* ===== MOBILE ===== */
-        @media (max-width: 768px) {
-            .show-name { font-size: 17px; }
-            .episode-title { font-size: 13px; }
-            .show-logo { height: 44px; border-radius: 12px; }
-            .top-bar { padding: 14px 16px; }
-            .show-info { gap: 12px; }
-            .btn { padding: 8px 14px; font-size: 13px; }
+        /* ===== TOUCH DEVICES (hover: none) — smaller controls, bottom spacer, no btn-text ===== */
+        @media (hover: none) and (pointer: coarse) {
+            :root {
+                --fs-width: clamp(40px, 10vw, 50px);
+                --bottom-offset: calc(4px + var(--safe-bottom));
+                --right-offset: 4px;
+                --next-right: calc(var(--fs-width) * 3 + var(--right-offset) + 4px);
+                --bottom-info-bottom: calc(60px + var(--safe-bottom));
+            }
             .btn .btn-text { display: none; }
-            .bottom-info { bottom: 14px; font-size: 14px; }
-            .fs-overlay-btn { bottom: 8px; right: 8px; width: 50px; height: 42px; }
-            .next-overlay-btn { bottom: 8px; right: 150px; padding: 8px 14px; font-size: 13px; }
-            .trigger-bottom { right: 150px; }
             .next-overlay-btn .btn-text { display: none; }
             .settings-panel { width: 100vw; max-width: 100vw; }
+            .player-wrapper { height: calc(100dvh - var(--safe-bottom) - 46px); }
+            .mobile-bottom-spacer { display: block; height: calc(var(--safe-bottom) + 46px); }
+            .trigger-bottom { bottom: calc(var(--safe-bottom) + 40px); }
+        }
+
+        /* ===== VERY SMALL SCREENS (< 400px) ===== */
+        @media (max-width: 400px) {
+            .show-logo { height: 28px; }
+            .controls { gap: 4px; margin-left: 4px; }
+        }
+
+        /* ===== LARGE SCREENS (≥ 1400px) ===== */
+        @media (min-width: 1400px) {
+            :root {
+                --fs-width: 64px;
+                --bottom-offset: 16px;
+                --right-offset: 16px;
+                --next-right: 208px;
+            }
         }
     </style>
 </head>
@@ -283,6 +326,8 @@
     <div class="player-wrapper">
         <iframe id="player" allowfullscreen allow="autoplay; encrypted-media" src="about:blank"></iframe>
     </div>
+
+    <div class="mobile-bottom-spacer"></div>
 
     <div class="trigger-zone trigger-top" id="triggerTop"></div>
     <div class="trigger-zone trigger-bottom" id="triggerBottom"></div>
@@ -712,18 +757,40 @@
             if (!isPaused && !isLoading && !settingsPanel.classList.contains('open')) hideTimer = setTimeout(hideOverlay, 2000);
         }
 
+        // Rileva dispositivo touch con matchMedia — più affidabile di ontouchstart
+        const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+        // Rileva l'altezza della barra del browser / safe area in basso su mobile
+        function detectSafeBottom() {
+            const vh = window.innerHeight;
+            const dvh = window.visualViewport ? window.visualViewport.height : vh;
+            const diff = vh - dvh;
+            const safeBottom = Math.max(0, diff);
+            document.documentElement.style.setProperty('--safe-bottom', safeBottom + 'px');
+            console.log(`[Gumball] Safe bottom: ${safeBottom}px (vh=${vh}, dvh=${dvh})`);
+        }
+        detectSafeBottom();
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', detectSafeBottom);
+        }
+        window.addEventListener('resize', detectSafeBottom);
+
         triggerTop.addEventListener('mouseenter', showOverlay);
         triggerBottom.addEventListener('mouseenter', showOverlay);
         nextOverlayBtn.addEventListener('mouseenter', showOverlay);
         fsOverlayBtn.addEventListener('mouseenter', showOverlay);
-        topBar.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
-        bottomInfo.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
-        nextOverlayBtn.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
-        fsOverlayBtn.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
-        topBar.addEventListener('mouseleave', startHideTimer);
-        bottomInfo.addEventListener('mouseleave', startHideTimer);
-        nextOverlayBtn.addEventListener('mouseleave', startHideTimer);
-        fsOverlayBtn.addEventListener('mouseleave', startHideTimer);
+        // Su PC, hover su elementi UI ferma il timer; su mobile no (gestito da touchstart)
+        if (!isTouchDevice) {
+            topBar.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
+            bottomInfo.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
+            nextOverlayBtn.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
+            fsOverlayBtn.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
+            topBar.addEventListener('mouseleave', startHideTimer);
+            bottomInfo.addEventListener('mouseleave', startHideTimer);
+            nextOverlayBtn.addEventListener('mouseleave', startHideTimer);
+            fsOverlayBtn.addEventListener('mouseleave', startHideTimer);
+        }
+        // Mobile: touch mostra overlay, il timer di auto-hide parte sempre e non viene fermato
         document.addEventListener('touchstart', showOverlay, { passive: true });
         window.addEventListener('focus', showOverlay);
 
