@@ -51,35 +51,33 @@
         .player-wrapper { position: relative; width: 100%; height: 100vh; background: #000; }
         .player-wrapper iframe { width: 100%; height: 100%; border: none; }
 
-        /* ===== TRIGGER ZONES — intercettano il mouse sopra l'iframe ===== */
-        .trigger-zone {
-            position: fixed;
-            z-index: 85;
-            pointer-events: auto;
-            background: transparent;
-        }
-        .trigger-top {
-            top: 0; left: 0; right: 0;
-            height: 100px;
-        }
-        .trigger-bottom {
-            bottom: 0; left: 35%; right: 30%;
-            height: 50px;
-        }
+        /* ===== TRIGGER ZONES ===== */
+        .trigger-zone { position: fixed; z-index: 85; pointer-events: auto; background: transparent; }
+        .trigger-top { top: 0; left: 0; right: 0; height: 100px; }
+        .trigger-bottom { bottom: 0; left: 35%; right: 180px; height: 50px; }
 
-        /* ===== FULLSCREEN OVERLAY BUTTON — SEMPRE visibile ===== */
+        /* ===== FULLSCREEN OVERLAY BUTTON ===== */
         .fs-overlay-btn {
-            position: fixed;
-            bottom: 12px; right: 12px;
-            width: 48px; height: 48px;
-            z-index: 95;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
+            position: fixed; bottom: 12px; right: 12px; width: 60px; height: 48px;
+            z-index: 95; cursor: pointer; background: transparent; border: none;
+            border-radius: 6px; display: flex; align-items: center; justify-content: center;
         }
         .fs-overlay-btn svg { width: 0; height: 0; fill: transparent; pointer-events: none; }
+
+        /* ===== NEXT OVERLAY BUTTON ===== */
+        .next-overlay-btn {
+            position: fixed; bottom: 12px; right: 180px;
+            z-index: 95; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border: none; border-radius: 10px;
+            background: linear-gradient(135deg, #4fc3f7, #7c4dff); color: #fff;
+            font-size: 14px; font-weight: 600;
+            transition: all 0.2s ease, opacity 0.4s ease; white-space: nowrap;
+        }
+        .next-overlay-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(79,195,247,0.3); }
+        .next-overlay-btn:active { transform: scale(0.98); }
+        .next-overlay-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .next-overlay-btn.hidden { opacity: 0; pointer-events: none; }
 
         /* ===== TOP BAR ===== */
         .top-bar {
@@ -92,17 +90,12 @@
         .top-bar.hidden { opacity: 0; transform: translateY(-20px); pointer-events: none; }
 
         .show-info { display: flex; align-items: center; gap: 18px; min-width: 0; flex: 1; }
-
-        .show-logo {
-            height: 56px; width: auto; max-width: 120px;
-            object-fit: contain; border-radius: 14px; flex-shrink: 0;
-        }
+        .show-logo { height: 56px; width: auto; max-width: 120px; object-fit: contain; border-radius: 14px; flex-shrink: 0; }
         .show-details { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
         .show-name { font-size: 22px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .episode-title { font-size: 16px; font-weight: 500; color: #b0bec5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         .controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: 16px; }
-
         .btn {
             display: flex; align-items: center; gap: 8px;
             padding: 10px 20px; border: none; border-radius: 10px;
@@ -116,7 +109,7 @@
         .btn-secondary:hover { background: rgba(255,255,255,0.22); }
         .btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-        /* ===== BOTTOM CENTER: Stagione / Episodio ===== */
+        /* ===== BOTTOM CENTER ===== */
         .bottom-info {
             position: fixed; bottom: 17px; left: 50%; transform: translateX(-50%); z-index: 101;
             background: rgba(0,0,0,0.6); backdrop-filter: blur(14px);
@@ -142,6 +135,125 @@
         }
         .loading-text { font-size: 16px; color: #9e9e9e; font-weight: 500; }
 
+        /* ===== SETTINGS PANEL ===== */
+        .settings-panel {
+            position: fixed; top: 0; right: 0; z-index: 300;
+            width: 360px; max-width: 90vw; height: 100vh;
+            background: rgba(13, 17, 23, 0.97);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(79,195,247,0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            padding: 24px 20px;
+        }
+        .settings-panel.open { transform: translateX(0); }
+
+        .settings-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+        .settings-header h2 { font-size: 18px; font-weight: 700; color: #e0e0e0; }
+        .settings-close { background: none; border: none; color: #78909c; font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; }
+        .settings-close:hover { color: #fff; }
+
+        .settings-section { margin-bottom: 20px; }
+        .settings-section-title {
+            font-size: 13px; font-weight: 600; color: #4fc3f7;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 12px; padding-bottom: 6px;
+            border-bottom: 1px solid rgba(79,195,247,0.15);
+        }
+
+        .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .toggle-label { font-size: 14px; color: #e0e0e0; }
+        .toggle-label small { display: block; font-size: 11px; color: #78909c; margin-top: 2px; }
+
+        .toggle-switch {
+            position: relative; width: 44px; height: 24px;
+            background: rgba(255,255,255,0.12); border-radius: 12px;
+            cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+        }
+        .toggle-switch.active { background: rgba(79,195,247,0.5); }
+        .toggle-switch::after {
+            content: ''; position: absolute;
+            top: 3px; left: 3px; width: 18px; height: 18px;
+            background: #e0e0e0; border-radius: 50%;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .toggle-switch.active::after { transform: translateX(20px); background: #4fc3f7; }
+
+        .settings-backdrop {
+            position: fixed; inset: 0; z-index: 299;
+            background: rgba(0,0,0,0.5);
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .settings-backdrop.open { opacity: 1; pointer-events: all; }
+
+        /* ===== EPISODE LIST ===== */
+        .ep-list-show { margin-bottom: 16px; }
+        .ep-list-show-name {
+            font-size: 14px; font-weight: 700; color: #e0e0e0;
+            padding: 8px 0 4px; border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .ep-list-season-header {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 8px; cursor: pointer;
+            border-radius: 8px; transition: background 0.15s;
+            user-select: none;
+        }
+        .ep-list-season-header:hover { background: rgba(255,255,255,0.06); }
+        .ep-list-season-header .arrow {
+            display: inline-block; font-size: 10px; color: #4fc3f7;
+            transition: transform 0.2s; width: 16px; text-align: center;
+        }
+        .ep-list-season-header .arrow.open { transform: rotate(90deg); }
+        .ep-list-season-header .season-label { font-size: 13px; font-weight: 600; color: #b0bec5; }
+        .ep-list-season-header .season-count { font-size: 11px; color: #546e7a; margin-left: auto; }
+        .ep-list-season-header .season-toggle {
+            width: 32px; height: 18px; border-radius: 9px;
+            background: rgba(255,255,255,0.12); position: relative;
+            transition: background 0.2s; flex-shrink: 0; margin-left: 6px;
+        }
+        .ep-list-season-header .season-toggle.active { background: rgba(79,195,247,0.5); }
+        .ep-list-season-header .season-toggle::after {
+            content: ''; position: absolute;
+            top: 2px; left: 2px; width: 14px; height: 14px;
+            background: #b0bec5; border-radius: 50%;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .ep-list-season-header .season-toggle.active::after { transform: translateX(14px); background: #4fc3f7; }
+
+        .ep-list-season-eps {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .ep-list-season-eps.open { max-height: 5000px; }
+
+        .ep-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 8px 8px 32px;
+            border-radius: 8px; cursor: pointer;
+            transition: background 0.15s;
+        }
+        .ep-item:hover { background: rgba(79,195,247,0.1); }
+        .ep-item.now-playing { background: rgba(79,195,247,0.12); }
+
+        .ep-thumb {
+            width: 64px; height: 36px; border-radius: 4px;
+            background: rgba(255,255,255,0.06); flex-shrink: 0;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+        .ep-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .ep-thumb .ep-num-overlay {
+            font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.4);
+        }
+        .ep-info { min-width: 0; flex: 1; }
+        .ep-info .ep-title-text {
+            font-size: 13px; color: #cfd8dc; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis;
+        }
+        .ep-item.now-playing .ep-title-text { color: #4fc3f7; }
+        .ep-info .ep-meta { font-size: 11px; color: #546e7a; }
+
         /* ===== MOBILE ===== */
         @media (max-width: 768px) {
             .show-name { font-size: 17px; }
@@ -152,7 +264,11 @@
             .btn { padding: 8px 14px; font-size: 13px; }
             .btn .btn-text { display: none; }
             .bottom-info { bottom: 14px; font-size: 14px; }
-            .fs-overlay-btn { bottom: 8px; right: 8px; width: 42px; height: 42px; }
+            .fs-overlay-btn { bottom: 8px; right: 8px; width: 50px; height: 42px; }
+            .next-overlay-btn { bottom: 8px; right: 150px; padding: 8px 14px; font-size: 13px; }
+            .trigger-bottom { right: 150px; }
+            .next-overlay-btn .btn-text { display: none; }
+            .settings-panel { width: 100vw; max-width: 100vw; }
         }
     </style>
 </head>
@@ -168,14 +284,17 @@
         <iframe id="player" allowfullscreen allow="autoplay; encrypted-media" src="about:blank"></iframe>
     </div>
 
-    <!-- Zone trigger: intercettano il mouse SOPRA l'iframe -->
     <div class="trigger-zone trigger-top" id="triggerTop"></div>
     <div class="trigger-zone trigger-bottom" id="triggerBottom"></div>
 
-    <!-- Fullscreen button: SEMPRE visibile, blocca il native di vixsrc -->
     <div class="fs-overlay-btn" id="fsOverlayBtn">
         <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
     </div>
+
+    <button class="next-overlay-btn hidden" id="nextOverlayBtn" title="Prossimo episodio">
+        <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm2-8.14L11.03 12 8 14.14V9.86zM16 6h2v12h-2z"/></svg>
+        <span class="btn-text">Successivo</span>
+    </button>
 
     <div class="top-bar hidden" id="topBar">
         <div class="show-info">
@@ -189,9 +308,8 @@
             <button class="btn btn-secondary" id="btnHistory" title="Episodio precedente">
                 <svg viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
             </button>
-            <button class="btn btn-primary" id="btnRandom" title="Episodio random">
-                <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
-                <span class="btn-text">Random</span>
+            <button class="btn btn-secondary" id="btnSettings" title="Impostazioni">
+                <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>
             </button>
         </div>
     </div>
@@ -205,17 +323,28 @@
         <div class="loading-text" id="loadingText">Caricamento episodio...</div>
     </div>
 
+    <div class="settings-backdrop" id="settingsBackdrop"></div>
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2>Impostazioni</h2>
+            <button class="settings-close" id="settingsClose">&times;</button>
+        </div>
+        <div id="settingsContent"></div>
+    </div>
+
     <script>
         // ============================================
-        // PWA SERVICE WORKER
+        // PWA
         // ============================================
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js').catch(() => {});
         }
 
         // ============================================
-        // CONFIGURAZIONE
+        // CONFIGURAZIONE — TUTTO DINAMICO
         // ============================================
+        // Per aggiungere una serie basta aggiungerla qui.
+        // Stagioni, episodi, chip e lista si generano da soli dal episodes.json
         const SHOWS_CONFIG = [
             { tmdbId: 37606, showName: 'Lo straordinario mondo di Gumball', logo: 'Gumball.png' },
             { tmdbId: 291904, showName: 'Lo strano e meraviglioso mondo di Gumball', logo: 'Gumball2.png' }
@@ -248,6 +377,70 @@
         const LOAD_TIMEOUT = 5000;
         const FIRST_LOAD_TIMEOUT = 10000;
         let wasFullscreen = false;
+        let isLoading = false;
+
+        // ============================================
+        // SETTINGS (persistiti in localStorage)
+        // ============================================
+        const SETTINGS_KEY = 'gumball_settings';
+        let settings = {
+            selectedSeasons: {},   // { "37606_1": true, ... }  — dinamico
+            autoSkip: true,
+            playMode: 'random'     // 'random' | 'sequential'
+        };
+
+        function loadSettings() {
+            try {
+                const raw = localStorage.getItem(SETTINGS_KEY);
+                if (raw) {
+                    const saved = JSON.parse(raw);
+                    if (saved.selectedSeasons) settings.selectedSeasons = saved.selectedSeasons;
+                    if (typeof saved.autoSkip === 'boolean') settings.autoSkip = saved.autoSkip;
+                    if (saved.playMode === 'sequential' || saved.playMode === 'random') settings.playMode = saved.playMode;
+                }
+            } catch {}
+        }
+
+        function saveSettings() {
+            try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch {}
+        }
+
+        function initDefaultSeasons() {
+            // Dinamico: scorre allEpisodes e crea le chiavi per ogni show+season
+            for (const ep of allEpisodes) {
+                const key = `${ep.showId}_${ep.season}`;
+                if (settings.selectedSeasons[key] === undefined) {
+                    settings.selectedSeasons[key] = true;
+                }
+            }
+            saveSettings();
+        }
+
+        function getFilteredEpisodes() {
+            return allEpisodes.filter(ep => settings.selectedSeasons[`${ep.showId}_${ep.season}`] !== false);
+        }
+
+        // Trova il prossimo episodio in ordine sequenziale
+        function getNextSequentialEpisode() {
+            if (!currentEpisode) return getRandomEpisode();
+            const pool = getFilteredEpisodes();
+            if (pool.length === 0) return null;
+
+            // Trova l'indice dell'episodio corrente nel pool filtrato
+            const curIdx = pool.findIndex(ep =>
+                ep.showId === currentEpisode.showId &&
+                ep.season === currentEpisode.season &&
+                ep.episode === currentEpisode.episode
+            );
+
+            if (curIdx === -1 || curIdx >= pool.length - 1) {
+                // Riparti dall'inizio o episodio random se non trovato
+                return pool[0];
+            }
+            return pool[curIdx + 1];
+        }
+
+        loadSettings();
 
         // ============================================
         // DOM
@@ -266,25 +459,217 @@
         const episodeNumEl = $('episodeNum');
         const transitionOverlay = $('transitionOverlay');
         const loadingText = $('loadingText');
-        const btnRandom = $('btnRandom');
+        const nextOverlayBtn = $('nextOverlayBtn');
+        const btnNext = nextOverlayBtn; // Il tasto Successivo è ora in basso a destra
         const btnHistory = $('btnHistory');
+        const btnSettings = $('btnSettings');
         const fsOverlayBtn = $('fsOverlayBtn');
         const showLogoEl = $('showLogo');
         const triggerTop = $('triggerTop');
         const triggerBottom = $('triggerBottom');
+        const settingsPanel = $('settingsPanel');
+        const settingsBackdrop = $('settingsBackdrop');
+        const settingsClose = $('settingsClose');
+        const settingsContent = $('settingsContent');
 
         // ============================================
-        // FULLSCREEN — il nostro bottone è SEMPRE visibile
+        // SETTINGS PANEL UI — TUTTO DINAMICO
+        // ============================================
+        function openSettings() {
+            renderSettings();
+            settingsPanel.classList.add('open');
+            settingsBackdrop.classList.add('open');
+            clearTimeout(hideTimer);
+        }
+
+        function closeSettings() {
+            settingsPanel.classList.remove('open');
+            settingsBackdrop.classList.remove('open');
+        }
+
+        function renderSettings() {
+            let html = '';
+
+            const showIds = [...new Set(allEpisodes.map(e => e.showId))];
+
+            // --- Sezione riproduzione ---
+            html += `<div class="settings-section">`;
+            html += `<div class="settings-section-title">Riproduzione</div>`;
+
+            // Toggle: Random / Sequenziale
+            html += `<div class="toggle-row">`;
+            html += `<div class="toggle-label">Ordine sequenziale<small>Al posto di random, episodi in ordine</small></div>`;
+            html += `<div class="toggle-switch ${settings.playMode === 'sequential' ? 'active' : ''}" id="togglePlayMode"></div>`;
+            html += `</div>`;
+
+            // Toggle: Skip automatico
+            html += `<div class="toggle-row">`;
+            html += `<div class="toggle-label">Skip automatico<small>Salta intro e outro</small></div>`;
+            html += `<div class="toggle-switch ${settings.autoSkip ? 'active' : ''}" id="toggleAutoSkip"></div>`;
+            html += `</div></div>`;
+
+            // --- Lista episodi (dinamica) ---
+            html += `<div class="settings-section">`;
+            html += `<div class="settings-section-title" style="display:flex;align-items:center;justify-content:space-between;">Episodi <button id="btnEnableAll" style="background:rgba(79,195,247,0.15);border:1px solid rgba(79,195,247,0.25);color:#4fc3f7;font-size:11px;padding:3px 10px;border-radius:6px;cursor:pointer;font-weight:600;letter-spacing:0.3px;">Attiva/Disattiva tutte</button></div>`;
+            html += `<div id="episodeListContainer">`;
+
+            for (const showId of showIds) {
+                const cfg = SHOWS_CONFIG.find(s => s.tmdbId === showId) || { showName: `Serie ${showId}` };
+                const showEps = allEpisodes.filter(e => e.showId === showId);
+                const seasons = [...new Set(showEps.map(e => e.season))].sort((a, b) => a - b);
+
+                html += `<div class="ep-list-show">`;
+                html += `<div class="ep-list-show-name">${cfg.showName}</div>`;
+
+                for (const s of seasons) {
+                    const sEps = showEps.filter(e => e.season === s).sort((a, b) => a.episode - b.episode);
+                    const seasonKey = `season_${showId}_${s}`;
+
+                    const seasonFilterKey = `${showId}_${s}`;
+                    const seasonActive = settings.selectedSeasons[seasonFilterKey] !== false;
+
+                    html += `<div class="ep-list-season" data-season-key="${seasonKey}">`;
+                    html += `<div class="ep-list-season-header" data-target="${seasonKey}" data-filter-key="${seasonFilterKey}">`;
+                    html += `<span class="arrow">&#9654;</span>`;
+                    html += `<span class="season-label">Stagione ${s}</span>`;
+                    html += `<span class="season-count">${sEps.length} ep</span>`;
+                    html += `<span class="season-toggle ${seasonActive ? 'active' : ''}" data-filter-key="${seasonFilterKey}"></span>`;
+                    html += `</div>`;
+                    html += `<div class="ep-list-season-eps" id="${seasonKey}">`;
+
+                    for (const ep of sEps) {
+                        const isCurrent = currentEpisode &&
+                            currentEpisode.showId === ep.showId &&
+                            currentEpisode.season === ep.season &&
+                            currentEpisode.episode === ep.episode;
+
+                        html += `<div class="ep-item ${isCurrent ? 'now-playing' : ''}" 
+                            data-showid="${ep.showId}" data-season="${ep.season}" data-episode="${ep.episode}">`;
+                        html += `<div class="ep-thumb">`;
+                        if (ep.thumb) {
+                            html += `<img src="${ep.thumb}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display=''">`;
+                            html += `<span class="ep-num-overlay" style="display:none">${ep.episode}</span>`;
+                        } else {
+                            html += `<span class="ep-num-overlay">${ep.episode}</span>`;
+                        }
+                        html += `</div>`;
+                        html += `<div class="ep-info">`;
+                        html += `<div class="ep-title-text">${ep.title}</div>`;
+                        html += `<div class="ep-meta">S${ep.season}E${String(ep.episode).padStart(2,'0')}</div>`;
+                        html += `</div>`;
+                        html += `</div>`;
+                    }
+
+                    html += `</div></div>`;
+                }
+
+                html += `</div>`;
+            }
+
+            html += `</div></div>`;
+
+            settingsContent.innerHTML = html;
+
+            // Bind season filter toggles
+            settingsContent.querySelectorAll('.season-toggle').forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.stopPropagation(); // non chiudere/aprire l'accordion
+                    const key = toggle.dataset.filterKey;
+                    settings.selectedSeasons[key] = !settings.selectedSeasons[key];
+                    if (getFilteredEpisodes().length === 0) settings.selectedSeasons[key] = true;
+                    toggle.classList.toggle('active', settings.selectedSeasons[key]);
+                    saveSettings();
+                    lastEpisodeIndices = [];
+                });
+            });
+
+            // Bind play mode toggle
+            const toggleMode = settingsContent.querySelector('#togglePlayMode');
+            if (toggleMode) {
+                toggleMode.addEventListener('click', () => {
+                    settings.playMode = settings.playMode === 'random' ? 'sequential' : 'random';
+                    toggleMode.classList.toggle('active', settings.playMode === 'sequential');
+                    saveSettings();
+                });
+            }
+
+            // Bind auto-skip toggle
+            const toggleSkip = settingsContent.querySelector('#toggleAutoSkip');
+            if (toggleSkip) {
+                toggleSkip.addEventListener('click', () => {
+                    settings.autoSkip = !settings.autoSkip;
+                    toggleSkip.classList.toggle('active', settings.autoSkip);
+                    saveSettings();
+                });
+            }
+
+            // Bind season collapsible headers
+            settingsContent.querySelectorAll('.ep-list-season-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const target = header.dataset.target;
+                    const epsDiv = settingsContent.querySelector(`#${target}`);
+                    const arrow = header.querySelector('.arrow');
+                    if (epsDiv) {
+                        epsDiv.classList.toggle('open');
+                        arrow.classList.toggle('open');
+                    }
+                });
+            });
+
+            // Bind "enable/disable all seasons" button
+            const btnEnableAll = settingsContent.querySelector('#btnEnableAll');
+            if (btnEnableAll) {
+                btnEnableAll.addEventListener('click', () => {
+                    const allActive = Object.values(settings.selectedSeasons).every(v => v !== false);
+                    if (allActive) {
+                        // Disattiva tutte tranne la stagione dell'episodio corrente
+                        const seasonKeys = [...new Set(allEpisodes.map(ep => `${ep.showId}_${ep.season}`))];
+                        const keepKey = currentEpisode ? `${currentEpisode.showId}_${currentEpisode.season}` : seasonKeys[0];
+                        for (const key of seasonKeys) {
+                            settings.selectedSeasons[key] = (key === keepKey);
+                        }
+                    } else {
+                        // Attiva tutte
+                        for (const ep of allEpisodes) {
+                            const key = `${ep.showId}_${ep.season}`;
+                            settings.selectedSeasons[key] = true;
+                        }
+                    }
+                    saveSettings();
+                    lastEpisodeIndices = [];
+                    // Re-render to update toggle states
+                    renderSettings();
+                });
+            }
+
+            // Bind episode click → play
+            settingsContent.querySelectorAll('.ep-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const showId = parseInt(item.dataset.showid);
+                    const season = parseInt(item.dataset.season);
+                    const episode = parseInt(item.dataset.episode);
+                    const ep = allEpisodes.find(e => e.showId === showId && e.season === season && e.episode === episode);
+                    if (ep) {
+                        closeSettings();
+                        playEpisode(ep, false);
+                    }
+                });
+            });
+        }
+
+        btnSettings.addEventListener('click', openSettings);
+        settingsClose.addEventListener('click', closeSettings);
+        settingsBackdrop.addEventListener('click', closeSettings);
+
+        // ============================================
+        // FULLSCREEN
         // ============================================
         const fsSvgEnter = '<svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>';
         const fsSvgExit = '<svg viewBox="0 0 24 24"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>';
 
         function toggleFullscreen() {
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            } else {
-                document.documentElement.requestFullscreen().catch(() => {});
-            }
+            if (document.fullscreenElement) { document.exitFullscreen(); }
+            else { document.documentElement.requestFullscreen().catch(() => {}); }
         }
 
         document.addEventListener('fullscreenchange', () => {
@@ -300,68 +685,46 @@
         }
 
         fsOverlayBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleFullscreen();
+            e.preventDefault(); e.stopPropagation(); toggleFullscreen();
         });
 
         // ============================================
         // OVERLAY + TRIGGER ZONES
         // ============================================
-        // L'iframe cross-origin cattura tutti gli eventi mouse.
-        // Soluzione: div trasparenti (trigger zone) sopra l'iframe
-        // che intercettano mouseenter per mostrare l'overlay.
-        // Quando l'overlay è visibile, disabilitiamo le trigger zone
-        // (pointer-events: none) così il player è di nuovo utilizzabile.
-        // Quando l'overlay si nasconde, riabilitiamo le trigger zone.
-
-        function enableTriggers() {
-            triggerTop.style.pointerEvents = 'auto';
-            triggerBottom.style.pointerEvents = 'auto';
-        }
-
-        function disableTriggers() {
-            triggerTop.style.pointerEvents = 'none';
-            triggerBottom.style.pointerEvents = 'none';
-        }
+        function enableTriggers() { triggerTop.style.pointerEvents = 'auto'; triggerBottom.style.pointerEvents = 'auto'; }
+        function disableTriggers() { triggerTop.style.pointerEvents = 'none'; triggerBottom.style.pointerEvents = 'none'; }
 
         function showOverlay() {
             topBar.classList.remove('hidden');
             bottomInfo.classList.remove('hidden');
-            // Il fs-overlay-btn è SEMPRE visibile, non lo nascondiamo mai
-            disableTriggers(); // Lascia passare i click al player
-            startHideTimer();
+            nextOverlayBtn.classList.remove('hidden');
+            disableTriggers(); startHideTimer();
         }
 
         function hideOverlay() {
-            if (isPaused) return;
-            topBar.classList.add('hidden');
-            bottomInfo.classList.add('hidden');
-            // Il fs-overlay-btn resta SEMPRE visibile
-            enableTriggers(); // Riattiva le zone per il prossimo hover
+            if (isPaused || isLoading) return;
+            if (settingsPanel.classList.contains('open')) return;
+            topBar.classList.add('hidden'); bottomInfo.classList.add('hidden'); nextOverlayBtn.classList.add('hidden'); enableTriggers();
         }
 
         function startHideTimer() {
             clearTimeout(hideTimer);
-            if (!isPaused) hideTimer = setTimeout(hideOverlay, 3500);
+            if (!isPaused && !isLoading && !settingsPanel.classList.contains('open')) hideTimer = setTimeout(hideOverlay, 2000);
         }
 
-        // Trigger zone: mouseenter → mostra overlay
         triggerTop.addEventListener('mouseenter', showOverlay);
         triggerBottom.addEventListener('mouseenter', showOverlay);
-
-        // Se il mouse è sopra i nostri elementi overlay, mantienili visibili
+        nextOverlayBtn.addEventListener('mouseenter', showOverlay);
+        fsOverlayBtn.addEventListener('mouseenter', showOverlay);
         topBar.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
         bottomInfo.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
-
-        // Mouse che esce dai nostri elementi → riavvia il timer
+        nextOverlayBtn.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
+        fsOverlayBtn.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
         topBar.addEventListener('mouseleave', startHideTimer);
         bottomInfo.addEventListener('mouseleave', startHideTimer);
-
-        // Touch: ovunque sullo schermo → mostra overlay (mobile)
+        nextOverlayBtn.addEventListener('mouseleave', startHideTimer);
+        fsOverlayBtn.addEventListener('mouseleave', startHideTimer);
         document.addEventListener('touchstart', showOverlay, { passive: true });
-
-        // Focus/blur finestra
         window.addEventListener('focus', showOverlay);
 
         // ============================================
@@ -370,29 +733,29 @@
         function secureRandomInt(max) {
             if (max <= 0) return 0;
             const limit = Math.floor(0xFFFFFFFF / max) * max;
-            const arr = new Uint32Array(1);
-            let val;
+            const arr = new Uint32Array(1); let val;
             do { crypto.getRandomValues(arr); val = arr[0]; } while (val >= limit);
             return val % max;
         }
 
         function getRandomEpisode() {
-            if (allEpisodes.length === 0) return null;
-            if (allEpisodes.length === 1) return allEpisodes[0];
-            let idx, attempts = 0;
-            do { idx = secureRandomInt(allEpisodes.length); attempts++; }
-            while (lastEpisodeIndices.includes(idx) && attempts < 50);
+            const pool = getFilteredEpisodes();
+            if (pool.length === 0) return null;
+            if (pool.length === 1) return pool[0];
+            let ep, attempts = 0;
+            do { ep = pool[secureRandomInt(pool.length)]; attempts++; }
+            while (lastEpisodeIndices.some(i => allEpisodes[i] === ep) && attempts < 50);
+            const idx = allEpisodes.indexOf(ep);
             lastEpisodeIndices.push(idx);
-            if (lastEpisodeIndices.length > Math.min(AVOID_REPEAT_COUNT, allEpisodes.length - 1))
-                lastEpisodeIndices.shift();
-            return allEpisodes[idx];
+            if (lastEpisodeIndices.length > Math.min(AVOID_REPEAT_COUNT, allEpisodes.length - 1)) lastEpisodeIndices.shift();
+            return ep;
         }
 
         // ============================================
-        // CACHE (localStorage)
+        // CACHE
         // ============================================
         const CACHE_KEY = 'gumball_db';
-        const CACHE_VER = 9;
+        const CACHE_VER = 10;
 
         function loadCache() {
             try {
@@ -403,16 +766,8 @@
                 return { episodes: p.episodes, ts: p.ts || 0 };
             } catch { return null; }
         }
-
-        function saveCache(episodes) {
-            try {
-                localStorage.setItem(CACHE_KEY, JSON.stringify({ v: CACHE_VER, ts: Date.now(), episodes }));
-            } catch {}
-        }
-
-        function isStale(ts) {
-            return (Date.now() - ts) >= DB_REFRESH_DAYS * 24 * 60 * 60 * 1000;
-        }
+        function saveCache(episodes) { try { localStorage.setItem(CACHE_KEY, JSON.stringify({ v: CACHE_VER, ts: Date.now(), episodes })); } catch {} }
+        function isStale(ts) { return (Date.now() - ts) >= DB_REFRESH_DAYS * 24 * 60 * 60 * 1000; }
 
         // ============================================
         // DATABASE LOADER
@@ -424,10 +779,7 @@
                 const cfg = SHOWS_CONFIG.find(s => s.tmdbId === show.tmdbId) || { showName: show.showName, logo: show.logo };
                 if (show.episodes) {
                     for (const ep of show.episodes) {
-                        eps.push({
-                            showId: show.tmdbId, showName: cfg.showName, logo: cfg.logo,
-                            season: ep.season, episode: ep.episode, title: ep.title
-                        });
+                        eps.push({ showId: show.tmdbId, showName: cfg.showName, logo: cfg.logo, season: ep.season, episode: ep.episode, title: ep.title, thumb: ep.thumb || '' });
                     }
                 }
             }
@@ -441,10 +793,7 @@
                     if (!res.ok) continue;
                     const data = await res.json();
                     const eps = flattenDb(data);
-                    if (eps.length > 0) {
-                        console.log(`[Gumball] Caricato da: ${url}`);
-                        return eps;
-                    }
+                    if (eps.length > 0) { console.log(`[Gumball] Caricato da: ${url}`); return eps; }
                 } catch { continue; }
             }
             return null;
@@ -459,6 +808,7 @@
             const cached = loadCache();
             if (cached) {
                 allEpisodes = cached.episodes;
+                initDefaultSeasons();
                 console.log(`[Gumball] Cache: ${allEpisodes.length} episodi`);
                 loadingScreen.classList.add('hidden');
                 playRandomEpisode();
@@ -471,6 +821,7 @@
             if (jsonEps && jsonEps.length > 0) {
                 allEpisodes = jsonEps;
                 saveCache(allEpisodes);
+                initDefaultSeasons();
                 console.log(`[Gumball] JSON: ${allEpisodes.length} episodi`);
                 loadingScreen.classList.add('hidden');
                 playRandomEpisode();
@@ -487,6 +838,7 @@
             if (fresh.length !== allEpisodes.length) {
                 console.log(`[Gumball] Aggiornamento: ${allEpisodes.length} → ${fresh.length} episodi`);
                 allEpisodes = fresh;
+                initDefaultSeasons();
             }
             saveCache(allEpisodes);
         }
@@ -500,9 +852,7 @@
             const btn = document.createElement('button');
             btn.className = 'loading-retry-btn';
             btn.textContent = 'Riprova';
-            btn.onclick = () => {
-                allEpisodes = []; loadingSpinner.style.display = ''; btn.remove(); initializeApp();
-            };
+            btn.onclick = () => { allEpisodes = []; loadingSpinner.style.display = ''; btn.remove(); initializeApp(); };
             loadingScreen.appendChild(btn);
         }
 
@@ -510,19 +860,29 @@
         // EPISODI
         // ============================================
         function buildUrl(ep) {
-            return `https://vixsrc.to/tv/${ep.showId}/${ep.season}/${ep.episode}?lang=it&startAt=22&primaryColor=46B4C9&secondaryColor=001117`;
+            let url = `https://vixsrc.to/tv/${ep.showId}/${ep.season}/${ep.episode}?lang=it`;
+            if (settings.autoSkip) {
+                url += '&startAt=24';
+            }
+            url += '&primaryColor=46B4C9&secondaryColor=001117';
+            return url;
         }
+
+        // ===== Rilevamento 404 intelligente =====
+        // Usa iframe.onload per distinguere tra "pagina caricata ma niente player" (404)
+        // e "connessione lenta" (iframe non ha ancora caricato).
+        // Quando l'iframe carica (anche una pagina 404), parte un timer breve.
+        // Se entro quel timer non riceviamo un evento "play" dal player → 404.
+        let iframeLoaded = false;
+        const POST_LOAD_TIMEOUT = 8000; // dopo che l'iframe ha caricato, aspetta 8s per un evento play/timeupdate
 
         function playEpisode(ep, isAutoNext = false) {
             clearTimeout(loadCheckTimer);
             currentEpisode = ep;
             hasTriggeredNext = false;
-            playerDuration = 0;
-            playerCurrentTime = 0;
-            isPaused = false;
-
-            loadingText.textContent = isAutoNext ? 'Prossimo episodio...' : 'Caricamento episodio...';
-            transitionOverlay.classList.add('active');
+            iframeLoaded = false;
+            isLoading = true;
+            playerDuration = 0; playerCurrentTime = 0; isPaused = false;
 
             showNameEl.textContent = ep.showName;
             episodeTitleEl.textContent = ep.title;
@@ -530,27 +890,50 @@
             episodeNumEl.textContent = ep.episode;
             showLogoEl.src = ep.logo;
 
-            console.log(`[Gumball] S${ep.season}E${ep.episode} - "${ep.title}"`);
+            console.log(`[Gumball] S${ep.season}E${ep.episode} - "${ep.title}" [skip=${settings.autoSkip}, mode=${settings.playMode}]`);
             setTimeout(() => { player.src = buildUrl(ep); }, 300);
 
-            const timeout = isFirstEpisode ? FIRST_LOAD_TIMEOUT : LOAD_TIMEOUT;
+            // Timeout globale di sicurezza (45s) — se l'iframe non carica proprio
             loadCheckTimer = setTimeout(() => {
-                console.warn(`[Gumball] S${ep.season}E${ep.episode} non disponibile`);
-                if (++consecutiveFailures >= MAX_FAILS) { showError('Troppi episodi non disponibili.'); return; }
-                loadingText.textContent = 'Episodio non disponibile, prossimo...';
-                transitionOverlay.classList.add('active');
-                setTimeout(() => playNextRandomEpisode(), 800);
-            }, timeout);
+                console.warn(`[Gumball] S${ep.season}E${ep.episode} iframe non ha caricato entro 45s — skip`);
+                if (++consecutiveFailures >= MAX_FAILS) { showError('Troppi episodi non disponibili.'); isLoading = false; return; }
+                isLoading = false;
+                setTimeout(() => playRandomEpisode(), 400);
+            }, 45000);
 
             saveToHistory(ep);
+            // Mostra overlay e MANTIENI visibile (isLoading=true blocca hideOverlay)
             showOverlay();
-
-            // Ripristina fullscreen se era attivo
+            clearTimeout(hideTimer);
             setTimeout(restoreFullscreen, 500);
         }
 
+        // Quando l'iframe carica (anche pagina 404), inizia il timer post-load
+        player.addEventListener('load', () => {
+            if (!currentEpisode) return;
+            iframeLoaded = true;
+            clearTimeout(loadCheckTimer);
+
+            // Dopo che l'iframe ha caricato, aspettiamo un evento play/timeupdate
+            loadCheckTimer = setTimeout(() => {
+                console.warn(`[Gumball] S${currentEpisode.season}E${currentEpisode.episode} — nessun play dopo caricamento, probabile 404`);
+                if (++consecutiveFailures >= MAX_FAILS) { showError('Troppi episodi non disponibili.'); isLoading = false; return; }
+                isLoading = false;
+                setTimeout(() => playRandomEpisode(), 400);
+            }, POST_LOAD_TIMEOUT);
+        });
+
         function playRandomEpisode() { const ep = getRandomEpisode(); if (ep) playEpisode(ep, false); }
-        function playNextRandomEpisode() { const ep = getRandomEpisode(); if (ep) playEpisode(ep, true); }
+
+        function playNextEpisode() {
+            if (settings.playMode === 'sequential') {
+                const ep = getNextSequentialEpisode();
+                if (ep) playEpisode(ep, true);
+            } else {
+                const ep = getRandomEpisode();
+                if (ep) playEpisode(ep, true);
+            }
+        }
 
         // ============================================
         // STORICO
@@ -572,7 +955,7 @@
         }
 
         // ============================================
-        // PLAYER EVENTS (postMessage da vixsrc.to)
+        // PLAYER EVENTS
         // ============================================
         function extractEvent(d) {
             if (!d || d.type !== 'PLAYER_EVENT') return null;
@@ -591,38 +974,43 @@
 
             switch (pe.event) {
                 case 'play':
-                    isPaused = false;
-                    isFirstEpisode = false;
-                    clearTimeout(loadCheckTimer);
-                    consecutiveFailures = 0;
+                    isPaused = false; isFirstEpisode = false; isLoading = false;
+                    clearTimeout(loadCheckTimer); consecutiveFailures = 0;
                     transitionOverlay.classList.remove('active');
                     startHideTimer();
                     break;
                 case 'pause':
-                    isPaused = true;
-                    clearTimeout(hideTimer);
-                    showOverlay();
+                    isPaused = true; clearTimeout(hideTimer); showOverlay();
                     break;
                 case 'timeupdate':
+                    if (isLoading) { isLoading = false; clearTimeout(loadCheckTimer); consecutiveFailures = 0; }
                     transitionOverlay.classList.remove('active');
                     if (playerDuration > 0 && playerCurrentTime > 0 && !hasTriggeredNext) {
                         const rem = playerDuration - playerCurrentTime;
-                        if (rem <= CREDITS_SKIP_SECONDS) {
-                            hasTriggeredNext = true;
-                            console.log(`[Gumball] ${rem.toFixed(1)}s rimanenti — skip!`);
-                            playNextRandomEpisode();
+                        if (settings.autoSkip) {
+                            if (rem <= CREDITS_SKIP_SECONDS) {
+                                hasTriggeredNext = true;
+                                console.log(`[Gumball] ${rem.toFixed(1)}s rimanenti — skip!`);
+                                playNextEpisode();
+                            }
+                        } else {
+                            if (rem <= 2) {
+                                hasTriggeredNext = true;
+                                console.log(`[Gumball] Episodio finito — prossimo!`);
+                                playNextEpisode();
+                            }
                         }
                     }
                     break;
             }
         });
 
-        player.addEventListener('load', () => { setTimeout(() => transitionOverlay.classList.remove('active'), 2500); });
+
 
         // ============================================
         // BUTTONS
         // ============================================
-        btnRandom.addEventListener('click', playRandomEpisode);
+        btnNext.addEventListener('click', playNextEpisode);
         btnHistory.addEventListener('click', goBackToPrevious);
 
         // ============================================
