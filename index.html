@@ -714,11 +714,18 @@
             const isFs = !!document.fullscreenElement;
             wasFullscreen = isFs;
             fsOverlayBtn.innerHTML = isFs ? fsSvgExit : fsSvgEnter;
-            // In fullscreen: remove the 1px spacer (player = full height)
             if (isFs) {
                 document.documentElement.classList.add('is-fullscreen');
+                // Su mobile: forza landscape quando si entra in fullscreen
+                if (isTouchDevice && screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock('landscape').catch(() => {});
+                }
             } else {
                 document.documentElement.classList.remove('is-fullscreen');
+                // Su mobile: sblocca l'orientamento quando si esce dal fullscreen
+                if (isTouchDevice && screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
             }
             detectSafeBottom();
         });
@@ -750,14 +757,21 @@
         }
 
         function hideOverlay() {
-            if (isPaused || isLoading) return;
+            if (isLoading) return;
             if (settingsPanel.classList.contains('open')) return;
+            // Su mobile: nascondi sempre dopo il timeout (anche se in pausa)
+            // Su PC: mantieni l'overlay visibile se il video è in pausa
+            if (!isTouchDevice && isPaused) return;
             topBar.classList.add('hidden'); nextOverlayBtn.classList.add('hidden'); enableTriggers();
         }
 
         function startHideTimer() {
             clearTimeout(hideTimer);
-            if (!isPaused && !isLoading && !settingsPanel.classList.contains('open')) hideTimer = setTimeout(hideOverlay, 2500);
+            // Su mobile: il timer parte sempre; su PC: solo se non in pausa
+            if (settingsPanel.classList.contains('open')) return;
+            if (!isTouchDevice && (isPaused || isLoading)) return;
+            if (isLoading) return;
+            hideTimer = setTimeout(hideOverlay, 2500);
         }
 
         const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
