@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-05-18",
+  "updated": "2026-05-19",
   "shows": [
     {
       "tmdbId": 37606,
@@ -10,1202 +10,1442 @@
         {
           "season": 1,
           "episode": 1,
-          "title": "Il DVD"
+          "title": "Il DVD",
+          "thumb": "https://image.tmdb.org/t/p/w300/kAwb1pwQj28Rf5h3s4rlyiM1d5W.jpg"
         },
         {
           "season": 1,
           "episode": 2,
-          "title": "Tutta colpa... sua!"
+          "title": "Tutta colpa... sua!",
+          "thumb": "https://image.tmdb.org/t/p/w300/8Bb271ctUA8VBTIPlAqKm4fftUo.jpg"
         },
         {
           "season": 1,
           "episode": 3,
-          "title": "Il terzo amico del cuore"
+          "title": "Il terzo amico del cuore",
+          "thumb": "https://image.tmdb.org/t/p/w300/vJqYha8uEYkJubCOEPbKmT0JR9A.jpg"
         },
         {
           "season": 1,
           "episode": 4,
-          "title": "Il debito"
+          "title": "Il debito",
+          "thumb": "https://image.tmdb.org/t/p/w300/oySTprEmFPY3o86ZbHrE9maBLiD.jpg"
         },
         {
           "season": 1,
           "episode": 5,
-          "title": "La fine del mondo"
+          "title": "La fine del mondo",
+          "thumb": "https://image.tmdb.org/t/p/w300/1ZKdzlcbf2FYvII9jURGepcvNP7.jpg"
         },
         {
           "season": 1,
           "episode": 6,
-          "title": "Il vestito"
+          "title": "Il vestito",
+          "thumb": "https://image.tmdb.org/t/p/w300/q6k98cy6Ve65GVpfL3PyYKC9oqn.jpg"
         },
         {
           "season": 1,
           "episode": 7,
-          "title": "La bambola di Anais"
+          "title": "La bambola di Anais",
+          "thumb": "https://image.tmdb.org/t/p/w300/zBhsk0ztb7dvpgy6crtJ3ybiigq.jpg"
         },
         {
           "season": 1,
           "episode": 8,
-          "title": "Su le mani"
+          "title": "Su le mani",
+          "thumb": "https://image.tmdb.org/t/p/w300/wr3LQ3mMEFHQiFtZWq4o1VKwQoO.jpg"
         },
         {
           "season": 1,
           "episode": 9,
-          "title": "Gli amici prima delle ragazze"
+          "title": "Gli amici prima delle ragazze",
+          "thumb": "https://image.tmdb.org/t/p/w300/6KE1UhZqYwbm3QmU1WC7gzdz9Fv.jpg"
         },
         {
           "season": 1,
           "episode": 10,
-          "title": "Il disegno"
+          "title": "Il disegno",
+          "thumb": "https://image.tmdb.org/t/p/w300/wEW68R1Yt2cJiZDzAdT64VCz2xR.jpg"
         },
         {
           "season": 1,
           "episode": 11,
-          "title": "Il più pigro"
+          "title": "Il più pigro",
+          "thumb": "https://image.tmdb.org/t/p/w300/i09CGpnjROMAdSyJ0U9joCTuU3T.jpg"
         },
         {
           "season": 1,
           "episode": 12,
-          "title": "Il fantasma"
+          "title": "Il fantasma",
+          "thumb": "https://image.tmdb.org/t/p/w300/70Pyti3PXiHx3knbOIVPgfBGPCT.jpg"
         },
         {
           "season": 1,
           "episode": 13,
-          "title": "Il mistero"
+          "title": "Il mistero",
+          "thumb": "https://image.tmdb.org/t/p/w300/ejCerRPBSod8LtgxgnXbzSvWtkC.jpg"
         },
         {
           "season": 1,
           "episode": 14,
-          "title": "Lo scherzo"
+          "title": "Lo scherzo",
+          "thumb": "https://image.tmdb.org/t/p/w300/oz2MEdUcxr3Wk4FsLk9M49usmXs.jpg"
         },
         {
           "season": 1,
           "episode": 15,
-          "title": "I torsoli del karate"
+          "title": "I torsoli del karate",
+          "thumb": "https://image.tmdb.org/t/p/w300/XO329thnL6nQNItHhoM8dwTWOT.jpg"
         },
         {
           "season": 1,
           "episode": 16,
-          "title": "Un posto felice"
+          "title": "Un posto felice",
+          "thumb": "https://image.tmdb.org/t/p/w300/eqVm9F1YOT1aAQ8e6F0QuLiRCTb.jpg"
         },
         {
           "season": 1,
           "episode": 17,
-          "title": "La festa"
+          "title": "La festa",
+          "thumb": "https://image.tmdb.org/t/p/w300/wT5h8Teh16itWyB0G7cBtiFaqMn.jpg"
         },
         {
           "season": 1,
           "episode": 18,
-          "title": "Il rimborso"
+          "title": "Il rimborso",
+          "thumb": "https://image.tmdb.org/t/p/w300/vGAiXeeSZg3ymC31RMAOmxH2KhL.jpg"
         },
         {
           "season": 1,
           "episode": 19,
-          "title": "Il robot"
+          "title": "Il robot",
+          "thumb": "https://image.tmdb.org/t/p/w300/lxmOtADjaJqydNFHb9ZtoAt6pyE.jpg"
         },
         {
           "season": 1,
           "episode": 20,
-          "title": "Il picnic"
+          "title": "Il picnic",
+          "thumb": "https://image.tmdb.org/t/p/w300/42ZpV6YiYfDKSNcZoUyNd4MfB6Z.jpg"
         },
         {
           "season": 1,
           "episode": 21,
-          "title": "Scemo per un giorno"
+          "title": "Scemo per un giorno",
+          "thumb": "https://image.tmdb.org/t/p/w300/ahqT2Vg7XiM0btCfaUBbGM0Lu20.jpg"
         },
         {
           "season": 1,
           "episode": 22,
-          "title": "Giù per il tubo"
+          "title": "Giù per il tubo",
+          "thumb": "https://image.tmdb.org/t/p/w300/rqMSN910HOShtPUtfHUKyPMMH6q.jpg"
         },
         {
           "season": 1,
           "episode": 23,
-          "title": "Il calzino"
+          "title": "Il calzino",
+          "thumb": "https://image.tmdb.org/t/p/w300/B8Sw1oV1ecQj1uvulJc6hV9lpS.jpg"
         },
         {
           "season": 1,
           "episode": 24,
-          "title": "Il genio"
+          "title": "Il genio",
+          "thumb": "https://image.tmdb.org/t/p/w300/jcEOyV6jzA2NFiLOhIcx8HqlzJM.jpg"
         },
         {
           "season": 1,
           "episode": 25,
-          "title": "Il fantasma"
+          "title": "Il fantasma",
+          "thumb": "https://image.tmdb.org/t/p/w300/6LaZsDICCbvRdJGMWfjAh4GD7Xh.jpg"
         },
         {
           "season": 1,
           "episode": 26,
-          "title": "Da grandi"
+          "title": "Da grandi",
+          "thumb": "https://image.tmdb.org/t/p/w300/bPYEVojv8LxHWccta8EYjBKkOs2.jpg"
         },
         {
           "season": 1,
           "episode": 27,
-          "title": "Il primo appuntamento"
+          "title": "Il primo appuntamento",
+          "thumb": "https://image.tmdb.org/t/p/w300/qQ9wapSlC1jstdmqWXjhNWT6n74.jpg"
         },
         {
           "season": 1,
           "episode": 28,
-          "title": "Il club"
+          "title": "Il club",
+          "thumb": "https://image.tmdb.org/t/p/w300/axshzYctNZ5TiIkTnacDTgAdenD.jpg"
         },
         {
           "season": 1,
           "episode": 29,
-          "title": "La bacchetta magica"
+          "title": "La bacchetta magica",
+          "thumb": "https://image.tmdb.org/t/p/w300/as6LLvpf9sQz7cgbFMyurS0JyNF.jpg"
         },
         {
           "season": 1,
           "episode": 30,
-          "title": "Miss simpatia"
+          "title": "Miss simpatia",
+          "thumb": "https://image.tmdb.org/t/p/w300/gMy317Ib1uQfKNlb2IPwhWvnvBQ.jpg"
         },
         {
           "season": 1,
           "episode": 31,
-          "title": "La macchina nuova"
+          "title": "La macchina nuova",
+          "thumb": "https://image.tmdb.org/t/p/w300/xxCer78OmpMmH0KenZmireQR5QV.jpg"
         },
         {
           "season": 1,
           "episode": 32,
-          "title": "Che sfortuna!"
+          "title": "Che sfortuna!",
+          "thumb": "https://image.tmdb.org/t/p/w300/eFqrNqzC25oiLocPfaCq6YrXiFt.jpg"
         },
         {
           "season": 1,
           "episode": 33,
-          "title": "Il mostro mangia-tutto"
+          "title": "Il mostro mangia-tutto",
+          "thumb": "https://image.tmdb.org/t/p/w300/zSm9LuiuqgD7DxNjELXE1LGqoQV.jpg"
         },
         {
           "season": 1,
           "episode": 34,
-          "title": "Una mamma ficcanaso"
+          "title": "Una mamma ficcanaso",
+          "thumb": "https://image.tmdb.org/t/p/w300/2WS349bLDduoARqiZOL5zky999Y.jpg"
         },
         {
           "season": 1,
           "episode": 35,
-          "title": "L'elmetto"
+          "title": "L'elmetto",
+          "thumb": "https://image.tmdb.org/t/p/w300/gQ46UYc9u2RlmWxq3wFePScZygR.jpg"
         },
         {
           "season": 1,
           "episode": 36,
-          "title": "Il duello"
+          "title": "Il duello",
+          "thumb": "https://image.tmdb.org/t/p/w300/e1IF3bb6ICBHb7rA2UNwxHEdDkd.jpg"
         },
         {
           "season": 2,
           "episode": 1,
-          "title": "Il telecomando"
+          "title": "Il telecomando",
+          "thumb": "https://image.tmdb.org/t/p/w300/ilaFlfgz9j91sG8ASemPwV07V1k.jpg"
         },
         {
           "season": 2,
           "episode": 2,
-          "title": "Il gigante"
+          "title": "Il gigante",
+          "thumb": "https://image.tmdb.org/t/p/w300/6XlycTOvoadmmknYlJc2qomaHgP.jpg"
         },
         {
           "season": 2,
           "episode": 3,
-          "title": "I cavalieri"
+          "title": "I cavalieri",
+          "thumb": "https://image.tmdb.org/t/p/w300/zCETLeiH8lcEcvGiw5izdkQqik9.jpg"
         },
         {
           "season": 2,
           "episode": 4,
-          "title": "La tabella"
+          "title": "La tabella",
+          "thumb": "https://image.tmdb.org/t/p/w300/jnAQIQTCZEWOsVO77NLePE5Js4p.jpg"
         },
         {
           "season": 2,
           "episode": 5,
-          "title": "Il fiore"
+          "title": "Il fiore",
+          "thumb": "https://image.tmdb.org/t/p/w300/674D7kqHmm1bBknFrKbEo2eEHP6.jpg"
         },
         {
           "season": 2,
           "episode": 6,
-          "title": "La penna"
+          "title": "La penna",
+          "thumb": "https://image.tmdb.org/t/p/w300/gi3uLhjNZLdqiETMf5xj5IIhPpw.jpg"
         },
         {
           "season": 2,
           "episode": 7,
-          "title": "Il telefono"
+          "title": "Il telefono",
+          "thumb": "https://image.tmdb.org/t/p/w300/21i9weEedLgSTtJrQxuWTenFrMi.jpg"
         },
         {
           "season": 2,
           "episode": 8,
-          "title": "Speedy pizza"
+          "title": "Speedy pizza",
+          "thumb": "https://image.tmdb.org/t/p/w300/lHOkeAnzVaQRviGAp8DuODG5wJZ.jpg"
         },
         {
           "season": 2,
           "episode": 9,
-          "title": "La festa di Halloween"
+          "title": "La festa di Halloween",
+          "thumb": "https://image.tmdb.org/t/p/w300/4ob8VwI5CviPNoEyVZjzmFLcYMB.jpg"
         },
         {
           "season": 2,
           "episode": 10,
-          "title": "Il tesoro nascosto"
+          "title": "Il tesoro nascosto",
+          "thumb": "https://image.tmdb.org/t/p/w300/ckHvyvwqmoKFqH0hH3UDvm2nCx3.jpg"
         },
         {
           "season": 2,
           "episode": 11,
-          "title": "Le scuse"
+          "title": "Le scuse",
+          "thumb": "https://image.tmdb.org/t/p/w300/tFZ4HNqbDHFNHo0sQ5p248cNKM8.jpg"
         },
         {
           "season": 2,
           "episode": 12,
-          "title": "Le parole fanno male"
+          "title": "Le parole fanno male",
+          "thumb": "https://image.tmdb.org/t/p/w300/z3muafENgjAUhMs1NsW4QISBufQ.jpg"
         },
         {
           "season": 2,
           "episode": 13,
-          "title": "Il teschio e le bugie"
+          "title": "Il teschio e le bugie",
+          "thumb": "https://image.tmdb.org/t/p/w300/5qVjHYL3bW5IkBsowczNCrCsD6c.jpg"
         },
         {
           "season": 2,
           "episode": 14,
-          "title": "Il robot-schiavo"
+          "title": "Il robot-schiavo",
+          "thumb": "https://image.tmdb.org/t/p/w300/8eCots0Uxuj0pjAjd4kzrl1bZNt.jpg"
         },
         {
           "season": 2,
           "episode": 15,
-          "title": "Salviamo il Natale"
+          "title": "Salviamo il Natale",
+          "thumb": "https://image.tmdb.org/t/p/w300/jDM7U3JKh5CaVe0yoi4ExA5feYi.jpg"
         },
         {
           "season": 2,
           "episode": 16,
-          "title": "Sfida all'ultimo... orologio"
+          "title": "Sfida all'ultimo... orologio",
+          "thumb": "https://image.tmdb.org/t/p/w300/cPMx6GjLvFtoGFz5Vl5Fh498ee8.jpg"
         },
         {
           "season": 2,
           "episode": 17,
-          "title": "Spirito di patata"
+          "title": "Spirito di patata",
+          "thumb": "https://image.tmdb.org/t/p/w300/hCN3e0C8Sixw0PCQuekVfQoik7p.jpg"
         },
         {
           "season": 2,
           "episode": 18,
-          "title": "Scherzi dell'anestesia"
+          "title": "Scherzi dell'anestesia",
+          "thumb": "https://image.tmdb.org/t/p/w300/iXvGvcwhekOS40xypX5R38qom6b.jpg"
         },
         {
           "season": 2,
           "episode": 19,
-          "title": "Una buona madre"
+          "title": "Una buona madre",
+          "thumb": "https://image.tmdb.org/t/p/w300/y2aQeeI2bFHKOa2Xv0okjZNLXNO.jpg"
         },
         {
           "season": 2,
           "episode": 20,
-          "title": "Il virus"
+          "title": "Il virus",
+          "thumb": "https://image.tmdb.org/t/p/w300/zqBRZ0w6dxiVa5ZaIcZ8Jy7IUWY.jpg"
         },
         {
           "season": 2,
           "episode": 21,
-          "title": "Il pony"
+          "title": "Il pony",
+          "thumb": "https://image.tmdb.org/t/p/w300/jh5WWZBDbYYnk7fqX2LfdyCJvHB.jpg"
         },
         {
           "season": 2,
           "episode": 22,
-          "title": "L'eroe"
+          "title": "L'eroe",
+          "thumb": "https://image.tmdb.org/t/p/w300/dYziSuNu8PjAH2vEa33pJIxSSFM.jpg"
         },
         {
           "season": 2,
           "episode": 23,
-          "title": "Il sogno"
+          "title": "Il sogno",
+          "thumb": "https://image.tmdb.org/t/p/w300/yxZLTGacwbCZzvAtXcKniHcoCPO.jpg"
         },
         {
           "season": 2,
           "episode": 24,
-          "title": "La spalla"
+          "title": "La spalla",
+          "thumb": "https://image.tmdb.org/t/p/w300/bjDqcKtWRAMwsqO0z6VrPi2Ji2r.jpg"
         },
         {
           "season": 2,
           "episode": 25,
-          "title": "La foto"
+          "title": "La foto",
+          "thumb": "https://image.tmdb.org/t/p/w300/ue4ac5OYOQ1i9NsISMRrSCn7rhi.jpg"
         },
         {
           "season": 2,
           "episode": 26,
-          "title": "Il cassonetto"
+          "title": "Il cassonetto",
+          "thumb": "https://image.tmdb.org/t/p/w300/oItAVIGV9UuTWfO70N5GgM5gAyf.jpg"
         },
         {
           "season": 2,
           "episode": 27,
-          "title": "La tempesta"
+          "title": "La tempesta",
+          "thumb": "https://image.tmdb.org/t/p/w300/kXkbR10bkl8rEODWbZ4XRb6GxXF.jpg"
         },
         {
           "season": 2,
           "episode": 28,
-          "title": "Prigionieri a scuola"
+          "title": "Prigionieri a scuola",
+          "thumb": "https://image.tmdb.org/t/p/w300/bwLpa1DhyFQ5pAoP01YBbNSNP4Z.jpg"
         },
         {
           "season": 2,
           "episode": 29,
-          "title": "Il gioco"
+          "title": "Il gioco",
+          "thumb": "https://image.tmdb.org/t/p/w300/3YtZRHLl4HaRtdpXRKJ8yFwgXP9.jpg"
         },
         {
           "season": 2,
           "episode": 30,
-          "title": "Mamma belva"
+          "title": "Mamma belva",
+          "thumb": "https://image.tmdb.org/t/p/w300/lLnjcuRgLjilEZtO4XPhzc7WpgA.jpg"
         },
         {
           "season": 2,
           "episode": 31,
-          "title": "Un'amicizia bloccata"
+          "title": "Un'amicizia bloccata",
+          "thumb": "https://image.tmdb.org/t/p/w300/xA0ZcC8fcQYALISnwNRLXRLQTr8.jpg"
         },
         {
           "season": 2,
           "episode": 32,
-          "title": "Una vera amicizia"
+          "title": "Una vera amicizia",
+          "thumb": "https://image.tmdb.org/t/p/w300/5u5Bfgavz2F6YudBWrUBzfkLkhh.jpg"
         },
         {
           "season": 2,
           "episode": 33,
-          "title": "Casa dolce casa"
+          "title": "Casa dolce casa",
+          "thumb": "https://image.tmdb.org/t/p/w300/3Ru9FHPKdK5wXpHkg2qtqjTF6Ls.jpg"
         },
         {
           "season": 2,
           "episode": 34,
-          "title": "Lo stereo"
+          "title": "Lo stereo",
+          "thumb": "https://image.tmdb.org/t/p/w300/nSmcm2rz14w1mhOYWnMXfsB81MC.jpg"
         },
         {
           "season": 2,
           "episode": 35,
-          "title": "Ciak, si gira!"
+          "title": "Ciak, si gira!",
+          "thumb": "https://image.tmdb.org/t/p/w300/zUbT79RuxnMizRGXVfOrktuTf7C.jpg"
         },
         {
           "season": 2,
           "episode": 36,
-          "title": "I maglioni"
+          "title": "I maglioni",
+          "thumb": "https://image.tmdb.org/t/p/w300/12sRAPbroL0GzyN3qcyJk4tzMuC.jpg"
         },
         {
           "season": 2,
           "episode": 37,
-          "title": "Internet"
+          "title": "Internet",
+          "thumb": "https://image.tmdb.org/t/p/w300/cuCn4wIckaWQX3pNLx4pAyYbjC6.jpg"
         },
         {
           "season": 2,
           "episode": 38,
-          "title": "Il piano"
+          "title": "Il piano",
+          "thumb": "https://image.tmdb.org/t/p/w300/85iOXncvY2NY5B6jZr4WyZQ4ItF.jpg"
         },
         {
           "season": 2,
           "episode": 39,
-          "title": "Cose a caso"
+          "title": "Cose a caso",
+          "thumb": "https://image.tmdb.org/t/p/w300/nSxJx3H8qdZhRngKxyJhloXwuuY.jpg"
         },
         {
           "season": 2,
           "episode": 40,
-          "title": "Il finale"
+          "title": "Il finale",
+          "thumb": "https://image.tmdb.org/t/p/w300/hqzSssLeWZ3tjPaZJNGFzEqCEcV.jpg"
         },
         {
           "season": 3,
           "episode": 1,
-          "title": "Cambio di voce"
+          "title": "Cambio di voce",
+          "thumb": "https://image.tmdb.org/t/p/w300/pNzXBlu9WjfpVejrErKgbUmOSEb.jpg"
         },
         {
           "season": 3,
           "episode": 2,
-          "title": "Rivali in amore"
+          "title": "Rivali in amore",
+          "thumb": "https://image.tmdb.org/t/p/w300/vli2nFbgqM4ewnvrH53MCwLpSAt.jpg"
         },
         {
           "season": 3,
           "episode": 3,
-          "title": "L'allenatore"
+          "title": "L'allenatore",
+          "thumb": "https://image.tmdb.org/t/p/w300/bJwyn8EGTDXc0QAbiFHRyqiSo1v.jpg"
         },
         {
           "season": 3,
           "episode": 4,
-          "title": "L'epidemia"
+          "title": "L'epidemia",
+          "thumb": "https://image.tmdb.org/t/p/w300/bCNaiShu6ryUVVUT6rKOvWRCOi3.jpg"
         },
         {
           "season": 3,
           "episode": 5,
-          "title": "La tartaruga"
+          "title": "La tartaruga",
+          "thumb": "https://image.tmdb.org/t/p/w300/k8b5iBrTx79rSSf56LM180qS7O2.jpg"
         },
         {
           "season": 3,
           "episode": 6,
-          "title": "La clonazione"
+          "title": "La clonazione",
+          "thumb": "https://image.tmdb.org/t/p/w300/eXqwsVMWrP4KT7TLedzPeVTCKKN.jpg"
         },
         {
           "season": 3,
           "episode": 7,
-          "title": "Zac"
+          "title": "Zac",
+          "thumb": "https://image.tmdb.org/t/p/w300/pQeKO1WC4Itc3KzE92zpSZStUrk.jpg"
         },
         {
           "season": 3,
           "episode": 8,
-          "title": "Le comparse"
+          "title": "Le comparse",
+          "thumb": "https://image.tmdb.org/t/p/w300/narcWGeyf1EbPE2rRb7a8JE3Vko.jpg"
         },
         {
           "season": 3,
           "episode": 9,
-          "title": "Veramente falso"
+          "title": "Veramente falso",
+          "thumb": "https://image.tmdb.org/t/p/w300/jKI2TzQllNkFcYE4J7aIOp2OwcB.jpg"
         },
         {
           "season": 3,
           "episode": 10,
-          "title": "La vacanza"
+          "title": "La vacanza",
+          "thumb": "https://image.tmdb.org/t/p/w300/6yA9uqv3BBzvgp173YvocaMEqyw.jpg"
         },
         {
           "season": 3,
           "episode": 11,
-          "title": "110 e frode"
+          "title": "110 e frode",
+          "thumb": "https://image.tmdb.org/t/p/w300/s25RCUTtGah2VkGwcmihZU9WCnb.jpg"
         },
         {
           "season": 3,
           "episode": 12,
-          "title": "Il vuoto"
+          "title": "Il vuoto",
+          "thumb": "https://image.tmdb.org/t/p/w300/ln78jTl6tXO6F2DHY2a9rbyyRIc.jpg"
         },
         {
           "season": 3,
           "episode": 13,
-          "title": "Il capo"
+          "title": "Il capo",
+          "thumb": "https://image.tmdb.org/t/p/w300/HC4OuuPqlkUnWPMEPrRgarhP48.jpg"
         },
         {
           "season": 3,
           "episode": 14,
-          "title": "Niente bugie"
+          "title": "Niente bugie",
+          "thumb": "https://image.tmdb.org/t/p/w300/ezE90UXkxxA8qTFa10PWyuAxFMz.jpg"
         },
         {
           "season": 3,
           "episode": 15,
-          "title": "La legge"
+          "title": "La legge",
+          "thumb": "https://image.tmdb.org/t/p/w300/lrHoYBtGz2DBNb4TyG1SIKpb8Yp.jpg"
         },
         {
           "season": 3,
           "episode": 16,
-          "title": "L'allergia"
+          "title": "L'allergia",
+          "thumb": "https://image.tmdb.org/t/p/w300/qyaBl6ZUHWUGS5dYqPFIrbD8qUH.jpg"
         },
         {
           "season": 3,
           "episode": 17,
-          "title": "Supermamma"
+          "title": "Supermamma",
+          "thumb": "https://image.tmdb.org/t/p/w300/47s1EjsWWlNDV1gYD5qvjtJ3LhH.jpg"
         },
         {
           "season": 3,
           "episode": 18,
-          "title": "La password"
+          "title": "La password",
+          "thumb": "https://image.tmdb.org/t/p/w300/lis2aruJNU8qNSSodJsO76NGFX2.jpg"
         },
         {
           "season": 3,
           "episode": 19,
-          "title": "La spazzatura"
+          "title": "La spazzatura",
+          "thumb": "https://image.tmdb.org/t/p/w300/rct3xRaCCZgiFIsl39JAjLdjuao.jpg"
         },
         {
           "season": 3,
           "episode": 20,
-          "title": "Il guscio"
+          "title": "Il guscio",
+          "thumb": "https://image.tmdb.org/t/p/w300/l15ipBPKlizfAKsMEx4tICLusm7.jpg"
         },
         {
           "season": 3,
           "episode": 21,
-          "title": "La saggezza del criceto"
+          "title": "La saggezza del criceto",
+          "thumb": "https://image.tmdb.org/t/p/w300/sfSDfySlUCkvWCWCf9SdCrL5rDh.jpg"
         },
         {
           "season": 3,
           "episode": 22,
-          "title": "Fratelli"
+          "title": "Fratelli",
+          "thumb": "https://image.tmdb.org/t/p/w300/6s69s4QorNgAgaZtCaKqll24nZP.jpg"
         },
         {
           "season": 3,
           "episode": 23,
-          "title": "L'uomo nero"
+          "title": "L'uomo nero",
+          "thumb": "https://image.tmdb.org/t/p/w300/uFJKH8bCIdWGBAs4RGLFOKSADcv.jpg"
         },
         {
           "season": 3,
           "episode": 24,
-          "title": "Il fidanzato della nonna"
+          "title": "Il fidanzato della nonna",
+          "thumb": "https://image.tmdb.org/t/p/w300/ixnWqb1xl5KRLqkGGaQa4olimx7.jpg"
         },
         {
           "season": 3,
           "episode": 25,
-          "title": "L'apocalisse"
+          "title": "L'apocalisse",
+          "thumb": "https://image.tmdb.org/t/p/w300/20SqZ2sDOwLK8wZxP0cjGeUQxWC.jpg"
         },
         {
           "season": 3,
           "episode": 26,
-          "title": "Rockoween"
+          "title": "Rockoween",
+          "thumb": "https://image.tmdb.org/t/p/w300/1j0QwvvpvL7eYCENLEnvKDysS3L.jpg"
         },
         {
           "season": 3,
           "episode": 27,
-          "title": "Effetto domino"
+          "title": "Effetto domino",
+          "thumb": "https://image.tmdb.org/t/p/w300/fEgw547NqOOPXshYz3Uto8jXote.jpg"
         },
         {
           "season": 3,
           "episode": 28,
-          "title": "Il senso della vita"
+          "title": "Il senso della vita",
+          "thumb": "https://image.tmdb.org/t/p/w300/6MUS195KsAZDrD4jVb1mfKfrQXC.jpg"
         },
         {
           "season": 3,
           "episode": 29,
-          "title": "Il santo"
+          "title": "Il santo",
+          "thumb": "https://image.tmdb.org/t/p/w300/5r0xldELeRVYPPWa8NVEaXPPxuI.jpg"
         },
         {
           "season": 3,
           "episode": 30,
-          "title": "L'amico immaginario"
+          "title": "L'amico immaginario",
+          "thumb": "https://image.tmdb.org/t/p/w300/tWUN7JAqFVFhx0Fds99exaG5BCT.jpg"
         },
         {
           "season": 3,
           "episode": 31,
-          "title": "L'oracolo"
+          "title": "L'oracolo",
+          "thumb": "https://image.tmdb.org/t/p/w300/dNKuWPl8rIsjRJBZxmFa7vJPbDF.jpg"
         },
         {
           "season": 3,
           "episode": 32,
-          "title": "La sicurezza"
+          "title": "La sicurezza",
+          "thumb": "https://image.tmdb.org/t/p/w300/lfGKEheyjhXK0EfQFhB7b2yMINZ.jpg"
         },
         {
           "season": 3,
           "episode": 33,
-          "title": "Segreti a scuola"
+          "title": "Segreti a scuola",
+          "thumb": "https://image.tmdb.org/t/p/w300/c2hhmFdEZTCq8X0W5OznTsD1aUg.jpg"
         },
         {
           "season": 3,
           "episode": 34,
-          "title": "Il film dell'orrore"
+          "title": "Il film dell'orrore",
+          "thumb": "https://image.tmdb.org/t/p/w300/p7pAdchvVCEK28E4Dnh54Lvmszw.jpg"
         },
         {
           "season": 3,
           "episode": 35,
-          "title": "Viaggi nel tempo"
+          "title": "Viaggi nel tempo",
+          "thumb": "https://image.tmdb.org/t/p/w300/iqKDHlyLJaOUS7JJKd7lOFBnv0f.jpg"
         },
         {
           "season": 3,
           "episode": 36,
-          "title": "L'intruso"
+          "title": "L'intruso",
+          "thumb": "https://image.tmdb.org/t/p/w300/voeVZ1TXjUZh2BoH5pddrDxQv6P.jpg"
         },
         {
           "season": 3,
           "episode": 37,
-          "title": "Solo al mondo"
+          "title": "Solo al mondo",
+          "thumb": "https://image.tmdb.org/t/p/w300/u1Voizka23cdpiZcv22aBpcrpNL.jpg"
         },
         {
           "season": 3,
           "episode": 38,
-          "title": "Il compagno di giochi"
+          "title": "Il compagno di giochi",
+          "thumb": "https://image.tmdb.org/t/p/w300/ooMs8NzvYSroFMIxEdRbhoWsSRk.jpg"
         },
         {
           "season": 3,
           "episode": 39,
-          "title": "L'assolo"
+          "title": "L'assolo",
+          "thumb": "https://image.tmdb.org/t/p/w300/cJ0FY4VIzmB92VYRsvjgM2t8GSF.jpg"
         },
         {
           "season": 3,
           "episode": 40,
-          "title": "Famiglie al verde"
+          "title": "Famiglie al verde",
+          "thumb": "https://image.tmdb.org/t/p/w300/gTt9k0mkb3Wuu3qMem3dvuXt5QZ.jpg"
         },
         {
           "season": 4,
           "episode": 1,
-          "title": "Si ritorna a scuola"
+          "title": "Si ritorna a scuola",
+          "thumb": "https://image.tmdb.org/t/p/w300/3kG1JN1F2EXYvsaQKagzAJnQihe.jpg"
         },
         {
           "season": 4,
           "episode": 2,
-          "title": "Dr. Demolitore"
+          "title": "Dr. Demolitore",
+          "thumb": "https://image.tmdb.org/t/p/w300/r12ZWsYaOwfEOGX4tcivmvRnZF2.jpg"
         },
         {
           "season": 4,
           "episode": 3,
-          "title": "La gang"
+          "title": "La gang",
+          "thumb": "https://image.tmdb.org/t/p/w300/kicVVi7N3jxad0FcNCW63y7VZhz.jpg"
         },
         {
           "season": 4,
           "episode": 4,
-          "title": "Gli altri"
+          "title": "Gli altri",
+          "thumb": "https://image.tmdb.org/t/p/w300/wMqyqNA4BfMiYsycaAbXr2d1Goh.jpg"
         },
         {
           "season": 4,
           "episode": 5,
-          "title": "Il papà di papà"
+          "title": "Il papà di papà",
+          "thumb": "https://image.tmdb.org/t/p/w300/wLkLAlDtJMOQKvQnb82HN7besWq.jpg"
         },
         {
           "season": 4,
           "episode": 6,
-          "title": "L'assegno"
+          "title": "L'assegno",
+          "thumb": "https://image.tmdb.org/t/p/w300/56NNdzlIeVj1RUMffNhXiFTUtUz.jpg"
         },
         {
           "season": 4,
           "episode": 7,
-          "title": "La peste"
+          "title": "La peste",
+          "thumb": "https://image.tmdb.org/t/p/w300/xq89nPMKEByvPBp0Yc3OWA2ReDB.jpg"
         },
         {
           "season": 4,
           "episode": 8,
-          "title": "In vendita"
+          "title": "In vendita",
+          "thumb": "https://image.tmdb.org/t/p/w300/iI3s81abWlOo9uK6f7SRcpbTwSf.jpg"
         },
         {
           "season": 4,
           "episode": 9,
-          "title": "Il dono perfetto"
+          "title": "Il dono perfetto",
+          "thumb": "https://image.tmdb.org/t/p/w300/9aceh9mjGKQiccqqHth8UZXyUx3.jpg"
         },
         {
           "season": 4,
           "episode": 10,
-          "title": "Il parcheggio"
+          "title": "Il parcheggio",
+          "thumb": "https://image.tmdb.org/t/p/w300/yBKaOWbGMlb8yJrRW1LBvAwCZCe.jpg"
         },
         {
           "season": 4,
           "episode": 11,
-          "title": "La missione"
+          "title": "La missione",
+          "thumb": "https://image.tmdb.org/t/p/w300/nkFdO9N0KAEgDfKVbZBrscJs6Qk.jpg"
         },
         {
           "season": 4,
           "episode": 12,
-          "title": "Robot 2.0"
+          "title": "Robot 2.0",
+          "thumb": "https://image.tmdb.org/t/p/w300/uIIr4C3gjngkFcwWmxVVqMu52YZ.jpg"
         },
         {
           "season": 4,
           "episode": 13,
-          "title": "Il fumetto"
+          "title": "Il fumetto",
+          "thumb": "https://image.tmdb.org/t/p/w300/xnyvk1odYbzN4jMQ3NETUDPwoFU.jpg"
         },
         {
           "season": 4,
           "episode": 14,
-          "title": "Il romantico"
+          "title": "Il romantico",
+          "thumb": "https://image.tmdb.org/t/p/w300/h5BDhF63mRRzYCeoFIyPOOWldMU.jpg"
         },
         {
           "season": 4,
           "episode": 15,
-          "title": "I caricamenti"
+          "title": "I caricamenti",
+          "thumb": "https://image.tmdb.org/t/p/w300/8C7H60il2a4lMR3OQUiR0hzwW70.jpg"
         },
         {
           "season": 4,
           "episode": 16,
-          "title": "Il contratto"
+          "title": "Il contratto",
+          "thumb": "https://image.tmdb.org/t/p/w300/5D12TwKD63puVGhrLOT6WnV6f7l.jpg"
         },
         {
           "season": 4,
           "episode": 17,
-          "title": "L'abbraccio"
+          "title": "L'abbraccio",
+          "thumb": "https://image.tmdb.org/t/p/w300/hHqp3BlYvJDanatsfExlXcOeAoY.jpg"
         },
         {
           "season": 4,
           "episode": 18,
-          "title": "La cattiva"
+          "title": "La cattiva",
+          "thumb": "https://image.tmdb.org/t/p/w300/22rjpiWSi1wYYXrsT1yXc7MBTOv.jpg"
         },
         {
           "season": 4,
           "episode": 19,
-          "title": "Il traditore"
+          "title": "Il traditore",
+          "thumb": "https://image.tmdb.org/t/p/w300/6ysDhqO4b40hQiHGFIbuoBBF5ty.jpg"
         },
         {
           "season": 4,
           "episode": 20,
-          "title": "Le origini parte 1"
+          "title": "Le origini parte 1",
+          "thumb": "https://image.tmdb.org/t/p/w300/gbbsRa081b8ulXclOuzmf3BFz8S.jpg"
         },
         {
           "season": 4,
           "episode": 21,
-          "title": "Le origini parte 2"
+          "title": "Le origini parte 2",
+          "thumb": "https://image.tmdb.org/t/p/w300/fEqzxC3RuXJ4cbQA9RoVdRWH1sQ.jpg"
         },
         {
           "season": 4,
           "episode": 22,
-          "title": "La fidanzata"
+          "title": "La fidanzata",
+          "thumb": "https://image.tmdb.org/t/p/w300/7faBt5VTjcO4cpgJrid4s70ZXb.jpg"
         },
         {
           "season": 4,
           "episode": 23,
-          "title": "Il consiglio"
+          "title": "Il consiglio",
+          "thumb": "https://image.tmdb.org/t/p/w300/eiri56IrErky9gvcHBpMnZwSDvD.jpg"
         },
         {
           "season": 4,
           "episode": 24,
-          "title": "Il segnale"
+          "title": "Il segnale",
+          "thumb": "https://image.tmdb.org/t/p/w300/ljfXKnVT55jXTlOT64WXi5C2Zz1.jpg"
         },
         {
           "season": 4,
           "episode": 25,
-          "title": "Il parassita"
+          "title": "Il parassita",
+          "thumb": "https://image.tmdb.org/t/p/w300/v61vvJZPfE19Rr7WFTGcdUBGbS6.jpg"
         },
         {
           "season": 4,
           "episode": 26,
-          "title": "Cos'è l'amore?"
+          "title": "Cos'è l'amore?",
+          "thumb": "https://image.tmdb.org/t/p/w300/ncbftJVZ1Q5PIlNvZnsZDk7ZQat.jpg"
         },
         {
           "season": 4,
           "episode": 27,
-          "title": "Sincronismo perfetto"
+          "title": "Sincronismo perfetto",
+          "thumb": "https://image.tmdb.org/t/p/w300/eYs26SfoatL6KR9Gue5qc6XOsKy.jpg"
         },
         {
           "season": 4,
           "episode": 28,
-          "title": "Il nido"
+          "title": "Il nido",
+          "thumb": "https://image.tmdb.org/t/p/w300/3demUOP5GzL5FtNfnLCsoP0abC4.jpg"
         },
         {
           "season": 4,
           "episode": 29,
-          "title": "Soldi invisibili"
+          "title": "Soldi invisibili",
+          "thumb": "https://image.tmdb.org/t/p/w300/bmy2PQTKzsovm2DZvijdglL2JBD.jpg"
         },
         {
           "season": 4,
           "episode": 30,
-          "title": "L'autobus"
+          "title": "L'autobus",
+          "thumb": "https://image.tmdb.org/t/p/w300/k4c3LCQJmL4A83k4wZp1jrDX4m3.jpg"
         },
         {
           "season": 4,
           "episode": 31,
-          "title": "La notte"
+          "title": "La notte",
+          "thumb": "https://image.tmdb.org/t/p/w300/7sxtf2XO5OzDXRvjWLMZKGtnAqD.jpg"
         },
         {
           "season": 4,
           "episode": 32,
-          "title": "Le incomprensioni"
+          "title": "Le incomprensioni",
+          "thumb": "https://image.tmdb.org/t/p/w300/dt1SpySuGd9gYSqrC464XRzSYws.jpg"
         },
         {
           "season": 4,
           "episode": 33,
-          "title": "Il pesce fuor d'acqua"
+          "title": "Il pesce fuor d'acqua",
+          "thumb": "https://image.tmdb.org/t/p/w300/oGhh88DnbrBVtNNxUoihzCBNBHt.jpg"
         },
         {
           "season": 4,
           "episode": 34,
-          "title": "Genitori contro figli"
+          "title": "Genitori contro figli",
+          "thumb": "https://image.tmdb.org/t/p/w300/qolefIbolyKusXXjkkDhNxbf6P3.jpg"
         },
         {
           "season": 4,
           "episode": 35,
-          "title": "La pacca sul sedere"
+          "title": "La pacca sul sedere",
+          "thumb": "https://image.tmdb.org/t/p/w300/h40pbRj3cJI009624SuxNmSzn30.jpg"
         },
         {
           "season": 4,
           "episode": 36,
-          "title": "Il detective"
+          "title": "Il detective",
+          "thumb": "https://image.tmdb.org/t/p/w300/mIZH3ZbNgbmIV9B9iiL8yatBBVE.jpg"
         },
         {
           "season": 4,
           "episode": 37,
-          "title": "La sfida"
+          "title": "La sfida",
+          "thumb": "https://image.tmdb.org/t/p/w300/a5uZ498uMnLjg3pLAWyODoccrc.jpg"
         },
         {
           "season": 4,
           "episode": 38,
-          "title": "Elmore stream 2.0"
+          "title": "Elmore stream 2.0",
+          "thumb": "https://image.tmdb.org/t/p/w300/68yqeu0TFxExQR69dvva5Fco2so.jpg"
         },
         {
           "season": 4,
           "episode": 39,
-          "title": "Il divoratore"
+          "title": "Il divoratore",
+          "thumb": "https://image.tmdb.org/t/p/w300/eIuMVtofIoXOlTqKwyhiafjvNPK.jpg"
         },
         {
           "season": 4,
           "episode": 40,
-          "title": "Il disastro"
+          "title": "Il disastro",
+          "thumb": "https://image.tmdb.org/t/p/w300/4UFUy8p6oNYUDcZNNXQv7YQmH6F.jpg"
         },
         {
           "season": 5,
           "episode": 1,
-          "title": "I racconti di Molly"
+          "title": "I racconti di Molly",
+          "thumb": "https://image.tmdb.org/t/p/w300/eOeeoP3sSBw4xWlE1TagVklyTn4.jpg"
         },
         {
           "season": 5,
           "episode": 2,
-          "title": "Indietro nel tempo"
+          "title": "Indietro nel tempo",
+          "thumb": "https://image.tmdb.org/t/p/w300/gHpq4ZwPXV6hEQ7sXtsIgIFAt7Q.jpg"
         },
         {
           "season": 5,
           "episode": 3,
-          "title": "Ma chi è Josh?"
+          "title": "Ma chi è Josh?",
+          "thumb": "https://image.tmdb.org/t/p/w300/eVCukDNi2GuNxkY7NUayMHBOWls.jpg"
         },
         {
           "season": 5,
           "episode": 4,
-          "title": "La noia"
+          "title": "La noia",
+          "thumb": "https://image.tmdb.org/t/p/w300/bjZUAytN2WY69fPXLNypWorxApx.jpg"
         },
         {
           "season": 5,
           "episode": 5,
-          "title": "Alan il malvagio"
+          "title": "Alan il malvagio",
+          "thumb": "https://image.tmdb.org/t/p/w300/tgmNlQ3NTb2uXJS1gkMVJqNoFq.jpg"
         },
         {
           "season": 5,
           "episode": 6,
-          "title": "Le scelte"
+          "title": "Le scelte",
+          "thumb": "https://image.tmdb.org/t/p/w300/2EtXxBY1d3bxDhogv0pOVyVgIzA.jpg"
         },
         {
           "season": 5,
           "episode": 7,
-          "title": "Senza internet"
+          "title": "Senza internet",
+          "thumb": "https://image.tmdb.org/t/p/w300/Anwf2hER6XIU1tlIvPNUGDjydXU.jpg"
         },
         {
           "season": 5,
           "episode": 8,
-          "title": "Il test"
+          "title": "Il test",
+          "thumb": "https://image.tmdb.org/t/p/w300/8RX383wklYfvNC6J3Yxi4KKc3ft.jpg"
         },
         {
           "season": 5,
           "episode": 9,
-          "title": "La nuova app"
+          "title": "La nuova app",
+          "thumb": "https://image.tmdb.org/t/p/w300/l5j5QXHBIoRTeEtOgkjbr4BrQb8.jpg"
         },
         {
           "season": 5,
           "episode": 10,
-          "title": "Il protocollo"
+          "title": "Il protocollo",
+          "thumb": "https://image.tmdb.org/t/p/w300/ffPNuJdW8fSYjZifEUnBI8IEHix.jpg"
         },
         {
           "season": 5,
           "episode": 11,
-          "title": "La patata"
+          "title": "La patata",
+          "thumb": "https://image.tmdb.org/t/p/w300/cGFXPp99KT31ytEIAJMDXuS2Y6k.jpg"
         },
         {
           "season": 5,
           "episode": 12,
-          "title": "Un giorno da ricordare"
+          "title": "Un giorno da ricordare",
+          "thumb": "https://image.tmdb.org/t/p/w300/evzw0x6QphOlUkGpjq6xn9UfImp.jpg"
         },
         {
           "season": 5,
           "episode": 13,
-          "title": "I sosia"
+          "title": "I sosia",
+          "thumb": "https://image.tmdb.org/t/p/w300/9GXa79v8hmY3yXef2Y4F4AKQiIz.jpg"
         },
         {
           "season": 5,
           "episode": 14,
-          "title": "Nonno Frankie"
+          "title": "Nonno Frankie",
+          "thumb": "https://image.tmdb.org/t/p/w300/qLcr35nNE4YlqmqCSuK8oXhwNK9.jpg"
         },
         {
           "season": 5,
           "episode": 15,
-          "title": "Il vaso"
+          "title": "Il vaso",
+          "thumb": "https://image.tmdb.org/t/p/w300/srkwCwTwL3VeNfZACylCUAcqwWV.jpg"
         },
         {
           "season": 5,
           "episode": 16,
-          "title": "I due cupido"
+          "title": "I due cupido",
+          "thumb": "https://image.tmdb.org/t/p/w300/3Ph7fhQGDFZd1iGNpeIAorEcit5.jpg"
         },
         {
           "season": 5,
           "episode": 17,
-          "title": "Pacco a sorpresa"
+          "title": "Pacco a sorpresa",
+          "thumb": "https://image.tmdb.org/t/p/w300/6qhnund4xzKRVa2Ebvhen3ZbSIM.jpg"
         },
         {
           "season": 5,
           "episode": 18,
-          "title": "Il videogioco"
+          "title": "Il videogioco",
+          "thumb": "https://image.tmdb.org/t/p/w300/5oCmkYuxXT85vLaScNtkxcEHXRL.jpg"
         },
         {
           "season": 5,
           "episode": 19,
-          "title": "Lo skate"
+          "title": "Lo skate",
+          "thumb": "https://image.tmdb.org/t/p/w300/cg4KUHJppPjH3vKoxaaKFOKcwNy.jpg"
         },
         {
           "season": 5,
           "episode": 20,
-          "title": "False identità"
+          "title": "False identità",
+          "thumb": "https://image.tmdb.org/t/p/w300/dcn3Erb18PKFbfOwvKANECm2he.jpg"
         },
         {
           "season": 5,
           "episode": 21,
-          "title": "Il riscatto dei papà"
+          "title": "Il riscatto dei papà",
+          "thumb": "https://image.tmdb.org/t/p/w300/4FTppzLRm7ssGytOZ6kZ3wXaOtE.jpg"
         },
         {
           "season": 5,
           "episode": 22,
-          "title": "Cattive recensioni"
+          "title": "Cattive recensioni",
+          "thumb": "https://image.tmdb.org/t/p/w300/vNiTyEAL7RzShSgS1px16krvRaH.jpg"
         },
         {
           "season": 5,
           "episode": 23,
-          "title": "I voti"
+          "title": "I voti",
+          "thumb": "https://image.tmdb.org/t/p/w300/no21hRNj0bVBT6tddNFgxuq0D3g.jpg"
         },
         {
           "season": 5,
           "episode": 24,
-          "title": "La dieta"
+          "title": "La dieta",
+          "thumb": "https://image.tmdb.org/t/p/w300/88jdqb7jHFQmUOH591rzIvuE3we.jpg"
         },
         {
           "season": 5,
           "episode": 25,
-          "title": "La mia nemesi"
+          "title": "La mia nemesi",
+          "thumb": "https://image.tmdb.org/t/p/w300/jqjSKsc4nqT2w1SOwkQN6QiabIf.jpg"
         },
         {
           "season": 5,
           "episode": 26,
-          "title": "Lo stregone"
+          "title": "Lo stregone",
+          "thumb": "https://image.tmdb.org/t/p/w300/oplhMzbQbNFfpN2kGBjiKMRN7Sf.jpg"
         },
         {
           "season": 5,
           "episode": 27,
-          "title": "Il menù segreto"
+          "title": "Il menù segreto",
+          "thumb": "https://image.tmdb.org/t/p/w300/igxyBrF5c7x7apkAqKaHyAyOggC.jpg"
         },
         {
           "season": 5,
           "episode": 28,
-          "title": "Lo zio famoso"
+          "title": "Lo zio famoso",
+          "thumb": "https://image.tmdb.org/t/p/w300/sfSlkrSnmkOno1U8cs5LRT4cc0i.jpg"
         },
         {
           "season": 5,
           "episode": 29,
-          "title": "La stramba"
+          "title": "La stramba",
+          "thumb": "https://image.tmdb.org/t/p/w300/czwjaQgfMH9SRzXKrf7jTzbBg2n.jpg"
         },
         {
           "season": 5,
           "episode": 30,
-          "title": "La rapina"
+          "title": "La rapina",
+          "thumb": "https://image.tmdb.org/t/p/w300/y1tQZJE70I8xh8rt2MtBmXqUrkv.jpg"
         },
         {
           "season": 5,
           "episode": 31,
-          "title": "Cantando"
+          "title": "Cantando",
+          "thumb": "https://image.tmdb.org/t/p/w300/hLyjoRdI7JGPzsZU114eAWzCirk.jpg"
         },
         {
           "season": 5,
           "episode": 32,
-          "title": "Il migliore"
+          "title": "Il migliore",
+          "thumb": "https://image.tmdb.org/t/p/w300/9nMQDpplGJ8tcthTPEObGeMOmwr.jpg"
         },
         {
           "season": 5,
           "episode": 33,
-          "title": "Il peggiore"
+          "title": "Il peggiore",
+          "thumb": "https://image.tmdb.org/t/p/w300/7Ct4ChRQtCCQx7nokFdbWtrDidT.jpg"
         },
         {
           "season": 5,
           "episode": 34,
-          "title": "Lo sciopero del papà"
+          "title": "Lo sciopero del papà",
+          "thumb": "https://image.tmdb.org/t/p/w300/v4qoIBwl8pgN8PcfqNkEwrC1gEq.jpg"
         },
         {
           "season": 5,
           "episode": 35,
-          "title": "I petali"
+          "title": "I petali",
+          "thumb": "https://image.tmdb.org/t/p/w300/b9hwyD0R4HnsOpytPaZkdxaLiJd.jpg"
         },
         {
           "season": 5,
           "episode": 36,
-          "title": "I pupazzi"
+          "title": "I pupazzi",
+          "thumb": "https://image.tmdb.org/t/p/w300/i2kV8Wwsx5CQgN1iMPRztJeoRF5.jpg"
         },
         {
           "season": 5,
           "episode": 37,
-          "title": "Via i Watterson da Elmore"
+          "title": "Via i Watterson da Elmore",
+          "thumb": "https://image.tmdb.org/t/p/w300/97TAJdr5IBa0etJua4Iofn0cjhk.jpg"
         },
         {
           "season": 5,
           "episode": 38,
-          "title": "La fila"
+          "title": "La fila",
+          "thumb": "https://image.tmdb.org/t/p/w300/xfgCKIrsjlBQpUgFN6kGLGei0zh.jpg"
         },
         {
           "season": 5,
           "episode": 39,
-          "title": "La lista sbagliata"
+          "title": "La lista sbagliata",
+          "thumb": "https://image.tmdb.org/t/p/w300/oYJHY8QROUMIZSXlviWraKatdeN.jpg"
         },
         {
           "season": 5,
           "episode": 40,
-          "title": "Sguiscia la notizia"
+          "title": "Sguiscia la notizia",
+          "thumb": "https://image.tmdb.org/t/p/w300/gud6jBFAL89BsmUcMztvQqnJxsN.jpg"
         },
         {
           "season": 6,
           "episode": 1,
-          "title": "Nuovi arrivi"
+          "title": "Nuovi arrivi",
+          "thumb": "https://image.tmdb.org/t/p/w300/70dXQe1ErpN4wTa5XTiQ1vUxHqn.jpg"
         },
         {
           "season": 6,
           "episode": 2,
-          "title": "Il travestimento"
+          "title": "Il travestimento",
+          "thumb": "https://image.tmdb.org/t/p/w300/hDPNwf1rM3MJiN6vDIJ4UO2gZU.jpg"
         },
         {
           "season": 6,
           "episode": 3,
-          "title": "Il bullo sconfitto"
+          "title": "Il bullo sconfitto",
+          "thumb": "https://image.tmdb.org/t/p/w300/vORNZwdcga74IbZgxvzZli0EnXn.jpg"
         },
         {
           "season": 6,
           "episode": 4,
-          "title": "Il giorno della pigrizia"
+          "title": "Il giorno della pigrizia",
+          "thumb": "https://image.tmdb.org/t/p/w300/mNpm64wFAD8K3HBzyFFs3qEZEbN.jpg"
         },
         {
           "season": 6,
           "episode": 5,
-          "title": "Il numero uno"
+          "title": "Il numero uno",
+          "thumb": "https://image.tmdb.org/t/p/w300/4i4RWFuNbIFQH6LjlMJs8W4sLV9.jpg"
         },
         {
           "season": 6,
           "episode": 6,
-          "title": "Un nonno complicato"
+          "title": "Un nonno complicato",
+          "thumb": "https://image.tmdb.org/t/p/w300/zSnDVxnfNCU382jErl33a1Jmpnk.jpg"
         },
         {
           "season": 6,
           "episode": 7,
-          "title": "L'imbarazzo"
+          "title": "L'imbarazzo",
+          "thumb": "https://image.tmdb.org/t/p/w300/xGDkLh7p1S56YVZuOw0a78oAKrZ.jpg"
         },
         {
           "season": 6,
           "episode": 8,
-          "title": "La gabbia"
+          "title": "La gabbia",
+          "thumb": "https://image.tmdb.org/t/p/w300/yyIp8XKv2XShUjQgP4QNaz59pft.jpg"
         },
         {
           "season": 6,
           "episode": 9,
-          "title": "Musica e colori"
+          "title": "Musica e colori",
+          "thumb": "https://image.tmdb.org/t/p/w300/toNRvMFsfZwUdagftezBCIINBLJ.jpg"
         },
         {
           "season": 6,
           "episode": 10,
-          "title": "Il candidato"
+          "title": "Il candidato",
+          "thumb": "https://image.tmdb.org/t/p/w300/2P9XHKJtcdqwUfM6xH2pOqI7K0d.jpg"
         },
         {
           "season": 6,
           "episode": 11,
-          "title": "Lo scambio"
+          "title": "Lo scambio",
+          "thumb": "https://image.tmdb.org/t/p/w300/j8n90XNrOoKWhKuGvJM94YhtIBZ.jpg"
         },
         {
           "season": 6,
           "episode": 12,
-          "title": "La confessione"
+          "title": "La confessione",
+          "thumb": "https://image.tmdb.org/t/p/w300/xLEFFmNSldZEjtYHO0808L0q48c.jpg"
         },
         {
           "season": 6,
           "episode": 13,
-          "title": "Il vicino misterioso"
+          "title": "Il vicino misterioso",
+          "thumb": "https://image.tmdb.org/t/p/w300/bPpwZGsryL0wXdZ8BGANmxUpKZr.jpg"
         },
         {
           "season": 6,
           "episode": 14,
-          "title": "Love Story"
+          "title": "Love Story",
+          "thumb": "https://image.tmdb.org/t/p/w300/xVCkhrH0wlFMAyi9MzleBHFxeLL.jpg"
         },
         {
           "season": 6,
           "episode": 15,
-          "title": "Anais si è fatta male"
+          "title": "Anais si è fatta male",
+          "thumb": "https://image.tmdb.org/t/p/w300/8NQVJDP24czTDWygScApoGBgpUB.jpg"
         },
         {
           "season": 6,
           "episode": 16,
-          "title": "I genitori"
+          "title": "I genitori",
+          "thumb": "https://image.tmdb.org/t/p/w300/5nQGkwwQuvHHxIGfW2faBdJI1hU.jpg"
         },
         {
           "season": 6,
           "episode": 17,
-          "title": "Il capo"
+          "title": "Il capo",
+          "thumb": "https://image.tmdb.org/t/p/w300/5J36pLjM9N9QrJEgOko7wVrUtF.jpg"
         },
         {
           "season": 6,
           "episode": 18,
-          "title": "La lezione"
+          "title": "La lezione",
+          "thumb": "https://image.tmdb.org/t/p/w300/5RI3nqM6KggCWW2936gXH2oJ1G7.jpg"
         },
         {
           "season": 6,
           "episode": 19,
-          "title": "Ritorno al passato"
+          "title": "Ritorno al passato",
+          "thumb": "https://image.tmdb.org/t/p/w300/kZigmh4wcaNcwIK1fJbEsVZmrTi.jpg"
         },
         {
           "season": 6,
           "episode": 20,
-          "title": "La pozione"
+          "title": "La pozione",
+          "thumb": "https://image.tmdb.org/t/p/w300/mzSDaihlHDXFtHk3x3oubJFHBrL.jpg"
         },
         {
           "season": 6,
           "episode": 21,
-          "title": "Assalto ai programmi"
+          "title": "Assalto ai programmi",
+          "thumb": "https://image.tmdb.org/t/p/w300/1LvOAjur2vX4atF1WGnxfXRsVp5.jpg"
         },
         {
           "season": 6,
           "episode": 22,
-          "title": "Fuori dal guscio"
+          "title": "Fuori dal guscio",
+          "thumb": "https://image.tmdb.org/t/p/w300/hmTIl8STDZQiJfE4VhFQK4zsSZB.jpg"
         },
         {
           "season": 6,
           "episode": 23,
-          "title": "L'inserimento"
+          "title": "L'inserimento",
+          "thumb": "https://image.tmdb.org/t/p/w300/cwzSZJWA6CyxDXJ2IdodJRGbIZq.jpg"
         },
         {
           "season": 6,
           "episode": 24,
-          "title": "Gli ospiti"
+          "title": "Gli ospiti",
+          "thumb": "https://image.tmdb.org/t/p/w300/6mddPTR11wDF2HbSah8toEfXyhE.jpg"
         },
         {
           "season": 6,
           "episode": 25,
-          "title": "Halloween"
+          "title": "Halloween",
+          "thumb": "https://image.tmdb.org/t/p/w300/q0F47JVuaErbnhj8ffNNq297VJe.jpg"
         },
         {
           "season": 6,
           "episode": 26,
-          "title": "Il cattivo odore"
+          "title": "Il cattivo odore",
+          "thumb": "https://image.tmdb.org/t/p/w300/2HL9V77jpr30m579maM8Pd8XnxR.jpg"
         },
         {
           "season": 6,
           "episode": 27,
-          "title": "Il tema della settimana"
+          "title": "Il tema della settimana",
+          "thumb": "https://image.tmdb.org/t/p/w300/co54NEqa5a4VxoGaFLgARJG2r4W.jpg"
         },
         {
           "season": 6,
           "episode": 28,
-          "title": "Il fattorino"
+          "title": "Il fattorino",
+          "thumb": "https://image.tmdb.org/t/p/w300/9Gcpup5TXDae6AwM4XxbCQVaq5k.jpg"
         },
         {
           "season": 6,
           "episode": 29,
-          "title": "Il gossip"
+          "title": "Il gossip",
+          "thumb": "https://image.tmdb.org/t/p/w300/gJy9WjEGBrr5NaRnkVDSoIdY5bE.jpg"
         },
         {
           "season": 6,
           "episode": 30,
-          "title": "I computer infettati"
+          "title": "I computer infettati",
+          "thumb": "https://image.tmdb.org/t/p/w300/5CpqkN8rYo5pu6zaOUxZ6fayG46.jpg"
         },
         {
           "season": 6,
           "episode": 31,
-          "title": "Il frigo dei ricordi"
+          "title": "Il frigo dei ricordi",
+          "thumb": "https://image.tmdb.org/t/p/w300/bEjBAHXZ7FXe0s9lYadWIzu4anJ.jpg"
         },
         {
           "season": 6,
           "episode": 32,
-          "title": "Serata di famiglia"
+          "title": "Serata di famiglia",
+          "thumb": "https://image.tmdb.org/t/p/w300/r5htco0rUi2QsDlX57fZ20i0pZl.jpg"
         },
         {
           "season": 6,
           "episode": 33,
-          "title": "Senza parole"
+          "title": "Senza parole",
+          "thumb": "https://image.tmdb.org/t/p/w300/358fkB44cAPQdqi4ip8syMRxR5u.jpg"
         },
         {
           "season": 6,
           "episode": 34,
-          "title": "Il futuro"
+          "title": "Il futuro",
+          "thumb": "https://image.tmdb.org/t/p/w300/pBT5x67Nar1DFtWkuWsiBpOZrcT.jpg"
         },
         {
           "season": 6,
           "episode": 35,
-          "title": "Un cuscino speciale"
+          "title": "Un cuscino speciale",
+          "thumb": "https://image.tmdb.org/t/p/w300/jsc1Ce9JeYRdSfnHvJ5RcxtJx9e.jpg"
         },
         {
           "season": 6,
           "episode": 36,
-          "title": "La fabbrica"
+          "title": "La fabbrica",
+          "thumb": "https://image.tmdb.org/t/p/w300/wIRfDuxxSC6QLfehxJyncBP7Rvc.jpg"
         },
         {
           "season": 6,
           "episode": 37,
-          "title": "L'Agente segreto"
+          "title": "L'Agente segreto",
+          "thumb": "https://image.tmdb.org/t/p/w300/rYt6s4PLM7qSPYObSrq1MVTUDCf.jpg"
         },
         {
           "season": 6,
           "episode": 38,
-          "title": "Problemi col computer"
+          "title": "Problemi col computer",
+          "thumb": "https://image.tmdb.org/t/p/w300/3WX41SMCegdDuuT0RKIKtMPG2ok.jpg"
         },
         {
           "season": 6,
           "episode": 39,
-          "title": "Il Disastro"
+          "title": "Il Disastro",
+          "thumb": "https://image.tmdb.org/t/p/w300/xz05fMdEQfHnD7R6nY7MT1zxax1.jpg"
         },
         {
           "season": 6,
           "episode": 40,
-          "title": "Il cuore"
+          "title": "Il cuore",
+          "thumb": "https://image.tmdb.org/t/p/w300/eNwJ2OCxOhlCEXipBueajrax2Q.jpg"
         },
         {
           "season": 6,
           "episode": 41,
-          "title": "La rivolta"
+          "title": "La rivolta",
+          "thumb": "https://image.tmdb.org/t/p/w300/qOVriOhvfjeYmG8qL7r0KJwrLVj.jpg"
         },
         {
           "season": 6,
           "episode": 42,
-          "title": "Imparare a scegliere"
+          "title": "Imparare a scegliere",
+          "thumb": "https://image.tmdb.org/t/p/w300/gB8mRL5eETG0SGlnsIT5eTRXI9n.jpg"
         },
         {
           "season": 6,
           "episode": 43,
-          "title": "Amici del cuore"
+          "title": "Amici del cuore",
+          "thumb": "https://image.tmdb.org/t/p/w300/yQ1rn1IUTqKPy7nTOMKg5WPfIwo.jpg"
         },
         {
           "season": 6,
           "episode": 44,
-          "title": "La scuola trasformata"
+          "title": "La scuola trasformata",
+          "thumb": "https://image.tmdb.org/t/p/w300/lsbkwpxO4u6l6izlqzC981UxKU7.jpg"
         }
       ]
     },
@@ -1217,202 +1457,242 @@
         {
           "season": 1,
           "episode": 1,
-          "title": "L'hamburger"
+          "title": "L'hamburger",
+          "thumb": "https://image.tmdb.org/t/p/w300/tlqUF1QovVhmspDUyeBxzFTrLss.jpg"
         },
         {
           "season": 1,
           "episode": 2,
-          "title": "L'assistente"
+          "title": "L'assistente",
+          "thumb": "https://image.tmdb.org/t/p/w300/rldTYdZYN6ASVjPlbbhzNLGGC6W.jpg"
         },
         {
           "season": 1,
           "episode": 3,
-          "title": "La lontananza"
+          "title": "La lontananza",
+          "thumb": "https://image.tmdb.org/t/p/w300/eRFWDAdcwmClCD6oRNtzX8NiAXq.jpg"
         },
         {
           "season": 1,
           "episode": 4,
-          "title": "La cosa"
+          "title": "La cosa",
+          "thumb": "https://image.tmdb.org/t/p/w300/b9AiK2Eab24bCE4Jwqh74mb1EO2.jpg"
         },
         {
           "season": 1,
           "episode": 5,
-          "title": "La poesia"
+          "title": "La poesia",
+          "thumb": "https://image.tmdb.org/t/p/w300/alPJ7qrrm7SvnwvzqIht7y1jzxf.jpg"
         },
         {
           "season": 1,
           "episode": 6,
-          "title": "Il traffico"
+          "title": "Il traffico",
+          "thumb": "https://image.tmdb.org/t/p/w300/esNFIj8mFSM7DifEdJjA9bFxft0.jpg"
         },
         {
           "season": 1,
           "episode": 7,
-          "title": "Le previsioni cosmiche"
+          "title": "Le previsioni cosmiche",
+          "thumb": "https://image.tmdb.org/t/p/w300/9H8aROpv79R7aFsTKUMXgotZEo3.jpg"
         },
         {
           "season": 1,
           "episode": 8,
-          "title": "Il cheerleader"
+          "title": "Il cheerleader",
+          "thumb": "https://image.tmdb.org/t/p/w300/oxHLeySNSBdTT6xMQ216oOtS3dR.jpg"
         },
         {
           "season": 1,
           "episode": 9,
-          "title": "Il tempo"
+          "title": "Il tempo",
+          "thumb": "https://image.tmdb.org/t/p/w300/bn2rrDp31teWFYJE3VIT22dr2J1.jpg"
         },
         {
           "season": 1,
           "episode": 10,
-          "title": "L'insegnante"
+          "title": "L'insegnante",
+          "thumb": "https://image.tmdb.org/t/p/w300/rmBCtK98UYHmjFv5wHb5O4YhE2x.jpg"
         },
         {
           "season": 1,
           "episode": 11,
-          "title": "L'app"
+          "title": "L'app",
+          "thumb": "https://image.tmdb.org/t/p/w300/en6Qoejh8YS2RFPXCv2f0Gvt5hS.jpg"
         },
         {
           "season": 1,
           "episode": 12,
-          "title": "Il profumo"
+          "title": "Il profumo",
+          "thumb": "https://image.tmdb.org/t/p/w300/yMuvmzPxmgaW9g6dl4W2zmxxzmn.jpg"
         },
         {
           "season": 1,
           "episode": 13,
-          "title": "La lettera"
+          "title": "La lettera",
+          "thumb": "https://image.tmdb.org/t/p/w300/lRp7s7MGbvbKaMghNm9vVZ0expH.jpg"
         },
         {
           "season": 1,
           "episode": 14,
-          "title": "La pancia"
+          "title": "La pancia",
+          "thumb": "https://image.tmdb.org/t/p/w300/WuWsR1mJlm3CtWP0ZZMJCKyAaj.jpg"
         },
         {
           "season": 1,
           "episode": 15,
-          "title": "La ruga"
+          "title": "La ruga",
+          "thumb": "https://image.tmdb.org/t/p/w300/opSnpE9qEZ8XwfFpt6ckOpxgXgR.jpg"
         },
         {
           "season": 1,
           "episode": 16,
-          "title": "I maccheroni"
+          "title": "I maccheroni",
+          "thumb": "https://image.tmdb.org/t/p/w300/bjqEGqBsEMBc6UEMcHhGlxX9fuF.jpg"
         },
         {
           "season": 1,
           "episode": 17,
-          "title": "La piscina"
+          "title": "La piscina",
+          "thumb": "https://image.tmdb.org/t/p/w300/lkx4DU2qwc3uy2v1Gihnp2szkRc.jpg"
         },
         {
           "season": 1,
           "episode": 18,
-          "title": "La foto di famiglia"
+          "title": "La foto di famiglia",
+          "thumb": "https://image.tmdb.org/t/p/w300/b9iacshb1qCvLk4gqwIpaCyvvbt.jpg"
         },
         {
           "season": 1,
           "episode": 19,
-          "title": "La scalata"
+          "title": "La scalata",
+          "thumb": "https://image.tmdb.org/t/p/w300/zQKa4I5Rt0hq3BpEiiwpgsUV7jo.jpg"
         },
         {
           "season": 1,
           "episode": 20,
-          "title": "Il clan Fitzgerald"
+          "title": "Il clan Fitzgerald",
+          "thumb": "https://image.tmdb.org/t/p/w300/7aa2XYxwJMDoTLTKm2IlLgtPov9.jpg"
         },
         {
           "season": 2,
           "episode": 1,
-          "title": "La convocazione"
+          "title": "La convocazione",
+          "thumb": "https://image.tmdb.org/t/p/w300/hj82kX0WeQ2MuI0Na2nsl8lWDlo.jpg"
         },
         {
           "season": 2,
           "episode": 2,
-          "title": "La fan"
+          "title": "La fan",
+          "thumb": "https://image.tmdb.org/t/p/w300/jFrxdLZpnVWqvAgudAPOWhiZolF.jpg"
         },
         {
           "season": 2,
           "episode": 3,
-          "title": "L'invito"
+          "title": "L'invito",
+          "thumb": "https://image.tmdb.org/t/p/w300/6Ieh0nFwpdbcYLBGW9QM2kK7kQz.jpg"
         },
         {
           "season": 2,
           "episode": 4,
-          "title": "La tromba"
+          "title": "La tromba",
+          "thumb": "https://image.tmdb.org/t/p/w300/dqqNbU9Wgu7Jtih4sKfdXXJPwwm.jpg"
         },
         {
           "season": 2,
           "episode": 5,
-          "title": "La sintesi"
+          "title": "La sintesi",
+          "thumb": "https://image.tmdb.org/t/p/w300/hUUj3PPPLBbCIv2OZ2bHY6bqwGD.jpg"
         },
         {
           "season": 2,
           "episode": 6,
-          "title": "Il cheapmas"
+          "title": "Il cheapmas",
+          "thumb": "https://image.tmdb.org/t/p/w300/oCSePPe1FnhzfIE41qxD3P8SkEu.jpg"
         },
         {
           "season": 2,
           "episode": 7,
-          "title": "Il punteggio"
+          "title": "Il punteggio",
+          "thumb": "https://image.tmdb.org/t/p/w300/3e1f3TtRCQ4XAA5D4fZTDNKtrTv.jpg"
         },
         {
           "season": 2,
           "episode": 8,
-          "title": "Il diario"
+          "title": "Il diario",
+          "thumb": "https://image.tmdb.org/t/p/w300/wwszaHPcT1L924veJyFqf7Ez8b2.jpg"
         },
         {
           "season": 2,
           "episode": 9,
-          "title": "La punizione"
+          "title": "La punizione",
+          "thumb": "https://image.tmdb.org/t/p/w300/Are1rIBe0jnjDApXwc2PkdCEW6f.jpg"
         },
         {
           "season": 2,
           "episode": 10,
-          "title": "Le battute"
+          "title": "Le battute",
+          "thumb": "https://image.tmdb.org/t/p/w300/z0JUCu7nKloTW7LKOLcdJfMHGTx.jpg"
         },
         {
           "season": 2,
           "episode": 11,
-          "title": "I sopravvissuti"
+          "title": "I sopravvissuti",
+          "thumb": "https://image.tmdb.org/t/p/w300/efbsb6exKFNga41NlhgMvDRX0ve.jpg"
         },
         {
           "season": 2,
           "episode": 12,
-          "title": "Le etichette"
+          "title": "Le etichette",
+          "thumb": "https://image.tmdb.org/t/p/w300/sXtkSnyxwTK6BgjwPAulBaOH4L1.jpg"
         },
         {
           "season": 2,
           "episode": 13,
-          "title": "Gli sciocchi"
+          "title": "Gli sciocchi",
+          "thumb": "https://image.tmdb.org/t/p/w300/1VomwUWZOskF6JX706Kplfsgvg.jpg"
         },
         {
           "season": 2,
           "episode": 14,
-          "title": "I compiti"
+          "title": "I compiti",
+          "thumb": "https://image.tmdb.org/t/p/w300/ftv5njxVYtHhb700y5vVsFmc8RJ.jpg"
         },
         {
           "season": 2,
           "episode": 15,
-          "title": "La sonda"
+          "title": "La sonda",
+          "thumb": "https://image.tmdb.org/t/p/w300/iKEbK1xAx6Vlx7TNVj32HWOf6i7.jpg"
         },
         {
           "season": 2,
           "episode": 16,
-          "title": "Il signore"
+          "title": "Il signore",
+          "thumb": "https://image.tmdb.org/t/p/w300/uidSZEH9uVdGRupc69nA9hSGLsz.jpg"
         },
         {
           "season": 2,
           "episode": 17,
-          "title": "Il tracciamento"
+          "title": "Il tracciamento",
+          "thumb": "https://image.tmdb.org/t/p/w300/jO2EavjK4nEdyJfKfLKZiQAMs31.jpg"
         },
         {
           "season": 2,
           "episode": 18,
-          "title": "I pantaloni"
+          "title": "I pantaloni",
+          "thumb": "https://image.tmdb.org/t/p/w300/wqMN4YGCMPTBFmqSZK8hD85GdXW.jpg"
         },
         {
           "season": 2,
           "episode": 19,
-          "title": "Il Necropancer"
+          "title": "Il Necropancer",
+          "thumb": "https://image.tmdb.org/t/p/w300/yx1mQBrb6WV4De2qHywrl7WOHIe.jpg"
         },
         {
           "season": 2,
           "episode": 20,
-          "title": "Il copione"
+          "title": "Il copione",
+          "thumb": "https://image.tmdb.org/t/p/w300/ta0JDKW9Ks2llfrRb3APUOYhnFA.jpg"
         }
       ]
     }
