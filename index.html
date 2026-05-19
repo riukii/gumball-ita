@@ -74,6 +74,9 @@
         .trigger-top { top: 0; left: 0; right: 0; height: 100px; }
         .trigger-bottom { bottom: 0; left: 35%; right: var(--next-right); height: 50px; }
 
+        /* Full-screen touch trigger — mobile only, sits above iframe to capture taps */
+        .trigger-full { display: none; position: fixed; inset: 0; z-index: 84; background: transparent; }
+
         /* ===== FULLSCREEN OVERLAY BUTTON ===== */
         .fs-overlay-btn {
             position: fixed;
@@ -290,13 +293,14 @@
                 --bottom-offset: 4px;
                 --right-offset: 4px;
                 --next-right: calc(var(--fs-width) * 3 + var(--right-offset) + 4px);
-                --bottom-info-bottom: 54px;
+                --bottom-info-bottom: 8px;
             }
             .btn .btn-text { display: none; }
-            .settings-panel { width: 100vw; max-width: 100vw; }
             .player-wrapper { height: calc(100dvh - 1px); }
             .mobile-bottom-spacer { display: block; height: 1px; }
-            .trigger-bottom { bottom: 40px; }
+            .trigger-top, .trigger-bottom { display: none; }
+            .trigger-full { display: block; pointer-events: auto; }
+            .trigger-full.disabled { pointer-events: none; }
             .show-name { font-size: clamp(12px, 2.2vw, 16px); }
             .episode-title { font-size: clamp(9px, 1.5vw, 12px); }
             .bottom-info { font-size: clamp(10px, 1.5vw, 13px); }
@@ -335,6 +339,7 @@
 
     <div class="trigger-zone trigger-top" id="triggerTop"></div>
     <div class="trigger-zone trigger-bottom" id="triggerBottom"></div>
+    <div class="trigger-full" id="triggerFull"></div>
 
     <div class="fs-overlay-btn" id="fsOverlayBtn">
         <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
@@ -516,6 +521,7 @@
         const showLogoEl = $('showLogo');
         const triggerTop = $('triggerTop');
         const triggerBottom = $('triggerBottom');
+        const triggerFull = $('triggerFull');
         const settingsPanel = $('settingsPanel');
         const settingsBackdrop = $('settingsBackdrop');
         const settingsClose = $('settingsClose');
@@ -747,8 +753,16 @@
         // ============================================
         // OVERLAY + TRIGGER ZONES
         // ============================================
-        function enableTriggers() { triggerTop.style.pointerEvents = 'auto'; triggerBottom.style.pointerEvents = 'auto'; }
-        function disableTriggers() { triggerTop.style.pointerEvents = 'none'; triggerBottom.style.pointerEvents = 'none'; }
+        function enableTriggers() {
+            triggerTop.style.pointerEvents = 'auto';
+            triggerBottom.style.pointerEvents = 'auto';
+            triggerFull.classList.remove('disabled');
+        }
+        function disableTriggers() {
+            triggerTop.style.pointerEvents = 'none';
+            triggerBottom.style.pointerEvents = 'none';
+            triggerFull.classList.add('disabled');
+        }
 
         function showOverlay() {
             topBar.classList.remove('hidden');
@@ -786,11 +800,19 @@
         }
         window.addEventListener('resize', detectSafeBottom);
 
+        // PC: mouseenter su trigger zones mostra overlay
         triggerTop.addEventListener('mouseenter', showOverlay);
         triggerBottom.addEventListener('mouseenter', showOverlay);
         nextOverlayBtn.addEventListener('mouseenter', showOverlay);
         fsOverlayBtn.addEventListener('mouseenter', showOverlay);
-        // Su PC, hover su elementi UI ferma il timer; su mobile no (gestito da touchstart)
+
+        // Mobile: tap ovunque sul trigger-full mostra overlay
+        triggerFull.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            showOverlay();
+        });
+
+        // Su PC, hover su elementi UI ferma il timer; su mobile no
         if (!isTouchDevice) {
             topBar.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
             bottomInfo.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
@@ -801,8 +823,6 @@
             nextOverlayBtn.addEventListener('mouseleave', startHideTimer);
             fsOverlayBtn.addEventListener('mouseleave', startHideTimer);
         }
-        // Mobile: touch mostra overlay, il timer di auto-hide parte sempre e non viene fermato
-        document.addEventListener('touchstart', showOverlay, { passive: true });
         window.addEventListener('focus', showOverlay);
 
         // ============================================
