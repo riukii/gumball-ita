@@ -57,10 +57,13 @@ async function fetchShow(config) {
       .map(async (s) => {
         try {
           const seasonData = await tmdbFetch(`/tv/${config.tmdbId}/season/${s.season_number}`);
+          const TMDB_IMG_BASE = 'https://image.tmdb.org/t/p/w300';
+
           const eps = (seasonData.episodes || []).map(ep => ({
             season: ep.season_number,
             episode: ep.episode_number,
-            title: decodeHtml(ep.name) || `Episodio ${ep.episode_number}`
+            title: decodeHtml(ep.name) || `Episodio ${ep.episode_number}`,
+            thumb: ep.still_path ? `${TMDB_IMG_BASE}${ep.still_path}` : ''
           })).filter(ep => ep.episode > 0);
 
           console.log(`  Stagione ${s.season_number}: ${eps.length} episodi`);
