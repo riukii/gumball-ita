@@ -776,6 +776,16 @@
 
         const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
+        // Su mobile: ri-forza landscape se l'orientamento torna in portrait durante il fullscreen
+        // (alcuni browser perdono il lock quando i controlli nativi del video appaiono)
+        if (isTouchDevice) {
+            screen.orientation.addEventListener('change', () => {
+                if (document.fullscreenElement && screen.orientation.type.startsWith('portrait')) {
+                    screen.orientation.lock('landscape').catch(() => {});
+                }
+            });
+        }
+
         // Rileva safe-bottom per Firefox mobile
         function detectSafeBottom() {
             const vh = window.innerHeight;
@@ -1060,7 +1070,10 @@
                     startHideTimer();
                     break;
                 case 'pause':
-                    isPaused = true; clearTimeout(hideTimer); showOverlay();
+                    isPaused = true;
+                    // Su PC: mostra overlay e ferma il timer (i controlli restano visibili in pausa)
+                    // Su mobile: non mostrare overlay e non resettare il timer (l'overlay si nasconde da solo)
+                    if (!isTouchDevice) { clearTimeout(hideTimer); showOverlay(); }
                     break;
                 case 'timeupdate':
                     if (isLoading) { isLoading = false; clearTimeout(loadCheckTimer); consecutiveFailures = 0; }
