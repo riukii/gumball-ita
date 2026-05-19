@@ -17,7 +17,7 @@
             --fs-width: 60px;           /* fullscreen button width (also 1× unit) */
             --bottom-offset: 12px;      /* distance from bottom for bottom controls */
             --right-offset: 12px;       /* distance from right for fullscreen btn */
-            --next-right: 180px;        /* next button right = 3× fs-width */
+            --next-right: 12px;        /* next button distance from right edge */
         }
 
         body {
@@ -67,13 +67,12 @@
         .mobile-bottom-spacer { display: none; height: 0; width: 100%; transition: height 0.2s ease; }
         html.is-fullscreen .mobile-bottom-spacer { height: 0 !important; }
 
-        /* ===== TRIGGER ZONES ===== */
-        .trigger-zone { position: fixed; z-index: 85; pointer-events: auto; background: transparent; }
-        .trigger-top { top: 0; left: 0; right: 0; height: 100px; }
-        .trigger-bottom { bottom: 0; left: 35%; right: var(--next-right); height: 50px; }
-
-        /* Full-screen touch trigger — mobile only, sits above iframe to capture taps */
-        .trigger-full { display: none; position: fixed; inset: 0; z-index: 84; background: transparent; }
+        /* ===== TRIGGER — full-screen transparent overlay that captures first mouse/touch ===== */
+        /* When overlay is hidden, trigger-full is active (pointer-events: auto) and captures
+           mouseenter/touchstart to show the overlay. When overlay is visible, trigger-full gets
+           pointer-events: none so user can interact with the player underneath. */
+        .trigger-full { display: block; position: fixed; inset: 0; z-index: 84; background: transparent; pointer-events: auto; }
+        .trigger-full.disabled { pointer-events: none; }
 
         /* ===== FULLSCREEN OVERLAY BUTTON ===== */
         .fs-overlay-btn {
@@ -90,7 +89,7 @@
         /* ===== NEXT OVERLAY BUTTON ===== */
         .next-overlay-btn {
             position: fixed;
-            bottom: var(--bottom-offset);
+            bottom: calc(var(--fs-width) + var(--bottom-offset) + 8px);
             right: var(--next-right);
             z-index: 95; cursor: pointer;
             display: flex; align-items: center; gap: clamp(4px, 1vw, 8px);
@@ -281,13 +280,11 @@
                 --fs-width: clamp(40px, 10vw, 50px);
                 --bottom-offset: 4px;
                 --right-offset: 4px;
-                --next-right: calc(var(--fs-width) * 3 + var(--right-offset) + 4px);
+                --next-right: 6px;
             }
             .btn .btn-text { display: none; }
             .player-wrapper { height: calc(100dvh - 1px); }
             .mobile-bottom-spacer { display: block; height: 1px; }
-            .trigger-top, .trigger-bottom { display: none; }
-            .trigger-full { display: block; pointer-events: auto; }
             .trigger-full.disabled { pointer-events: none; }
             .show-name { font-size: clamp(12px, 2.2vw, 16px); }
             .episode-title { font-size: clamp(9px, 1.5vw, 12px); }
@@ -305,7 +302,7 @@
                 --fs-width: 64px;
                 --bottom-offset: 16px;
                 --right-offset: 16px;
-                --next-right: 208px;
+                --next-right: 16px;
             }
         }
     </style>
@@ -324,8 +321,6 @@
 
     <div class="mobile-bottom-spacer"></div>
 
-    <div class="trigger-zone trigger-top" id="triggerTop"></div>
-    <div class="trigger-zone trigger-bottom" id="triggerBottom"></div>
     <div class="trigger-full" id="triggerFull"></div>
 
     <div class="fs-overlay-btn" id="fsOverlayBtn">
@@ -509,8 +504,6 @@
         const btnSettings = $('btnSettings');
         const fsOverlayBtn = $('fsOverlayBtn');
         const showLogoEl = $('showLogo');
-        const triggerTop = $('triggerTop');
-        const triggerBottom = $('triggerBottom');
         const triggerFull = $('triggerFull');
         const settingsPanel = $('settingsPanel');
         const settingsBackdrop = $('settingsBackdrop');
@@ -744,13 +737,9 @@
         // OVERLAY + TRIGGER ZONES
         // ============================================
         function enableTriggers() {
-            triggerTop.style.pointerEvents = 'auto';
-            triggerBottom.style.pointerEvents = 'auto';
             triggerFull.classList.remove('disabled');
         }
         function disableTriggers() {
-            triggerTop.style.pointerEvents = 'none';
-            triggerBottom.style.pointerEvents = 'none';
             triggerFull.classList.add('disabled');
         }
 
@@ -768,7 +757,7 @@
 
         function startHideTimer() {
             clearTimeout(hideTimer);
-            if (!isPaused && !isLoading && !settingsPanel.classList.contains('open')) hideTimer = setTimeout(hideOverlay, 2000);
+            if (!isPaused && !isLoading && !settingsPanel.classList.contains('open')) hideTimer = setTimeout(hideOverlay, 2500);
         }
 
         const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
@@ -784,13 +773,12 @@
         if (window.visualViewport) window.visualViewport.addEventListener('resize', detectSafeBottom);
         window.addEventListener('resize', detectSafeBottom);
 
-        // PC: mouseenter su trigger zones mostra overlay
-        triggerTop.addEventListener('mouseenter', showOverlay);
-        triggerBottom.addEventListener('mouseenter', showOverlay);
-        nextOverlayBtn.addEventListener('mouseenter', showOverlay);
-        fsOverlayBtn.addEventListener('mouseenter', showOverlay);
-
-        // Mobile: tap ovunque sul trigger-full mostra overlay
+        // PC: mouseenter/mousemove su trigger-full mostra overlay
+        // (mousemove needed because when trigger-full re-enables after auto-hide,
+        //  if the mouse is already inside, mouseenter won't fire)
+        // Mobile: touchstart su trigger-full mostra overlay
+        triggerFull.addEventListener('mouseenter', showOverlay);
+        triggerFull.addEventListener('mousemove', showOverlay);
         triggerFull.addEventListener('touchstart', (e) => {
             e.preventDefault();
             showOverlay();
