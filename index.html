@@ -525,6 +525,8 @@
         function closeSettings() {
             settingsPanel.classList.remove('open');
             settingsBackdrop.classList.remove('open');
+            // Riavvia il timer per nascondere l'overlay
+            startHideTimer();
         }
 
         function renderSettings() {
@@ -766,16 +768,26 @@
         // OVERLAY + TRIGGER ZONES
         // ============================================
         function enableTriggers() {
-            triggerFull.classList.remove('disabled');
+            if (!isTouchDevice) {
+                triggerFull.classList.remove('disabled');
+            } else {
+                // Su mobile: ritarda la riattivazione di 400ms per evitare che
+                // eventi touch/mouse residui dall'interazione con vixsrc ri-attivino l'overlay
+                setTimeout(() => triggerFull.classList.remove('disabled'), 400);
+            }
         }
         function disableTriggers() {
             triggerFull.classList.add('disabled');
         }
 
         function showOverlay() {
+            const wasHidden = topBar.classList.contains('hidden');
             topBar.classList.remove('hidden');
             nextOverlayBtn.classList.remove('hidden');
-            disableTriggers(); startHideTimer();
+            disableTriggers();
+            // Avvia il timer solo se l'overlay era nascosto —
+            // se era già visibile, il timer sta già scorrendo, non resettarlo
+            if (wasHidden) startHideTimer();
         }
 
         function hideOverlay() {
@@ -787,11 +799,11 @@
 
         function startHideTimer() {
             clearTimeout(hideTimer);
-            // Su mobile: il timer parte sempre; su PC: solo se non in pausa
+            hideTimer = null;
             if (settingsPanel.classList.contains('open')) return;
             if (!isTouchDevice && (isPaused || isLoading)) return;
             if (isLoading) return;
-            hideTimer = setTimeout(hideOverlay, 2500);
+            hideTimer = setTimeout(() => { hideTimer = null; hideOverlay(); }, 2500);
         }
 
         // Rileva safe-bottom per Firefox mobile
@@ -806,15 +818,17 @@
         window.addEventListener('resize', detectSafeBottom);
 
         // PC: mouseenter/mousemove su trigger-full mostra overlay
-        triggerFull.addEventListener('mouseenter', showOverlay);
-        triggerFull.addEventListener('mousemove', showOverlay);
+        if (!isTouchDevice) {
+            triggerFull.addEventListener('mouseenter', showOverlay);
+            triggerFull.addEventListener('mousemove', showOverlay);
+        }
 
-        // Mobile: touchstart su trigger-full mostra overlay
+        // Mobile: touchstart su trigger-full mostra overlay.
         // Il primo tap mostra il nostro overlay e disabilita trigger-full (pointer-events: none),
         // così il secondo tap va a vixsrc e mostra i suoi controlli.
         if (isTouchDevice) {
             triggerFull.addEventListener('touchstart', (e) => {
-                e.preventDefault(); // previene il click fantasma
+                e.preventDefault();
                 showOverlay();
             }, { passive: false });
         }
@@ -1079,7 +1093,9 @@
                     isPaused = false; isFirstEpisode = false; isLoading = false;
                     clearTimeout(loadCheckTimer); consecutiveFailures = 0;
                     transitionOverlay.classList.remove('active');
-                    startHideTimer();
+                    // Inizia il timer solo se l'overlay è visibile e nessun timer è già attivo
+                    // (evita che 'play' ripetuti dal buffering contino a resettare il timer)
+                    if (!topBar.classList.contains('hidden') && !hideTimer) startHideTimer();
                     break;
                 case 'pause':
                     isPaused = true;
