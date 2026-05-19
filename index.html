@@ -18,8 +18,6 @@
             --bottom-offset: 12px;      /* distance from bottom for bottom controls */
             --right-offset: 12px;       /* distance from right for fullscreen btn */
             --next-right: 180px;        /* next button right = 3× fs-width */
-            --bottom-info-bottom: 17px;
-            --safe-bottom: 0px;         /* will be overridden by JS for mobile browsers */
         }
 
         body {
@@ -121,7 +119,9 @@
         .show-logo { height: clamp(32px, 7vw, 56px); width: auto; max-width: 120px; object-fit: contain; border-radius: clamp(8px, 1.5vw, 14px); flex-shrink: 0; }
         .show-details { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
         .show-name { font-size: clamp(14px, 2.8vw, 22px); font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .episode-title { font-size: clamp(11px, 2vw, 16px); font-weight: 500; color: #b0bec5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .episode-title { font-size: clamp(11px, 2vw, 16px); font-weight: 500; color: #58B8CD; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .episode-title .ep-separator { color: #607d8b; margin: 0 5px; }
+        .episode-title .ep-season-info { font-style: italic; color: #b0bec5; }
 
         .controls { display: flex; align-items: center; gap: clamp(6px, 1vw, 10px); flex-shrink: 0; margin-left: clamp(8px, 2vw, 16px); }
         .btn {
@@ -137,21 +137,6 @@
         .btn-secondary { background: rgba(255,255,255,0.12); color: #e0e0e0; backdrop-filter: blur(10px); }
         .btn-secondary:hover { background: rgba(255,255,255,0.22); }
         .btn svg { width: clamp(14px, 2vw, 18px); height: clamp(14px, 2vw, 18px); fill: currentColor; }
-
-        /* ===== BOTTOM CENTER ===== */
-        .bottom-info {
-            position: fixed;
-            bottom: var(--bottom-info-bottom);
-            left: 50%; transform: translateX(-50%); z-index: 101;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(14px);
-            padding: clamp(3px, 0.8vw, 5px) clamp(8px, 2vw, 14px);
-            border-radius: clamp(10px, 2vw, 16px);
-            font-size: clamp(12px, 2vw, 17px); color: #e0e0e0;
-            border: 1px solid rgba(255,255,255,0.07);
-            transition: opacity 0.4s ease; pointer-events: none; white-space: nowrap;
-        }
-        .bottom-info.hidden { opacity: 0; }
-        .bottom-info .hl { color: #4fc3f7; font-weight: 600; }
 
         /* ===== TRANSITION OVERLAY ===== */
         .transition-overlay {
@@ -262,12 +247,17 @@
 
         .ep-item {
             display: flex; align-items: center; gap: 10px;
-            padding: 8px 8px 8px 32px;
+            padding: 8px 8px 8px 12px;
             border-radius: 8px; cursor: pointer;
             transition: background 0.15s;
         }
         .ep-item:hover { background: rgba(79,195,247,0.1); }
         .ep-item.now-playing { background: rgba(79,195,247,0.12); }
+
+        .ep-num {
+            font-size: 11px; font-weight: 700; color: #546e7a; min-width: 20px; text-align: right; flex-shrink: 0;
+        }
+        .ep-item.now-playing .ep-num { color: #4fc3f7; }
 
         .ep-thumb {
             width: 64px; height: 36px; border-radius: 4px;
@@ -284,7 +274,6 @@
             overflow: hidden; text-overflow: ellipsis;
         }
         .ep-item.now-playing .ep-title-text { color: #4fc3f7; }
-        .ep-info .ep-meta { font-size: 11px; color: #546e7a; }
 
         /* ===== TOUCH DEVICES (hover: none) — smaller controls, bottom spacer, no btn-text ===== */
         @media (hover: none) and (pointer: coarse) {
@@ -293,7 +282,6 @@
                 --bottom-offset: 4px;
                 --right-offset: 4px;
                 --next-right: calc(var(--fs-width) * 3 + var(--right-offset) + 4px);
-                --bottom-info-bottom: 8px;
             }
             .btn .btn-text { display: none; }
             .player-wrapper { height: calc(100dvh - 1px); }
@@ -303,7 +291,6 @@
             .trigger-full.disabled { pointer-events: none; }
             .show-name { font-size: clamp(12px, 2.2vw, 16px); }
             .episode-title { font-size: clamp(9px, 1.5vw, 12px); }
-            .bottom-info { font-size: clamp(10px, 1.5vw, 13px); }
         }
 
         /* ===== VERY SMALL SCREENS (< 400px) ===== */
@@ -368,10 +355,6 @@
         </div>
     </div>
 
-    <div class="bottom-info hidden" id="bottomInfo">
-        Stagione <span class="hl" id="seasonNum">-</span> &middot; Episodio <span class="hl" id="episodeNum">-</span>
-    </div>
-
     <div class="transition-overlay" id="transitionOverlay">
         <div class="spinner"></div>
         <div class="loading-text" id="loadingText">Caricamento episodio...</div>
@@ -401,7 +384,7 @@
         // Stagioni, episodi, chip e lista si generano da soli dal episodes.json
         const SHOWS_CONFIG = [
             { tmdbId: 37606, showName: 'Lo straordinario mondo di Gumball', logo: 'Gumball.png' },
-            { tmdbId: 291904, showName: 'Lo strano e meraviglioso mondo di Gumball', logo: 'Gumball2.png' }
+            { tmdbId: 291904, showName: 'Lo strano e meraviglioso mondo di Gumball', logo: 'Gumball2.png', continuesAfter: 37606 }
         ];
 
         const CREDITS_SKIP_SECONDS = 33;
@@ -412,12 +395,23 @@
             'https://raw.githubusercontent.com/riukii/gumball-ita/refs/heads/main/episodes.json'
         ];
 
+        // Calcola lo sfasamento stagioni per le serie che continuano un'altra
+        // Se una serie ha continuesAfter, le sue stagioni vengono numerite come
+        // proseguimento della serie indicata (es. S1 → Stagione 7 se la precedente ne ha 6)
+        function getDisplaySeason(showId, season) {
+            const cfg = SHOWS_CONFIG.find(s => s.tmdbId === showId);
+            if (!cfg || !cfg.continuesAfter) return season;
+            const prevShow = allEpisodes.filter(e => e.showId === cfg.continuesAfter);
+            const prevSeasonCount = new Set(prevShow.map(e => e.season)).size;
+            return season + prevSeasonCount;
+        }
+
         // ============================================
         // STATO
         // ============================================
         let allEpisodes = [];
         let currentEpisode = null;
-        let isFirstEpisode = true;
+        let isFirstEpisode = false;
         let lastEpisodeIndices = [];
         const AVOID_REPEAT_COUNT = 5;
         let hideTimer = null;
@@ -428,8 +422,7 @@
         let loadCheckTimer = null;
         let consecutiveFailures = 0;
         const MAX_FAILS = 8;
-        const LOAD_TIMEOUT = 5000;
-        const FIRST_LOAD_TIMEOUT = 10000;
+
         let wasFullscreen = false;
         let isLoading = false;
 
@@ -508,13 +501,10 @@
         const topBar = $('topBar');
         const showNameEl = $('showName');
         const episodeTitleEl = $('episodeTitle');
-        const bottomInfo = $('bottomInfo');
-        const seasonNumEl = $('seasonNum');
-        const episodeNumEl = $('episodeNum');
+
         const transitionOverlay = $('transitionOverlay');
         const loadingText = $('loadingText');
         const nextOverlayBtn = $('nextOverlayBtn');
-        const btnNext = nextOverlayBtn; // Il tasto Successivo è ora in basso a destra
         const btnHistory = $('btnHistory');
         const btnSettings = $('btnSettings');
         const fsOverlayBtn = $('fsOverlayBtn');
@@ -586,7 +576,7 @@
                     html += `<div class="ep-list-season" data-season-key="${seasonKey}">`;
                     html += `<div class="ep-list-season-header" data-target="${seasonKey}" data-filter-key="${seasonFilterKey}">`;
                     html += `<span class="arrow">&#9654;</span>`;
-                    html += `<span class="season-label">Stagione ${s}</span>`;
+                    html += `<span class="season-label">Stagione ${getDisplaySeason(showId, s)}</span>`;
                     html += `<span class="season-count">${sEps.length} ep</span>`;
                     html += `<span class="season-toggle ${seasonActive ? 'active' : ''}" data-filter-key="${seasonFilterKey}"></span>`;
                     html += `</div>`;
@@ -600,6 +590,7 @@
 
                         html += `<div class="ep-item ${isCurrent ? 'now-playing' : ''}" 
                             data-showid="${ep.showId}" data-season="${ep.season}" data-episode="${ep.episode}">`;
+                        html += `<span class="ep-num">${ep.episode}</span>`;
                         html += `<div class="ep-thumb">`;
                         if (ep.thumb) {
                             html += `<img src="${ep.thumb}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display=''">`;
@@ -610,7 +601,6 @@
                         html += `</div>`;
                         html += `<div class="ep-info">`;
                         html += `<div class="ep-title-text">${ep.title}</div>`;
-                        html += `<div class="ep-meta">S${ep.season}E${String(ep.episode).padStart(2,'0')}</div>`;
                         html += `</div>`;
                         html += `</div>`;
                     }
@@ -766,7 +756,6 @@
 
         function showOverlay() {
             topBar.classList.remove('hidden');
-            bottomInfo.classList.remove('hidden');
             nextOverlayBtn.classList.remove('hidden');
             disableTriggers(); startHideTimer();
         }
@@ -774,7 +763,7 @@
         function hideOverlay() {
             if (isPaused || isLoading) return;
             if (settingsPanel.classList.contains('open')) return;
-            topBar.classList.add('hidden'); bottomInfo.classList.add('hidden'); nextOverlayBtn.classList.add('hidden'); enableTriggers();
+            topBar.classList.add('hidden'); nextOverlayBtn.classList.add('hidden'); enableTriggers();
         }
 
         function startHideTimer() {
@@ -782,22 +771,17 @@
             if (!isPaused && !isLoading && !settingsPanel.classList.contains('open')) hideTimer = setTimeout(hideOverlay, 2000);
         }
 
-        // Rileva dispositivo touch con matchMedia — più affidabile di ontouchstart
         const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
-        // Rileva l'altezza della barra del browser / safe area in basso su mobile
+        // Rileva safe-bottom per Firefox mobile
         function detectSafeBottom() {
             const vh = window.innerHeight;
             const dvh = window.visualViewport ? window.visualViewport.height : vh;
-            const diff = vh - dvh;
-            const safeBottom = Math.max(0, diff);
+            const safeBottom = Math.max(0, vh - dvh);
             document.documentElement.style.setProperty('--safe-bottom', safeBottom + 'px');
-            console.log(`[Gumball] Safe bottom: ${safeBottom}px (vh=${vh}, dvh=${dvh})`);
         }
         detectSafeBottom();
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', detectSafeBottom);
-        }
+        if (window.visualViewport) window.visualViewport.addEventListener('resize', detectSafeBottom);
         window.addEventListener('resize', detectSafeBottom);
 
         // PC: mouseenter su trigger zones mostra overlay
@@ -815,11 +799,9 @@
         // Su PC, hover su elementi UI ferma il timer; su mobile no
         if (!isTouchDevice) {
             topBar.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
-            bottomInfo.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
             nextOverlayBtn.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
             fsOverlayBtn.addEventListener('mouseenter', () => { clearTimeout(hideTimer); });
             topBar.addEventListener('mouseleave', startHideTimer);
-            bottomInfo.addEventListener('mouseleave', startHideTimer);
             nextOverlayBtn.addEventListener('mouseleave', startHideTimer);
             fsOverlayBtn.addEventListener('mouseleave', startHideTimer);
         }
@@ -983,9 +965,7 @@
             playerDuration = 0; playerCurrentTime = 0; isPaused = false;
 
             showNameEl.textContent = ep.showName;
-            episodeTitleEl.textContent = ep.title;
-            seasonNumEl.textContent = ep.season;
-            episodeNumEl.textContent = ep.episode;
+            episodeTitleEl.innerHTML = ep.title + '<span class="ep-separator">-</span><span class="ep-season-info">Stag. ' + getDisplaySeason(ep.showId, ep.season) + ' \u2022 Ep. ' + ep.episode + '</span>';
             showLogoEl.src = ep.logo;
 
             console.log(`[Gumball] S${ep.season}E${ep.episode} - "${ep.title}" [skip=${settings.autoSkip}, mode=${settings.playMode}]`);
@@ -1108,7 +1088,7 @@
         // ============================================
         // BUTTONS
         // ============================================
-        btnNext.addEventListener('click', playNextEpisode);
+        nextOverlayBtn.addEventListener('click', playNextEpisode);
         btnHistory.addEventListener('click', goBackToPrevious);
 
         // ============================================
