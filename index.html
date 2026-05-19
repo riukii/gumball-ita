@@ -67,10 +67,10 @@
         .mobile-bottom-spacer { display: none; height: 0; width: 100%; transition: height 0.2s ease; }
         html.is-fullscreen .mobile-bottom-spacer { height: 0 !important; }
 
-        /* ===== TRIGGER — full-screen transparent overlay that captures first mouse/touch ===== */
-        /* When overlay is hidden, trigger-full is active (pointer-events: auto) and captures
-           mouseenter/touchstart to show the overlay. When overlay is visible, trigger-full gets
-           pointer-events: none so user can interact with the player underneath. */
+        /* ===== TRIGGER — full-screen transparent overlay ===== */
+        /* Covers the entire screen. When overlay is hidden → pointer-events: auto (captures taps/mouse).
+           When overlay is visible → pointer-events: none (lets user interact with vixsrc controls).
+           PC: mouseenter/mousemove → show overlay. Mobile: touchstart → show overlay. */
         .trigger-full { display: block; position: fixed; inset: 0; z-index: 84; background: transparent; pointer-events: auto; }
         .trigger-full.disabled { pointer-events: none; }
 
@@ -285,7 +285,6 @@
             .btn .btn-text { display: none; }
             .player-wrapper { height: calc(100dvh - 1px); }
             .mobile-bottom-spacer { display: block; height: 1px; }
-            .trigger-full.disabled { pointer-events: none; }
             .show-name { font-size: clamp(12px, 2.2vw, 16px); }
             .episode-title { font-size: clamp(9px, 1.5vw, 12px); }
         }
@@ -510,6 +509,9 @@
         const settingsClose = $('settingsClose');
         const settingsContent = $('settingsContent');
 
+        // Device detection
+        const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
         // ============================================
         // SETTINGS PANEL UI — TUTTO DINAMICO
         // ============================================
@@ -710,21 +712,34 @@
             else { document.documentElement.requestFullscreen().catch(() => {}); }
         }
 
+        let orientationLockInterval = null;
+
+        function lockOrientationLandscape() {
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock('landscape').catch(() => {});
+            }
+        }
+
         document.addEventListener('fullscreenchange', () => {
             const isFs = !!document.fullscreenElement;
             wasFullscreen = isFs;
             fsOverlayBtn.innerHTML = isFs ? fsSvgExit : fsSvgEnter;
             if (isFs) {
                 document.documentElement.classList.add('is-fullscreen');
-                // Su mobile: forza landscape quando si entra in fullscreen
-                if (isTouchDevice && screen.orientation && screen.orientation.lock) {
-                    screen.orientation.lock('landscape').catch(() => {});
+                // Su mobile: forza landscape e mantieni il lock periodicamente
+                if (isTouchDevice) {
+                    lockOrientationLandscape();
+                    clearInterval(orientationLockInterval);
+                    orientationLockInterval = setInterval(lockOrientationLandscape, 2000);
                 }
             } else {
                 document.documentElement.classList.remove('is-fullscreen');
-                // Su mobile: sblocca l'orientamento quando si esce dal fullscreen
-                if (isTouchDevice && screen.orientation && screen.orientation.unlock) {
-                    screen.orientation.unlock();
+                if (isTouchDevice) {
+                    clearInterval(orientationLockInterval);
+                    orientationLockInterval = null;
+                    if (screen.orientation && screen.orientation.unlock) {
+                        screen.orientation.unlock();
+                    }
                 }
             }
             detectSafeBottom();
@@ -739,6 +754,13 @@
         fsOverlayBtn.addEventListener('click', (e) => {
             e.preventDefault(); e.stopPropagation(); toggleFullscreen();
         });
+
+        // Su mobile: ri-locka landscape quando l'orientamento cambia durante il fullscreen
+        if (isTouchDevice && screen.orientation && screen.orientation.addEventListener) {
+            screen.orientation.addEventListener('change', () => {
+                if (document.fullscreenElement) lockOrientationLandscape();
+            });
+        }
 
         // ============================================
         // OVERLAY + TRIGGER ZONES
@@ -759,8 +781,6 @@
         function hideOverlay() {
             if (isLoading) return;
             if (settingsPanel.classList.contains('open')) return;
-            // Su mobile: nascondi sempre dopo il timeout (anche se in pausa)
-            // Su PC: mantieni l'overlay visibile se il video è in pausa
             if (!isTouchDevice && isPaused) return;
             topBar.classList.add('hidden'); nextOverlayBtn.classList.add('hidden'); enableTriggers();
         }
@@ -772,18 +792,6 @@
             if (!isTouchDevice && (isPaused || isLoading)) return;
             if (isLoading) return;
             hideTimer = setTimeout(hideOverlay, 2500);
-        }
-
-        const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-
-        // Su mobile: ri-forza landscape se l'orientamento torna in portrait durante il fullscreen
-        // (alcuni browser perdono il lock quando i controlli nativi del video appaiono)
-        if (isTouchDevice) {
-            screen.orientation.addEventListener('change', () => {
-                if (document.fullscreenElement && screen.orientation.type.startsWith('portrait')) {
-                    screen.orientation.lock('landscape').catch(() => {});
-                }
-            });
         }
 
         // Rileva safe-bottom per Firefox mobile
@@ -798,15 +806,18 @@
         window.addEventListener('resize', detectSafeBottom);
 
         // PC: mouseenter/mousemove su trigger-full mostra overlay
-        // (mousemove needed because when trigger-full re-enables after auto-hide,
-        //  if the mouse is already inside, mouseenter won't fire)
-        // Mobile: touchstart su trigger-full mostra overlay
         triggerFull.addEventListener('mouseenter', showOverlay);
         triggerFull.addEventListener('mousemove', showOverlay);
-        triggerFull.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            showOverlay();
-        });
+
+        // Mobile: touchstart su trigger-full mostra overlay
+        // Il primo tap mostra il nostro overlay e disabilita trigger-full (pointer-events: none),
+        // così il secondo tap va a vixsrc e mostra i suoi controlli.
+        if (isTouchDevice) {
+            triggerFull.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // previene il click fantasma
+                showOverlay();
+            }, { passive: false });
+        }
 
         // Su PC, hover su elementi UI ferma il timer; su mobile no
         if (!isTouchDevice) {
@@ -817,7 +828,8 @@
             nextOverlayBtn.addEventListener('mouseleave', startHideTimer);
             fsOverlayBtn.addEventListener('mouseleave', startHideTimer);
         }
-        window.addEventListener('focus', showOverlay);
+        // On PC: show overlay when window regains focus (e.g. tab switch back)
+        if (!isTouchDevice) window.addEventListener('focus', showOverlay);
 
         // ============================================
         // RANDOMIZATION
@@ -1074,6 +1086,8 @@
                     // Su PC: mostra overlay e ferma il timer (i controlli restano visibili in pausa)
                     // Su mobile: non mostrare overlay e non resettare il timer (l'overlay si nasconde da solo)
                     if (!isTouchDevice) { clearTimeout(hideTimer); showOverlay(); }
+                    // Su mobile in fullscreen: ri-locka landscape (il browser potrebbe averlo rilasciato)
+                    if (isTouchDevice && document.fullscreenElement) lockOrientationLandscape();
                     break;
                 case 'timeupdate':
                     if (isLoading) { isLoading = false; clearTimeout(loadCheckTimer); consecutiveFailures = 0; }
