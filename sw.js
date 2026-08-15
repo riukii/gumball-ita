@@ -6,6 +6,7 @@ const PRECACHE_URLS = [
     './',
 './index.html',
 './episodes.json',
+'./hls.min.js',
 './Gumball.png',
 './Gumball2.png',
 './manifest.json'

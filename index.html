@@ -62,6 +62,15 @@
         }
         html.is-fullscreen .player-wrapper { height: 100dvh !important; }
         .player-wrapper iframe { width: 100%; height: 100%; border: none; }
+        .player-wrapper video {
+            width: 100%; height: 100%; background: #000; display: none;
+        }
+        .proxy-loading {
+            position: absolute; inset: 0; z-index: 60;
+            display: none; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+            background: #000; pointer-events: none;
+        }
+        .proxy-loading-text { font-size: clamp(12px, 2vw, 14px); color: #78909c; }
 
         /* ===== MOBILE BOTTOM SPACER (only for touch devices) ===== */
         .mobile-bottom-spacer { display: none; height: 0; width: 100%; transition: height 0.2s ease; }
@@ -180,6 +189,17 @@
             transition: transform 0.2s, background 0.2s;
         }
         .toggle-switch.active::after { transform: translateX(20px); background: #4fc3f7; }
+
+        .input-row { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .input-label { display: block; font-size: 13px; color: #b0bec5; margin-bottom: 6px; }
+        .settings-input {
+            width: 100%; padding: 9px 12px;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px; color: #fff; font-size: 13px; outline: none;
+            transition: border-color 0.2s;
+        }
+        .settings-input:focus { border-color: rgba(79,195,247,0.6); }
+        .settings-input::placeholder { color: #546e7a; }
 
         .settings-backdrop {
             position: fixed; inset: 0; z-index: 299;
@@ -301,6 +321,11 @@
 
     <div class="player-wrapper">
         <iframe id="player" allowfullscreen allow="autoplay; encrypted-media" src="about:blank"></iframe>
+        <video id="videoPlayer" playsinline webkit-playsinline controls preload="auto"></video>
+        <div class="proxy-loading" id="proxyLoading">
+            <div class="spinner"></div>
+            <div class="proxy-loading-text">Caricamento stream...</div>
+        </div>
     </div>
 
     <div class="mobile-bottom-spacer"></div>
@@ -406,7 +431,10 @@
         let settings = {
             selectedSeasons: {},   // { "37606_1": true, ... }  — dinamico
             autoSkip: true,
-            playMode: 'random'     // 'random' | 'sequential'
+            playMode: 'random',    // 'random' | 'sequential'
+            useProxy: false,       // true = riproduci tramite EasyProxy
+            proxyUrl: '',          // es. http://192.168.1.10:7860
+            proxyPassword: ''      // api_password (opzionale)
         };
 
         function loadSettings() {
@@ -417,12 +445,19 @@
                     if (saved.selectedSeasons) settings.selectedSeasons = saved.selectedSeasons;
                     if (typeof saved.autoSkip === 'boolean') settings.autoSkip = saved.autoSkip;
                     if (saved.playMode === 'sequential' || saved.playMode === 'random') settings.playMode = saved.playMode;
+                    if (typeof saved.useProxy === 'boolean') settings.useProxy = saved.useProxy;
+                    if (typeof saved.proxyUrl === 'string') settings.proxyUrl = saved.proxyUrl;
+                    if (typeof saved.proxyPassword === 'string') settings.proxyPassword = saved.proxyPassword;
                 }
             } catch {}
         }
 
         function saveSettings() {
             try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch {}
+        }
+
+        function escapeAttr(s) {
+            return String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
         }
 
         function initDefaultSeasons() {
@@ -471,6 +506,8 @@
         const loadingTitle = $('loadingTitle');
         const loadingSubtitle = $('loadingSubtitle');
         const player = $('player');
+        const videoPlayer = $('videoPlayer');
+        const proxyLoadingEl = $('proxyLoading');
         const topBar = $('topBar');
         const showNameEl = $('showName');
         const episodeTitleEl = $('episodeTitle');
@@ -524,6 +561,25 @@
             html += `<div class="toggle-row">`;
             html += `<div class="toggle-label">Skip automatico<small>Salta intro e outro</small></div>`;
             html += `<div class="toggle-switch ${settings.autoSkip ? 'active' : ''}" id="toggleAutoSkip"></div>`;
+            html += `</div></div>`;
+
+            // --- Sezione EasyProxy ---
+            html += `<div class="settings-section">`;
+            html += `<div class="settings-section-title">EasyProxy</div>`;
+
+            html += `<div class="toggle-row">`;
+            html += `<div class="toggle-label">Passa da EasyProxy<small>Riproduci tramite EasyProxy invece del player vixsrc diretto</small></div>`;
+            html += `<div class="toggle-switch ${settings.useProxy ? 'active' : ''}" id="toggleProxy"></div>`;
+            html += `</div>`;
+
+            html += `<div class="input-row" id="proxyUrlRow"${settings.useProxy ? '' : ' hidden'}>`;
+            html += `<label class="input-label" for="inputProxyUrl">URL proxy</label>`;
+            html += `<input class="settings-input" id="inputProxyUrl" type="url" placeholder="http://192.168.1.10:7860" value="${escapeAttr(settings.proxyUrl)}" autocomplete="off" spellcheck="false">`;
+            html += `</div>`;
+
+            html += `<div class="input-row" id="proxyPwRow"${settings.useProxy ? '' : ' hidden'}>`;
+            html += `<label class="input-label" for="inputProxyPw">Password API (opzionale)</label>`;
+            html += `<input class="settings-input" id="inputProxyPw" type="password" placeholder="api_password" value="${escapeAttr(settings.proxyPassword)}" autocomplete="off">`;
             html += `</div></div>`;
 
             // --- Lista episodi (dinamica) ---
@@ -617,6 +673,40 @@
                 toggleSkip.addEventListener('click', () => {
                     settings.autoSkip = !settings.autoSkip;
                     toggleSkip.classList.toggle('active', settings.autoSkip);
+                    saveSettings();
+                });
+            }
+
+            // Bind EasyProxy toggle
+            const toggleProxy = settingsContent.querySelector('#toggleProxy');
+            if (toggleProxy) {
+                toggleProxy.addEventListener('click', () => {
+                    settings.useProxy = !settings.useProxy;
+                    toggleProxy.classList.toggle('active', settings.useProxy);
+                    const urlRow = settingsContent.querySelector('#proxyUrlRow');
+                    const pwRow = settingsContent.querySelector('#proxyPwRow');
+                    if (urlRow) urlRow.hidden = !settings.useProxy;
+                    if (pwRow) pwRow.hidden = !settings.useProxy;
+                    saveSettings();
+                    // Riavvia l'episodio corrente nel nuovo modo
+                    if (currentEpisode) playEpisode(currentEpisode);
+                });
+            }
+
+            // Bind proxy URL input
+            const inputProxyUrl = settingsContent.querySelector('#inputProxyUrl');
+            if (inputProxyUrl) {
+                inputProxyUrl.addEventListener('input', () => {
+                    settings.proxyUrl = inputProxyUrl.value;
+                    saveSettings();
+                });
+            }
+
+            // Bind proxy password input
+            const inputProxyPw = settingsContent.querySelector('#inputProxyPw');
+            if (inputProxyPw) {
+                inputProxyPw.addEventListener('input', () => {
+                    settings.proxyPassword = inputProxyPw.value;
                     saveSettings();
                 });
             }
@@ -952,13 +1042,217 @@
         // ============================================
         // EPISODI
         // ============================================
+        function buildVixUrl(ep) {
+            return `https://vixsrc.to/tv/${ep.showId}/${ep.season}/${ep.episode}?lang=it`;
+        }
+
         function buildUrl(ep) {
-            let url = `https://vixsrc.to/tv/${ep.showId}/${ep.season}/${ep.episode}?lang=it`;
+            let url = buildVixUrl(ep);
             if (settings.autoSkip) {
                 url += '&startAt=24';
             }
             url += '&primaryColor=46B4C9&secondaryColor=001117';
             return url;
+        }
+
+        // ============================================
+        // EASYPROXY (riproduzione HLS via proxy)
+        // ============================================
+        let hlsInstance = null;
+        let proxyIntroSeekDone = false;
+        let proxyBlobUrl = null;
+        let proxyRetries = 0;
+        const PROXY_MAX_RETRIES = 2;
+        let unmuteListeners = [];
+
+        // Se l'autoplay è bloccato si riparte in muto; al primo contatto
+        // dell'utente si riattiva l'audio
+        function bindUnmuteOnce() {
+            while (unmuteListeners.length) {
+                const [el, ev, fn] = unmuteListeners.pop();
+                el.removeEventListener(ev, fn);
+            }
+            const fn = () => { videoPlayer.muted = false; };
+            for (const ev of ['pointerdown', 'touchstart', 'keydown']) {
+                document.addEventListener(ev, fn, { once: true });
+                unmuteListeners.push([document, ev, fn]);
+            }
+        }
+
+        function getProxyBase() {
+            return (settings.proxyUrl || '').trim().replace(/\/+$/, '');
+        }
+
+        function proxyAuthQuery() {
+            const pw = (settings.proxyPassword || '').trim();
+            return pw ? '&api_password=' + encodeURIComponent(pw) : '';
+        }
+
+        function setProxyLoading(show) {
+            proxyLoadingEl.style.display = show ? 'flex' : 'none';
+        }
+
+        function setPlaybackMode(useProxy) {
+            if (useProxy) {
+                player.src = 'about:blank';
+                player.style.display = 'none';
+                videoPlayer.style.display = 'block';
+            } else {
+                stopProxyPlayback();
+                player.style.display = '';
+                videoPlayer.style.display = '';
+            }
+        }
+
+        function stopProxyPlayback() {
+            if (hlsInstance) {
+                try { hlsInstance.destroy(); } catch {}
+                hlsInstance = null;
+            }
+            if (proxyBlobUrl) {
+                try { URL.revokeObjectURL(proxyBlobUrl); } catch {}
+                proxyBlobUrl = null;
+            }
+            const hadSrc = videoPlayer.hasAttribute('src') || !!videoPlayer.currentSrc;
+            videoPlayer.pause();
+            videoPlayer.removeAttribute('src');
+            // load() con un fetch in corso lancia DOMException asincrona (abort):
+            // lo chiamiamo solo se c'era davvero una sorgente da fermare
+            if (hadSrc) { try { videoPlayer.load(); } catch {} }
+            setProxyLoading(false);
+        }
+
+        let useNativeHls = false;
+
+        // Decide il motore di riproduzione: hls.js (file locale, niente CDN) oppure
+        // HLS nativo (Safari/iOS). hls.js viene verificato davvero caricato e
+        // funzionante prima di usarlo — niente più tentativi nativi non supportati.
+        async function ensureHlsEngine() {
+            if (window.Hls && Hls.isSupported()) { useNativeHls = false; return; }
+            if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) { useNativeHls = true; return; }
+            if (!window.Hls) {
+                await new Promise((resolve, reject) => {
+                    const s = document.createElement('script');
+                    s.src = './hls.min.js';
+                    s.onload = () => resolve();
+                    s.onerror = () => reject(new Error('Impossibile caricare hls.js'));
+                    document.head.appendChild(s);
+                });
+            }
+            if (!window.Hls || !Hls.isSupported()) throw new Error('HLS non supportato da questo browser');
+            useNativeHls = false;
+        }
+
+        // Con redirect_stream=true EasyProxy restituisce direttamente il manifest m3u8
+        // riscritto (segmenti già puntati al proxy) con header CORS inclusi:
+        // funziona con qualsiasi EasyProxy stock, anche cross-origin.
+        async function resolveViaEasyProxy(ep) {
+            const base = getProxyBase();
+            if (!base) {
+                showError('Configura l\'URL di EasyProxy nelle impostazioni.');
+                isLoading = false;
+                return null;
+            }
+            const vixUrl = buildVixUrl(ep);
+            const reqUrl = base + '/extractor/video?d=' + encodeURIComponent(vixUrl) + proxyAuthQuery() + '&redirect_stream=true';
+
+            let res;
+            try {
+                res = await fetch(reqUrl);
+            } catch (err) {
+                throw new Error('Impossibile raggiungere EasyProxy (' + base + '). Verifica URL, password e rete; sito e proxy devono usare entrambi HTTP o entrambi HTTPS. Se usi uBlock/adblock, whitelista l\'indirizzo del proxy.');
+            }
+            if (!res.ok) {
+                handlePlaybackFailure('EasyProxy: HTTP ' + res.status);
+                return null;
+            }
+            const text = await res.text();
+            if (!text || text.trim().charAt(0) === '{') {
+                handlePlaybackFailure('Risposta EasyProxy non valida (estrazione fallita).');
+                return null;
+            }
+            // hls.js: manifest come blob; player nativo (Safari): URL diretto
+            if (useNativeHls) return reqUrl;
+            proxyBlobUrl = URL.createObjectURL(new Blob([text], { type: 'application/vnd.apple.mpegurl' }));
+            return proxyBlobUrl;
+        }
+
+        function handlePlaybackFailure(msg) {
+            console.warn('[Gumball] Playback fallito:', msg);
+            setProxyLoading(false);
+            if (++consecutiveFailures >= MAX_FAILS) { showError('Troppi episodi non disponibili.'); isLoading = false; return; }
+            isLoading = false;
+            setTimeout(() => playRandomEpisode(), 400);
+        }
+
+        async function playEpisodeViaProxy(ep) {
+            stopProxyPlayback();
+            setPlaybackMode(true);
+            setProxyLoading(true);
+            try {
+                await ensureHlsEngine();
+                const manifestUrl = await resolveViaEasyProxy(ep);
+                if (!manifestUrl) return;
+                startProxyPlayback(manifestUrl);
+            } catch (err) {
+                console.error('[Gumball] EasyProxy errore:', err);
+                // Errore di connessione/CORS: riprova un paio di volte, poi
+                // errore chiaro invece di skippare all'infinito
+                setProxyLoading(false);
+                if (++proxyRetries < PROXY_MAX_RETRIES) {
+                    isLoading = false;
+                    setTimeout(() => playEpisode(ep), 2000);
+                    return;
+                }
+                proxyRetries = 0;
+                showError(err && err.message ? err.message : 'Errore EasyProxy');
+                isLoading = false;
+            }
+        }
+
+        function startProxyPlayback(manifestUrl) {
+            setPlaybackMode(true);
+            proxyIntroSeekDone = false;
+            videoPlayer.muted = false;
+            setProxyLoading(true);
+
+            // Come per l'iframe: se entro 8s dal caricamento del manifest
+            // non arriva un play, probabilmente lo stream è inutilizzabile
+            const onReady = () => {
+                clearTimeout(loadCheckTimer);
+                loadCheckTimer = setTimeout(() => {
+                    console.warn('[Gumball] Nessun play dopo caricamento manifest');
+                    handlePlaybackFailure('Nessun play dopo caricamento manifest');
+                }, POST_LOAD_TIMEOUT);
+            };
+
+            if (window.Hls && Hls.isSupported() && !useNativeHls) {
+                const hls = new Hls();
+                hlsInstance = hls;
+                hls.on(Hls.Events.MANIFEST_PARSED, onReady);
+                hls.on(Hls.Events.ERROR, (evt, data) => {
+                    if (!data.fatal) return;
+                    if (data.type === Hls.ErrorTypes.NETWORK_ERROR) { hls.startLoad(); return; }
+                    if (data.type === Hls.ErrorTypes.MEDIA_ERROR) { hls.recoverMediaError(); return; }
+                    handlePlaybackFailure('Errore HLS (' + data.type + ')');
+                });
+                hls.loadSource(manifestUrl);
+                hls.attachMedia(videoPlayer);
+            } else if (useNativeHls) {
+                videoPlayer.src = manifestUrl;
+                videoPlayer.addEventListener('loadedmetadata', onReady, { once: true });
+            } else {
+                handlePlaybackFailure('HLS non supportato da questo browser');
+                return;
+            }
+            videoPlayer.play().catch(() => {
+                // Autoplay bloccato (avvio automatico senza gesto dell'utente):
+                // riprova in muto, permesso da tutti i browser, e riattiva
+                // l'audio al primo contatto
+                videoPlayer.muted = true;
+                videoPlayer.play().catch(() => {});
+                bindUnmuteOnce();
+            });
         }
 
         // ===== Rilevamento 404 intelligente =====
@@ -979,15 +1273,18 @@
             episodeTitleEl.innerHTML = ep.title + '<span class="ep-separator">-</span><span class="ep-season-info">Stag. ' + getDisplaySeason(ep.showId, ep.season) + ' \u2022 Ep. ' + ep.episode + '</span>';
             showLogoEl.src = ep.logo;
 
-            console.log(`[Gumball] S${ep.season}E${ep.episode} - "${ep.title}" [skip=${settings.autoSkip}, mode=${settings.playMode}]`);
-            setTimeout(() => { player.src = buildUrl(ep); }, 300);
+            console.log(`[Gumball] S${ep.season}E${ep.episode} - "${ep.title}" [skip=${settings.autoSkip}, mode=${settings.playMode}, proxy=${settings.useProxy}]`);
+            if (settings.useProxy) {
+                playEpisodeViaProxy(ep);
+            } else {
+                setPlaybackMode(false);
+                setTimeout(() => { player.src = buildUrl(ep); }, 300);
+            }
 
-            // Timeout globale di sicurezza (45s) — se l'iframe non carica proprio
+            // Timeout globale di sicurezza (45s) — se il player non carica proprio
             loadCheckTimer = setTimeout(() => {
-                console.warn(`[Gumball] S${ep.season}E${ep.episode} iframe non ha caricato entro 45s — skip`);
-                if (++consecutiveFailures >= MAX_FAILS) { showError('Troppi episodi non disponibili.'); isLoading = false; return; }
-                isLoading = false;
-                setTimeout(() => playRandomEpisode(), 400);
+                console.warn(`[Gumball] S${ep.season}E${ep.episode} player non ha caricato entro 45s — skip`);
+                handlePlaybackFailure('Player non ha caricato entro 45s');
             }, 45000);
 
             saveToHistory(ep);
@@ -999,6 +1296,7 @@
         // Quando l'iframe carica (anche pagina 404), inizia il timer post-load
         player.addEventListener('load', () => {
             if (!currentEpisode) return;
+            if (settings.useProxy) return; // in modalità proxy l'iframe è solo about:blank
             clearTimeout(loadCheckTimer);
 
             // Dopo che l'iframe ha caricato, aspettiamo un evento play/timeupdate
@@ -1051,19 +1349,14 @@
             return null;
         }
 
-        window.addEventListener('message', (event) => {
-            const pe = extractEvent(event.data);
-            if (!pe) return;
-            const ct = parseFloat(pe.currentTime) || 0;
-            const dur = parseFloat(pe.duration) || 0;
-            if (ct > 0) playerCurrentTime = ct;
-            if (dur > 0) playerDuration = dur;
-
-            switch (pe.event) {
+        // Handler condiviso: eventi dal player vixsrc (postMessage) e dal video EasyProxy
+        function handlePlaybackEvent(event, currentTime, duration) {
+            switch (event) {
                 case 'play':
                     const wasLoading = isLoading;
                     isPaused = false; isLoading = false;
                     clearTimeout(loadCheckTimer); consecutiveFailures = 0;
+                    setProxyLoading(false);
                     if (wasLoading) forceStartHideTimer();
                     else if (!topBar.classList.contains('hidden')) startHideTimer();
                     break;
@@ -1079,6 +1372,8 @@
                     if (isTouchDevice && document.fullscreenElement) lockOrientationLandscape();
                     break;
                 case 'timeupdate':
+                    if (currentTime > 0) playerCurrentTime = currentTime;
+                    if (duration > 0) playerDuration = duration;
                     if (isLoading) { isLoading = false; clearTimeout(loadCheckTimer); consecutiveFailures = 0; }
                     if (playerDuration > 0 && playerCurrentTime > 0 && !hasTriggeredNext) {
                         const rem = playerDuration - playerCurrentTime;
@@ -1097,6 +1392,40 @@
                         }
                     }
                     break;
+            }
+        }
+
+        window.addEventListener('message', (event) => {
+            const pe = extractEvent(event.data);
+            if (!pe) return;
+            handlePlaybackEvent(pe.event, parseFloat(pe.currentTime) || 0, parseFloat(pe.duration) || 0);
+        });
+
+        // ===== Eventi player in modalità EasyProxy =====
+        videoPlayer.addEventListener('play', () => { handlePlaybackEvent('play'); });
+        videoPlayer.addEventListener('pause', () => { handlePlaybackEvent('pause'); });
+        videoPlayer.addEventListener('timeupdate', () => {
+            const dur = videoPlayer.duration || 0;
+            if (dur > 0) handlePlaybackEvent('timeupdate', videoPlayer.currentTime, dur);
+        });
+        videoPlayer.addEventListener('ended', () => {
+            const dur = videoPlayer.duration || 0;
+            if (dur > 0) handlePlaybackEvent('timeupdate', dur, dur);
+        });
+        // startAt=24 del player vixsrc, replicato in modalità proxy
+        videoPlayer.addEventListener('loadedmetadata', () => {
+            if (settings.useProxy && settings.autoSkip && !proxyIntroSeekDone && videoPlayer.duration > 30) {
+                proxyIntroSeekDone = true;
+                videoPlayer.currentTime = 24;
+            }
+        });
+        // Errori di decodifica/formato (gli abort volontari di stopProxyPlayback sono code 1/2 e si ignorano)
+        videoPlayer.addEventListener('error', () => {
+            if (!settings.useProxy) return;
+            const ve = videoPlayer.error;
+            if (!ve) return;
+            if (ve.code === 3 || ve.code === 4) {
+                handlePlaybackFailure('Formato video non supportato (' + ve.code + ')');
             }
         });
 
