@@ -1061,8 +1061,7 @@
         let hlsInstance = null;
         let proxyIntroSeekDone = false;
         let proxyBlobUrl = null;
-        let proxyRetries = 0;
-        const PROXY_MAX_RETRIES = 2;
+        let proxyPlayStarted = false;
         let unmuteListeners = [];
 
         // Se l'autoplay è bloccato si riparte in muto; al primo contatto
@@ -1105,6 +1104,7 @@
         }
 
         function stopProxyPlayback() {
+            proxyPlayStarted = false;
             if (hlsInstance) {
                 try { hlsInstance.destroy(); } catch {}
                 hlsInstance = null;
@@ -1160,15 +1160,23 @@
             try {
                 res = await fetch(reqUrl);
             } catch (err) {
-                throw new Error('Impossibile raggiungere EasyProxy (' + base + '). Verifica URL, password e rete; sito e proxy devono usare entrambi HTTP o entrambi HTTPS. Se usi uBlock/adblock, whitelista l\'indirizzo del proxy.');
+                // Con EasyProxy stock le risposte di errore non hanno header CORS:
+                // cross-origin il browser le blocca e qui sembrano errori di rete,
+                // ma potrebbero essere episodi non disponibili su vixsrc (404).
+                // Come il modo diretto: si salta all'episodio successivo.
+                throw new Error('Impossibile raggiungere EasyProxy (' + base + '). Verifica URL, password e rete; sito e proxy devono usare entrambi HTTP o entrambi HTTPS. Se usi uBlock/adblock, whitelista l\'indirizzo del proxy. L\'episodio potrebbe anche non essere disponibile su vixsrc.');
             }
             if (!res.ok) {
-                handlePlaybackFailure('EasyProxy: HTTP ' + res.status);
+                let detail = 'HTTP ' + res.status;
+                try { const ejson = await res.json(); detail = ejson.error || detail; } catch {}
+                handlePlaybackFailure('EasyProxy: ' + detail);
                 return null;
             }
             const text = await res.text();
             if (!text || text.trim().charAt(0) === '{') {
-                handlePlaybackFailure('Risposta EasyProxy non valida (estrazione fallita).');
+                let detail = 'estrazione fallita';
+                try { const ejson = JSON.parse(text); detail = ejson.error || detail; } catch {}
+                handlePlaybackFailure('EasyProxy: ' + detail);
                 return null;
             }
             // hls.js: manifest come blob; player nativo (Safari): URL diretto
@@ -1180,7 +1188,11 @@
         function handlePlaybackFailure(msg) {
             console.warn('[Gumball] Playback fallito:', msg);
             setProxyLoading(false);
-            if (++consecutiveFailures >= MAX_FAILS) { showError('Troppi episodi non disponibili.'); isLoading = false; return; }
+            if (++consecutiveFailures >= MAX_FAILS) {
+                showError('Riproduzione non riuscita: ' + (msg || 'episodi non disponibili'));
+                isLoading = false;
+                return;
+            }
             isLoading = false;
             setTimeout(() => playRandomEpisode(), 400);
         }
@@ -1196,17 +1208,7 @@
                 startProxyPlayback(manifestUrl);
             } catch (err) {
                 console.error('[Gumball] EasyProxy errore:', err);
-                // Errore di connessione/CORS: riprova un paio di volte, poi
-                // errore chiaro invece di skippare all'infinito
-                setProxyLoading(false);
-                if (++proxyRetries < PROXY_MAX_RETRIES) {
-                    isLoading = false;
-                    setTimeout(() => playEpisode(ep), 2000);
-                    return;
-                }
-                proxyRetries = 0;
-                showError(err && err.message ? err.message : 'Errore EasyProxy');
-                isLoading = false;
+                handlePlaybackFailure(err && err.message ? err.message : 'Errore EasyProxy');
             }
         }
 
@@ -1216,20 +1218,34 @@
             videoPlayer.muted = false;
             setProxyLoading(true);
 
-            // Come per l'iframe: se entro 8s dal caricamento del manifest
-            // non arriva un play, probabilmente lo stream è inutilizzabile
-            const onReady = () => {
+            const PROXY_POST_LOAD_TIMEOUT = 30000; // in modalità proxy il primo play può tardare
+
+            // Come per l'iframe: se lo stream non parte, va skippato. Ma in modalità
+            // EasyProxy i segmenti arrivano riscritti dal proxy e la prima
+            // riproduzione può tardare più di 8s. Il timer si ri-arma a ogni segno
+            // di attività (segmento scaricato): uno stream lento ma vivo non viene
+            // mai skippato, uno stream morto (nessun dato) viene skippato.
+            const armStallTimer = () => {
                 clearTimeout(loadCheckTimer);
                 loadCheckTimer = setTimeout(() => {
                     console.warn('[Gumball] Nessun play dopo caricamento manifest');
                     handlePlaybackFailure('Nessun play dopo caricamento manifest');
-                }, POST_LOAD_TIMEOUT);
+                }, PROXY_POST_LOAD_TIMEOUT);
+            };
+            const onReady = () => {
+                clearTimeout(loadCheckTimer);
+                armStallTimer();
+            };
+            const onActivity = () => {
+                if (proxyPlayStarted || !settings.useProxy) return;
+                armStallTimer();
             };
 
             if (window.Hls && Hls.isSupported() && !useNativeHls) {
                 const hls = new Hls();
                 hlsInstance = hls;
                 hls.on(Hls.Events.MANIFEST_PARSED, onReady);
+                hls.on(Hls.Events.FRAG_LOADED, onActivity);
                 hls.on(Hls.Events.ERROR, (evt, data) => {
                     if (!data.fatal) return;
                     if (data.type === Hls.ErrorTypes.NETWORK_ERROR) { hls.startLoad(); return; }
@@ -1241,6 +1257,7 @@
             } else if (useNativeHls) {
                 videoPlayer.src = manifestUrl;
                 videoPlayer.addEventListener('loadedmetadata', onReady, { once: true });
+                videoPlayer.addEventListener('progress', onActivity);
             } else {
                 handlePlaybackFailure('HLS non supportato da questo browser');
                 return;
@@ -1402,7 +1419,7 @@
         });
 
         // ===== Eventi player in modalità EasyProxy =====
-        videoPlayer.addEventListener('play', () => { handlePlaybackEvent('play'); });
+        videoPlayer.addEventListener('play', () => { proxyPlayStarted = true; handlePlaybackEvent('play'); });
         videoPlayer.addEventListener('pause', () => { handlePlaybackEvent('pause'); });
         videoPlayer.addEventListener('timeupdate', () => {
             const dur = videoPlayer.duration || 0;
