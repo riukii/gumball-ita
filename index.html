@@ -1218,26 +1218,29 @@
             videoPlayer.muted = false;
             setProxyLoading(true);
 
-            const PROXY_POST_LOAD_TIMEOUT = 30000; // in modalità proxy il primo play può tardare
+            const PROXY_POST_LOAD_TIMEOUT = 10000;
 
-            // Come per l'iframe: se lo stream non parte, va skippato. Ma in modalità
-            // EasyProxy i segmenti arrivano riscritti dal proxy e la prima
-            // riproduzione può tardare più di 8s. Il timer si ri-arma a ogni segno
-            // di attività (segmento scaricato): uno stream lento ma vivo non viene
-            // mai skippato, uno stream morto (nessun dato) viene skippato.
+            // Come per l'iframe: se lo stream non parte, va skippato. Ma il timer
+            // si azzera a ogni segno di attività (segmento scaricato) e non deve
+            // MAI scattare se l'episodio è già partito: il callback verifica
+            // proxyPlayStarted e in quel caso non fa nulla. Uno stream lento ma
+            // vivo non viene mai skippato, uno stream morto (nessun dato) sì.
             const armStallTimer = () => {
                 clearTimeout(loadCheckTimer);
                 loadCheckTimer = setTimeout(() => {
+                    if (proxyPlayStarted) return;
                     console.warn('[Gumball] Nessun play dopo caricamento manifest');
                     handlePlaybackFailure('Nessun play dopo caricamento manifest');
                 }, PROXY_POST_LOAD_TIMEOUT);
             };
             const onReady = () => {
+                if (proxyPlayStarted) { clearTimeout(loadCheckTimer); return; }
                 clearTimeout(loadCheckTimer);
                 armStallTimer();
             };
             const onActivity = () => {
-                if (proxyPlayStarted || !settings.useProxy) return;
+                if (!settings.useProxy) return;
+                if (proxyPlayStarted) { clearTimeout(loadCheckTimer); return; }
                 armStallTimer();
             };
 
