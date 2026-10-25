@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-22",
+  "updated": "2026-10-25",
   "shows": [
     {
       "tmdbId": 37606,
@@ -1577,7 +1577,7 @@
         {
           "season": 2,
           "episode": 1,
-          "title": "La convocazione",
+          "title": "L'annuario",
           "thumb": "https://image.tmdb.org/t/p/w300/hj82kX0WeQ2MuI0Na2nsl8lWDlo.jpg"
         },
         {
